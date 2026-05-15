@@ -133,6 +133,15 @@ function buildHtml(data) {
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
     th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .02em; }
     .code { font-weight: 800; white-space: nowrap; }
+    .id-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: #f1f5f9;
+      color: #24405f;
+      white-space: nowrap;
+    }
     .footer-note {
       margin-top: 16px;
       color: var(--muted);
@@ -179,7 +188,7 @@ function buildHtml(data) {
         <div style="overflow:auto">
           <table>
             <thead>
-              <tr><th>กองทุน</th><th>กลุ่ม</th><th>AUM ลบ.</th><th>NAV</th><th>วันที่</th></tr>
+              <tr><th>กองทุน</th><th>กลุ่ม</th><th>Project ID / Class</th><th>AUM ลบ.</th><th>Change</th><th>NAV</th><th>วันที่</th></tr>
             </thead>
             <tbody id="fundRows"></tbody>
           </table>
@@ -216,6 +225,13 @@ function buildHtml(data) {
       const arrow = value >= 0 ? "▲" : "▼";
       const pctText = pct === null || pct === undefined ? "" : " (" + fmt.format(Math.abs(pct)) + "%)";
       return arrow + " " + fmt.format(Math.abs(value)) + " ลบ." + pctText;
+    }
+
+    function signedDeltaText(value, pct) {
+      if (value === null || value === undefined) return "-";
+      const sign = value >= 0 ? "+" : "-";
+      const pctText = pct === null || pct === undefined ? "" : " (" + sign + fmt.format(Math.abs(pct)) + "%)";
+      return sign + fmt.format(Math.abs(value)) + " ลบ." + pctText;
     }
 
     function activeBucket() {
@@ -279,10 +295,12 @@ function buildHtml(data) {
 
     function renderFunds(bucket) {
       document.getElementById("tableTitle").textContent = "รายการกองทุน - " + bucket.name;
-      document.getElementById("fundRows").innerHTML = bucket.funds.map((fund) => {
+      document.getElementById("fundRows").innerHTML = bucket.funds.slice().sort((a, b) => (b.latest?.aumMillionBaht || 0) - (a.latest?.aumMillionBaht || 0)).map((fund) => {
         const latest = fund.latest || {};
-        return '<tr><td class="code">' + fund.code + '</td><td>' + (fund.group || "-") + '</td><td>' +
-          (latest.aumMillionBaht === undefined ? "-" : fmt.format(latest.aumMillionBaht)) + '</td><td>' +
+        return '<tr><td class="code">' + fund.code + '</td><td>' + (fund.group || "-") + '</td><td><span class="id-pill">' +
+          fund.identifierType + ': ' + fund.identifier + '</span></td><td>' +
+          (latest.aumMillionBaht === undefined ? "-" : fmt.format(latest.aumMillionBaht)) + '</td><td class="delta ' +
+          deltaClass(fund.changeMillionBaht) + '">' + signedDeltaText(fund.changeMillionBaht, fund.changePct) + '</td><td>' +
           (latest.nav === undefined ? "-" : fmt.format(latest.nav)) + '</td><td>' + (latest.navDate || "-") + '</td></tr>';
       }).join("");
     }
