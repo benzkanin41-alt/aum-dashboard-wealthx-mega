@@ -1,7 +1,7 @@
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "./talis-public.js";
+import { fetchTalisFundHistory, fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "./talis-public.js";
 
 const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, "data");
@@ -49,22 +49,35 @@ export async function refreshAll({ full = false } = {}) {
 
   try {
     await fs.mkdir(DATA_DIR, { recursive: true });
-    const apiKey = process.env.SEC_API_KEY || process.env.SEC_PRIMARY_KEY;
-    if (!apiKey) throw new Error("SEC_API_KEY is missing. Set it before refresh.");
-
     const config = await readJson(FUNDS_PATH, { buckets: [] });
     const projectMap = await readJson(MAP_PATH, {});
     const history = await readJson(HISTORY_PATH, {});
     const funds = flattenFunds(config);
+    const apiKey = process.env.SEC_API_KEY || process.env.SEC_PRIMARY_KEY;
 
     try {
       const rows = await fetchTalisPublicNav();
       const removedEstimatedRows = purgeEstimatedHistory(history);
       const fallback = mergeTalisRowsIntoHistory({ config, history, rows });
-      refreshState.message = `imported ${fallback.imported} Talis public rows, removed ${removedEstimatedRows} estimated rows`;
+      let importedHistoryRows = 0;
+      if (full) {
+        importedHistoryRows = await mergeTalisHistoryRows({ config, history, latestRows: rows, days: 365 });
+      }
+      refreshState.message = `imported ${fallback.imported} Talis latest rows, ${importedHistoryRows} Talis history rows, removed ${removedEstimatedRows} estimated rows`;
       await writeJson(HISTORY_PATH, history);
     } catch (error) {
       refreshState.errors.push(`Talis public fallback: ${error.message}`);
+    }
+
+    const useSecApi = process.env.USE_SEC_API === "1";
+    if (!useSecApi) {
+      refreshState.message = refreshState.errors.length ? refreshState.message : "completed via Talis public NAV";
+      return refreshState;
+    }
+
+    if (!apiKey) {
+      refreshState.errors.push("SEC_API_KEY is missing, skipped SEC API refresh");
+      return refreshState;
     }
 
     const days = Number(process.env.HISTORY_DAYS || (full ? 370 : 14));
@@ -164,7 +177,6 @@ function buildDashboardPayload(config, history, status, baseline) {
     const dates = [...new Set(seriesFunds.flatMap((fund) => fund.points.map((point) => point.navDate)))].sort();
     const series = dates.map((date) => {
       const pointsForDate = seriesFunds.map((fund) => latestPointOnOrBefore(fund.points, date));
-      if (pointsForDate.some((point) => !point)) return null;
       const total = pointsForDate.reduce((sum, point) => {
         return sum + Number(point?.aumMillionBaht || 0);
       }, 0);
@@ -209,6 +221,51 @@ function sumFundAum(funds, key) {
 
 function flattenFunds(config) {
   return config.buckets.flatMap((bucket) => bucket.funds.map((fund) => ({ ...fund, bucketId: bucket.id })));
+}
+
+async function mergeTalisHistoryRows({ config, history, latestRows, days }) {
+  const latestByCode = new Map(latestRows.map((row) => [row.code, row]));
+  const cutoff = cutoffDate(latestRows, days);
+  let imported = 0;
+
+  for (const fund of flattenFunds(config)) {
+    const latest = latestByCode.get(fund.code);
+    if (!latest?.talisFundCode) continue;
+    const rows = await fetchTalisFundHistory(latest.talisFundCode, { range: "year1" });
+    const selected = rows.filter((row) => row.navDate >= cutoff);
+    history[fund.code] ||= {};
+
+    for (const row of selected) {
+      history[fund.code][row.navDate] = {
+        code: fund.code,
+        group: fund.group,
+        projId: fund.identifierType === "proj_id" ? fund.identifier : null,
+        navDate: row.navDate,
+        aumMillionBaht: row.aumMillionBaht,
+        nav: row.nav,
+        raw: {
+          fundName: latest.fundName,
+          netAsset: row.netAsset,
+          source: row.source,
+          talisFundCode: latest.talisFundCode
+        }
+      };
+      imported += 1;
+    }
+  }
+
+  return imported;
+}
+
+function cutoffDate(rows, days) {
+  const latestDate = rows
+    .map((row) => row.navDate)
+    .filter(Boolean)
+    .sort()
+    .at(-1);
+  const end = latestDate ? new Date(`${latestDate}T00:00:00Z`) : new Date();
+  end.setUTCDate(end.getUTCDate() - days);
+  return end.toISOString().slice(0, 10);
 }
 
 async function resolveProjectId(fund, apiKey) {

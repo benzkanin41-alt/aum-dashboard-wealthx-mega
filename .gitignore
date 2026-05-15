@@ -3,3 +3,4 @@ data/project-map.json
 data/refresh-status.json
 dist/
 outputs/
+logs/

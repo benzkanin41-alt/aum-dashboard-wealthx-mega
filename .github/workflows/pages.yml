@@ -30,8 +30,8 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Refresh Talis public AUM data
-        run: npm run import:talis
+      - name: Refresh 1Y Talis public AUM history
+        run: npm run import:talis:history
 
       - name: Commit refreshed real history
         run: |

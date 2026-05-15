@@ -1,4 +1,5 @@
 const TALIS_NAV_URL = "https://nav.talisam.co.th/index_NAV_Sum.jsp?p_lang=EN";
+const TALIS_HISTORY_URL = "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp";
 
 export async function fetchTalisPublicNav() {
   const response = await fetch(TALIS_NAV_URL, {
@@ -28,10 +29,12 @@ export function parseTalisNavRows(html) {
     const change = toNumber(cells[codeIndex + 5]);
     const changePct = toNumber(cells[codeIndex + 6]);
     const navDate = toIsoDate(cells[codeIndex + 7]);
+    const talisFundCode = tr.match(/p_fund_code=(\d+)/i)?.[1] || null;
 
     if (!code || nav === null || netAsset === null || !navDate) continue;
     rows.push({
       code,
+      talisFundCode,
       fundName: cells[codeIndex - 1],
       nav,
       netAsset,
@@ -43,6 +46,41 @@ export function parseTalisNavRows(html) {
     });
   }
   return rows;
+}
+
+export async function fetchTalisFundHistory(talisFundCode, { range = "year1" } = {}) {
+  const rangeParam = range ? `&${encodeURIComponent(range)}=${encodeURIComponent(range)}` : "";
+  const url = `${TALIS_HISTORY_URL}?p_fund_code=${encodeURIComponent(talisFundCode)}&p_lang=EN${rangeParam}`;
+  const response = await fetch(url, {
+    headers: {
+      accept: "text/html,application/xhtml+xml",
+      "user-agent": "Mozilla/5.0 AUM dashboard"
+    }
+  });
+  if (!response.ok) throw new Error(`Talis NAV history ${response.status}: ${response.statusText}`);
+  const html = await response.text();
+  return parseTalisHistoryRows(html, url);
+}
+
+export function parseTalisHistoryRows(html, source) {
+  const rows = [];
+  const trMatches = html.match(/<tr[\s\S]*?<\/tr>/gi) || [];
+  for (const tr of trMatches) {
+    const cells = [...tr.matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/gi)].map((match) => cleanCell(match[1]));
+    if (cells.length < 3) continue;
+    const navDate = toIsoDate(cells[0]);
+    const nav = toNumber(cells[1]);
+    const netAsset = toNumber(cells[2]);
+    if (!navDate || nav === null || netAsset === null) continue;
+    rows.push({
+      navDate,
+      nav,
+      netAsset,
+      aumMillionBaht: round2(netAsset / 1_000_000),
+      source
+    });
+  }
+  return rows.sort((a, b) => a.navDate.localeCompare(b.navDate));
 }
 
 export function mergeTalisRowsIntoHistory({ config, history, rows }) {

@@ -8,6 +8,7 @@
     "start": "node server.js",
     "refresh": "node scripts/refresh.js",
     "import:talis": "node scripts/import-talis-nav.js",
+    "import:talis:history": "node scripts/import-talis-history.js --days=365",
     "export:share": "node scripts/export-share-html.js"
   }
 }

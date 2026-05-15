@@ -15,10 +15,22 @@ npm start
 
 ไฟล์ `.env.local` ใช้เก็บ SEC API key สำหรับเครื่องนี้ และถูกใส่ไว้ใน `.gitignore`
 
+## Local Auto Run / Auto Refresh
+
+เครื่องนี้มี helper scripts สำหรับให้ dashboard local เปิดเองและ refresh history ทุกวัน:
+
+- `scripts/start-local-server.ps1` เปิด `http://localhost:4173` ถ้ายังไม่มี server ฟังอยู่
+- `scripts/refresh-local-history.ps1` ดึง Talis public NAV history ย้อนหลัง 1 ปี และเปิด server หากยังไม่รัน
+
+ตั้งไว้บนเครื่องนี้แล้ว:
+
+- Windows Startup shortcut: เปิด local server เมื่อ login
+- Windows Scheduled Task: `AUM Dashboard Daily History Refresh` ทุกวันเวลา 09:00
+
 ## Static Export
 
 ```powershell
-npm run import:talis
+npm run import:talis:history
 npm run export:share
 ```
 
