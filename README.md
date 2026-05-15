@@ -26,6 +26,7 @@ npm start
 
 - Windows Startup shortcut: เปิด local server เมื่อ login
 - Windows Scheduled Task: `AUM Dashboard Daily History Refresh` ทุกวันเวลา 09:00
+- Windows Scheduled Task: `AUM Dashboard Local Server Watchdog` เช็คทุก 5 นาทีและเปิด server กลับหากหยุดทำงาน
 
 ## Static Export
 
