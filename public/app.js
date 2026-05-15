@@ -93,12 +93,14 @@ function renderBucket() {
 
 function renderChart(bucket) {
   const svg = $("aumChart");
-  const points = filterRange(bucket.series, state.days);
+  const range = filterRange(bucket.series, state.days);
+  const points = range.points;
   const width = svg.clientWidth || 900;
   const height = svg.clientHeight || 360;
   const pad = { top: 28, right: 24, bottom: 48, left: 74 };
   const innerW = width - pad.left - pad.right;
   const innerH = height - pad.top - pad.bottom;
+  renderChartMeta(bucket, range);
 
   if (!points.length) {
     svg.innerHTML = `
@@ -136,7 +138,7 @@ function renderChart(bucket) {
       <text x="${cx}" y="${cy - 18}" text-anchor="middle" fill="#17202a" font-size="15" font-weight="800">${money(end.totalMillionBaht)} ล้านบาท</text>
       <text x="${cx}" y="${cy + 30}" text-anchor="middle" fill="#687382" font-size="12">ข้อมูลจริงที่มีตอนนี้ 1 จุด: ${end.date}</text>
       <text x="${pad.left}" y="22" fill="#17202a" font-size="13" font-weight="700">${ranges[state.days]} actual AUM history</text>
-      <text x="${pad.left + innerW}" y="22" text-anchor="end" fill="#687382" font-size="12">ไม่มี estimated history</text>
+      <text x="${pad.left + innerW}" y="22" text-anchor="end" fill="#687382" font-size="12">${range.coverageLabel}</text>
     `;
     return;
   }
@@ -155,8 +157,23 @@ function renderChart(bucket) {
     <text x="${pad.left}" y="${height - 18}" fill="#687382" font-size="12">${start.date}</text>
     <text x="${pad.left + innerW / 2}" y="${height - 18}" text-anchor="middle" fill="#687382" font-size="12">${mid.date}</text>
     <text x="${pad.left + innerW}" y="${height - 18}" text-anchor="end" fill="#687382" font-size="12">${end.date}</text>
-    <text x="${pad.left}" y="22" fill="#17202a" font-size="13" font-weight="700">${ranges[state.days]} AUM history: ${money(end.totalMillionBaht)} ล้านบาท</text>
-    <text x="${pad.left + innerW}" y="22" text-anchor="end" fill="#687382" font-size="12">${points.length} points</text>
+    <text x="${pad.left}" y="22" fill="#17202a" font-size="13" font-weight="700">${ranges[state.days]} actual AUM history: ${money(end.totalMillionBaht)} ล้านบาท</text>
+    <text x="${pad.left + innerW}" y="22" text-anchor="end" fill="#687382" font-size="12">${points.length} points | ${range.coverageLabel}</text>
+  `;
+}
+
+function renderChartMeta(bucket, range) {
+  const selected = ranges[state.days] || `${state.days}D`;
+  const all = bucket.series || [];
+  const hasMoreThanRange = range.points.length < all.length;
+  const mode = hasMoreThanRange
+    ? `แสดงตามช่วง ${selected}`
+    : `แสดงข้อมูลจริงเท่าที่มีในช่วง ${selected}`;
+  $("chartMeta").innerHTML = `
+    <span>Timeline: ${selected}</span>
+    <span>${mode}</span>
+    <span>Actual coverage: ${range.coverageLabel}</span>
+    <span>${range.points.length} จุดข้อมูล</span>
   `;
 }
 
@@ -204,11 +221,23 @@ function activeBucket() {
 }
 
 function filterRange(series, days) {
-  if (!series.length) return [];
+  if (!series.length) {
+    return {
+      points: [],
+      coverageLabel: "ยังไม่มีข้อมูลจริง",
+      requestedStart: null
+    };
+  }
   const end = new Date(series.at(-1).date);
   const start = new Date(end);
   start.setUTCDate(start.getUTCDate() - days);
-  return series.filter((point) => new Date(point.date) >= start);
+  const points = series.filter((point) => new Date(point.date) >= start);
+  const visible = points.length ? points : [series.at(-1)];
+  return {
+    points: visible,
+    coverageLabel: `${visible[0].date} ถึง ${visible.at(-1).date}`,
+    requestedStart: start.toISOString().slice(0, 10)
+  };
 }
 
 function money(value) {

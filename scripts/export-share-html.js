@@ -197,6 +197,7 @@ function buildHtml(data) {
     const DATA = ${encoded};
     let activeBucketId = DATA.buckets[0]?.id || "";
     let activeDays = 365;
+    const rangeLabels = { 365: "1Y", 183: "6M", 92: "3M", 31: "1M" };
 
     const fmt = new Intl.NumberFormat("th-TH", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
     const fmt0 = new Intl.NumberFormat("th-TH", { maximumFractionDigits: 0 });
@@ -221,12 +222,24 @@ function buildHtml(data) {
       return DATA.buckets.find((bucket) => bucket.id === activeBucketId) || DATA.buckets[0];
     }
 
+    function activeRangeLabel() {
+      return rangeLabels[activeDays] || activeDays + "D";
+    }
+
     function filteredSeries(bucket) {
-      if (!bucket?.series?.length) return [];
+      if (!bucket?.series?.length) {
+        return { points: [], coverageLabel: "ยังไม่มีข้อมูลจริง" };
+      }
       const latestDate = new Date(bucket.series.at(-1).date + "T00:00:00");
       const cutoff = new Date(latestDate);
       cutoff.setDate(cutoff.getDate() - activeDays);
-      return bucket.series.filter((point) => new Date(point.date + "T00:00:00") >= cutoff);
+      const points = bucket.series.filter((point) => new Date(point.date + "T00:00:00") >= cutoff);
+      const visible = points.length ? points : [bucket.series.at(-1)];
+      return {
+        points: visible,
+        coverageLabel: visible[0].date + " ถึง " + visible.at(-1).date,
+        requestedStart: cutoff.toISOString().slice(0, 10)
+      };
     }
 
     function render() {
@@ -291,12 +304,13 @@ function buildHtml(data) {
       const width = canvas.width;
       const height = canvas.height;
       const pad = { left: 70, right: 24, top: 28, bottom: 48 };
-      const points = filteredSeries(bucket);
+      const range = filteredSeries(bucket);
+      const points = range.points;
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, width, height);
       if (!points.length) {
-        document.getElementById("chartMeta").textContent = bucket.name + " | ยังไม่มีข้อมูลจริงสะสมสำหรับกราฟ";
+        document.getElementById("chartMeta").textContent = bucket.name + " | " + range.coverageLabel;
         return;
       }
 
@@ -322,7 +336,7 @@ function buildHtml(data) {
         ctx.font = "13px Segoe UI, Tahoma, sans-serif";
         ctx.fillText("ข้อมูลจริงที่มีตอนนี้ 1 จุด: " + point.date, cx, cy + 34);
         ctx.textAlign = "left";
-        document.getElementById("chartMeta").textContent = bucket.name + " | 1 จุดข้อมูลจริง | ไม่มี estimated history";
+        document.getElementById("chartMeta").textContent = bucket.name + " | Timeline " + activeRangeLabel() + " | Actual coverage " + range.coverageLabel + " | 1 จุดข้อมูลจริง";
         return;
       }
 
@@ -386,7 +400,7 @@ function buildHtml(data) {
       ctx.fillText(first.date, pad.left, height - 16);
       ctx.fillText(mid.date, width / 2 - 40, height - 16);
       ctx.fillText(last.date, width - pad.right - 86, height - 16);
-      document.getElementById("chartMeta").textContent = bucket.name + " | " + points.length + " จุดข้อมูล | " + first.date + " ถึง " + last.date;
+      document.getElementById("chartMeta").textContent = bucket.name + " | Timeline " + activeRangeLabel() + " | Actual coverage " + range.coverageLabel + " | " + points.length + " จุดข้อมูล";
     }
 
     render();

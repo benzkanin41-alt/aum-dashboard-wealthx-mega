@@ -197,6 +197,27 @@ button:hover { border-color: #a8b0bb; }
   height: 100%;
 }
 
+.chart-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.chart-meta span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
 .split {
   display: grid;
   grid-template-columns: 360px minmax(0, 1fr);
