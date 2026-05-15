@@ -24,9 +24,9 @@ npm start
 
 ตั้งไว้บนเครื่องนี้แล้ว:
 
-- Windows Startup shortcut: เปิด local server เมื่อ login
-- Windows Scheduled Task: `AUM Dashboard Daily History Refresh` ทุกวันเวลา 09:00
-- Windows Scheduled Task: `AUM Dashboard Local Server Watchdog` เช็คทุก 5 นาทีและเปิด server กลับหากหยุดทำงาน
+- Windows Startup shortcut: เปิด local server เมื่อ login ผ่าน `wscript.exe` แบบ hidden
+- Windows Scheduled Task: `AUM Dashboard Daily History Refresh` ทุกวันเวลา 09:00 ผ่าน hidden wrapper
+- Windows Scheduled Task: `AUM Dashboard Local Server Watchdog` เช็คทุก 5 นาทีและเปิด server กลับหากหยุดทำงานผ่าน hidden wrapper
 
 ## Static Export
 
