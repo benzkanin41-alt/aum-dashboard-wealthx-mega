@@ -1,0 +1,13 @@
+{
+  "name": "aum-3-bucket-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily AUM/AUA tracker for WealthX, MEGA 30, and TLUSHD buckets.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "refresh": "node scripts/refresh.js",
+    "import:talis": "node scripts/import-talis-nav.js",
+    "export:share": "node scripts/export-share-html.js"
+  }
+}

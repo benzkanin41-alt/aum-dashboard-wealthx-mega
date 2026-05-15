@@ -1,0 +1,12 @@
+{
+  "source": "manual screenshot baseline",
+  "asOfReportDate": "2026-05-14",
+  "navDate": "2026-05-12",
+  "buckets": {
+    "mega30": {
+      "aumMillionBaht": 5211.17,
+      "changeMillionBaht": -11.07,
+      "changePct": -0.21
+    }
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "buckets": [
+    {
+      "id": "wealthx_other",
+      "name": "WealthX SeriesX",
+      "description": "นับเฉพาะกอง SeriesX/Class-X ที่เป็นกองพิเศษเฉพาะ WealthX ตามรูป ไม่รวม TLUSHD",
+      "color": "#2563eb",
+      "funds": [
+        { "code": "TLWORLD-X", "group": "Series X / World", "identifierType": "proj_id", "identifier": "M0051_2569", "source": "WealthX Series X" },
+        { "code": "TLWORLDRMF", "group": "Series X / World RMF", "identifierType": "proj_id", "identifier": "M0153_2569", "source": "WealthX Series X" },
+        { "code": "TLUS500-UH-X", "group": "Series X / S&P 500", "identifierType": "fund_class_name", "identifier": "TLUS500-UH-X", "source": "WealthX Series X" },
+        { "code": "TLUS500RMF", "group": "Series X / S&P 500 RMF", "identifierType": "proj_id", "identifier": "M1027_2568", "source": "WealthX Series X" },
+        { "code": "TLUSNDQ-UH-X", "group": "Series X / Nasdaq 100", "identifierType": "fund_class_name", "identifier": "TLUSNDQ-UH-X", "source": "WealthX Series X" },
+        { "code": "TLUSNDQRMF", "group": "Series X / Nasdaq 100 RMF", "identifierType": "proj_id", "identifier": "M0271_2569", "source": "WealthX Series X" },
+        { "code": "TLNDQINCOME-UH-X", "group": "Income / YIELDTECH", "identifierType": "proj_id", "identifier": "M0231_2569", "source": "WealthX exclusive Income/YIELDTECH" },
+        { "code": "TLNDQINCOME-H-X", "group": "Income / YIELDTECH", "identifierType": "proj_id", "identifier": "M0093_2569", "source": "WealthX exclusive Income/YIELDTECH" }
+      ]
+    },
+    {
+      "id": "mega30",
+      "name": "MEGA30+TLUSHD",
+      "description": "MEGA 30 funds รวม TLUSHD-H, TLUSHD-UH และ TLUSHDRMF ตามคำสั่งล่าสุด แยกออกจาก WealthX SeriesX",
+      "color": "#0f766e",
+      "funds": [
+        { "code": "MEGA10-A", "group": "US", "identifierType": "fund_class_name", "identifier": "MEGA10-A" },
+        { "code": "MEGA10AI-A", "group": "US", "identifierType": "fund_class_name", "identifier": "MEGA10AI-A" },
+        { "code": "MEGA10CYBER-A", "group": "US", "identifierType": "fund_class_name", "identifier": "MEGA10CYBER-A" },
+        { "code": "MEGA10HEALTH-A", "group": "US", "identifierType": "fund_class_name", "identifier": "MEGA10HEALTH-A" },
+        { "code": "MEGA10-SSF", "group": "US", "identifierType": "fund_class_name", "identifier": "MEGA10-SSF" },
+        { "code": "MEGA10AI-SSF", "group": "US", "identifierType": "fund_class_name", "identifier": "MEGA10AI-SSF" },
+        { "code": "MEGA10RMF", "group": "US", "identifierType": "proj_id", "identifier": "M0619_2565" },
+        { "code": "MEGA10AIRMF", "group": "US", "identifierType": "proj_id", "identifier": "M0241_2567" },
+        { "code": "MEGA10CYBERRMF", "group": "US", "identifierType": "proj_id", "identifier": "M1015_2568" },
+        { "code": "MEGA10HEALTHRMF", "group": "US", "identifierType": "proj_id", "identifier": "M0526_2568" },
+        { "code": "MEGA10CHINA-A", "group": "China", "identifierType": "fund_class_name", "identifier": "MEGA10CHINA-A" },
+        { "code": "MEGA10AICHINA-A", "group": "China", "identifierType": "fund_class_name", "identifier": "MEGA10AICHINA-A" },
+        { "code": "MEGA10CHINAPOP-A", "group": "China", "identifierType": "fund_class_name", "identifier": "MEGA10CHINAPOP-A" },
+        { "code": "MEGA10CHINATECH-A", "group": "China", "identifierType": "fund_class_name", "identifier": "MEGA10CHINATECH-A" },
+        { "code": "MEGA10CHINA-SSF", "group": "China", "identifierType": "fund_class_name", "identifier": "MEGA10CHINA-SSF" },
+        { "code": "MEGA10CHINARMF", "group": "China", "identifierType": "proj_id", "identifier": "M0761_2566" },
+        { "code": "MEGA10AICHINARMF", "group": "China", "identifierType": "proj_id", "identifier": "M0187_2568" },
+        { "code": "MEGA10CHINAPOPRMF", "group": "China", "identifierType": "proj_id", "identifier": "M0917_2568" },
+        { "code": "MEGA10CHINATECHRMF", "group": "China", "identifierType": "proj_id", "identifier": "M0936_2568" },
+        { "code": "MEGA10EURO-A", "group": "Euro", "identifierType": "fund_class_name", "identifier": "MEGA10EURO-A" },
+        { "code": "MEGA10EURO-SSF", "group": "Euro", "identifierType": "fund_class_name", "identifier": "MEGA10EURO-SSF" },
+        { "code": "MEGA10EURORMF", "group": "Euro", "identifierType": "proj_id", "identifier": "M0539_2567" },
+        { "code": "MEGAWORLD30-A", "group": "World", "identifierType": "fund_class_name", "identifier": "MEGAWORLD30-A" },
+        { "code": "MEGAWORLD30-SSF", "group": "World", "identifierType": "fund_class_name", "identifier": "MEGAWORLD30-SSF" },
+        { "code": "MEGAWORLD30RMF", "group": "World", "identifierType": "proj_id", "identifier": "M0074_2568" },
+        { "code": "MEGA20THAIESG", "group": "Thailand", "identifierType": "proj_id", "identifier": "M0822_2566" },
+        { "code": "MEGATX8020U-L", "group": "Thailand", "identifierType": "fund_class_name", "identifier": "MEGATX8020U-L" },
+        { "code": "MEGATX8020U-N", "group": "Thailand", "identifierType": "fund_class_name", "identifier": "MEGATX8020U-N" },
+        { "code": "MEGATX8020C-L", "group": "Thailand", "identifierType": "fund_class_name", "identifier": "MEGATX8020C-L" },
+        { "code": "MEGATX8020C-N", "group": "Thailand", "identifierType": "fund_class_name", "identifier": "MEGATX8020C-N" },
+        { "code": "TLUSHD-H", "group": "TLUSHD", "identifierType": "fund_class_name", "identifier": "TLUSHD-H" },
+        { "code": "TLUSHD-UH", "group": "TLUSHD", "identifierType": "fund_class_name", "identifier": "TLUSHD-UH" },
+        { "code": "TLUSHDRMF", "group": "TLUSHD RMF", "identifierType": "fund_class_name", "identifier": "TLUSHDRMF" }
+      ]
+    }
+  ]
+}

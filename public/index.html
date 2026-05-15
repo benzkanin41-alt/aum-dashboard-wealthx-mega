@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AUM 3 Bucket Dashboard</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Daily AUM / AUA Tracker</p>
+      <h1>WealthX SeriesX และ MEGA30+TLUSHD</h1>
+    </div>
+    <div class="actions">
+      <button id="refreshBtn" class="primary">Refresh</button>
+      <button id="fullRefreshBtn" class="secondary">Full 1Y Refresh</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="status-strip">
+      <div>
+        <span class="label">Auto refresh</span>
+        <strong>09:00 Asia/Bangkok</strong>
+      </div>
+      <div>
+        <span class="label">Status</span>
+        <strong id="statusText">Loading</strong>
+      </div>
+      <div>
+        <span class="label">Last update</span>
+        <strong id="lastUpdate">-</strong>
+      </div>
+    </section>
+
+    <section id="summaryCards" class="summary-grid"></section>
+
+    <section class="workspace">
+      <nav id="bucketTabs" class="tabs"></nav>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <p id="bucketDesc" class="muted"></p>
+            <h2 id="bucketTitle">-</h2>
+          </div>
+          <div id="rangeButtons" class="segments">
+            <button data-days="365" class="active">1Y</button>
+            <button data-days="183">6M</button>
+            <button data-days="92">3M</button>
+            <button data-days="31">1M</button>
+          </div>
+        </div>
+
+        <div class="chart-shell">
+          <svg id="aumChart" role="img" aria-label="AUM history chart"></svg>
+        </div>
+
+        <div class="split">
+          <section>
+            <div class="section-title">Group Mix</div>
+            <div id="groupMix" class="mix-list"></div>
+          </section>
+          <section>
+            <div class="section-title">Latest Funds</div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Fund</th>
+                    <th>Group</th>
+                    <th>Project ID / Class</th>
+                    <th>AUM (ลบ.)</th>
+                    <th>Change</th>
+                    <th>NAV</th>
+                    <th>NAV Date</th>
+                    <th>Source</th>
+                  </tr>
+                </thead>
+                <tbody id="fundRows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
