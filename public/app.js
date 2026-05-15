@@ -100,10 +100,10 @@ function renderChart(bucket) {
   const innerW = width - pad.left - pad.right;
   const innerH = height - pad.top - pad.bottom;
 
-  if (points.length < 2) {
+  if (!points.length) {
     svg.innerHTML = `
       <text x="50%" y="46%" text-anchor="middle" fill="#17202a" font-size="15" font-weight="700">${bucket.funds.length} configured funds</text>
-      <text x="50%" y="54%" text-anchor="middle" fill="#687382">No live AUM history yet. SEC API currently returns 401 authorization error.</text>
+      <text x="50%" y="54%" text-anchor="middle" fill="#687382">ยังไม่มีข้อมูลจริงสะสมสำหรับกราฟ</text>
     `;
     return;
   }
@@ -127,6 +127,20 @@ function renderChart(bucket) {
   const start = points[0];
   const mid = points[Math.floor(points.length / 2)];
   const end = points.at(-1);
+  if (points.length === 1) {
+    const cx = pad.left + innerW / 2;
+    const cy = pad.top + innerH / 2;
+    svg.innerHTML = `
+      <line x1="${pad.left}" x2="${pad.left + innerW}" y1="${cy}" y2="${cy}" stroke="#e5e7eb"/>
+      <circle cx="${cx}" cy="${cy}" r="7" fill="${bucket.color}"/>
+      <text x="${cx}" y="${cy - 18}" text-anchor="middle" fill="#17202a" font-size="15" font-weight="800">${money(end.totalMillionBaht)} ล้านบาท</text>
+      <text x="${cx}" y="${cy + 30}" text-anchor="middle" fill="#687382" font-size="12">ข้อมูลจริงที่มีตอนนี้ 1 จุด: ${end.date}</text>
+      <text x="${pad.left}" y="22" fill="#17202a" font-size="13" font-weight="700">${ranges[state.days]} actual AUM history</text>
+      <text x="${pad.left + innerW}" y="22" text-anchor="end" fill="#687382" font-size="12">ไม่มี estimated history</text>
+    `;
+    return;
+  }
+
   svg.innerHTML = `
     <defs>
       <linearGradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">

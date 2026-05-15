@@ -1,7 +1,7 @@
 import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fetchTalisPublicNav, mergeTalisRowsIntoHistory } from "./talis-public.js";
+import { fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "./talis-public.js";
 
 const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, "data");
@@ -59,8 +59,9 @@ export async function refreshAll({ full = false } = {}) {
 
     try {
       const rows = await fetchTalisPublicNav();
+      const removedEstimatedRows = purgeEstimatedHistory(history);
       const fallback = mergeTalisRowsIntoHistory({ config, history, rows });
-      refreshState.message = `imported ${fallback.imported} Talis public rows`;
+      refreshState.message = `imported ${fallback.imported} Talis public rows, removed ${removedEstimatedRows} estimated rows`;
       await writeJson(HISTORY_PATH, history);
     } catch (error) {
       refreshState.errors.push(`Talis public fallback: ${error.message}`);
@@ -159,14 +160,16 @@ function buildDashboardPayload(config, history, status, baseline) {
       };
     });
 
-    const dates = [...new Set(funds.flatMap((fund) => fund.points.map((point) => point.navDate)))].sort();
+    const seriesFunds = funds.filter((fund) => fund.points.length);
+    const dates = [...new Set(seriesFunds.flatMap((fund) => fund.points.map((point) => point.navDate)))].sort();
     const series = dates.map((date) => {
-      const total = funds.reduce((sum, fund) => {
-        const point = latestPointOnOrBefore(fund.points, date);
+      const pointsForDate = seriesFunds.map((fund) => latestPointOnOrBefore(fund.points, date));
+      if (pointsForDate.some((point) => !point)) return null;
+      const total = pointsForDate.reduce((sum, point) => {
         return sum + Number(point?.aumMillionBaht || 0);
       }, 0);
       return { date, totalMillionBaht: round2(total) };
-    }).filter((point) => point.totalMillionBaht > 0);
+    }).filter((point) => point && point.totalMillionBaht > 0);
 
     const latestTotal = sumFundAum(funds, "latest");
     const previousTotal = sumFundAum(funds, "previous");

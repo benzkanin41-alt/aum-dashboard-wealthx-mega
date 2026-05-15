@@ -1,5 +1,4 @@
 .env.local
-data/nav-history.json
 data/project-map.json
 data/refresh-status.json
 dist/

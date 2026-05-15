@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { fetchTalisPublicNav, mergeTalisRowsIntoHistory } from "../server-lib/talis-public.js";
+import { fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "../server-lib/talis-public.js";
 
 const ROOT = process.cwd();
 const configPath = path.join(ROOT, "config", "funds.json");
@@ -15,8 +15,9 @@ try {
 }
 
 const rows = await fetchTalisPublicNav();
+const removedEstimatedRows = purgeEstimatedHistory(history);
 const result = mergeTalisRowsIntoHistory({ config, history, rows });
 await fs.mkdir(path.dirname(historyPath), { recursive: true });
 await fs.writeFile(historyPath, `${JSON.stringify(history, null, 2)}\n`, "utf8");
 
-console.log(JSON.stringify(result, null, 2));
+console.log(JSON.stringify({ ...result, removedEstimatedRows }, null, 2));

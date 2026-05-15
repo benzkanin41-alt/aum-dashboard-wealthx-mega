@@ -69,7 +69,6 @@ export function mergeTalisRowsIntoHistory({ config, history, rows }) {
           source: row.source
         }
       };
-      seedShortHistory(history[fund.code], history[fund.code][row.navDate]);
       imported += 1;
     }
   }
@@ -77,32 +76,18 @@ export function mergeTalisRowsIntoHistory({ config, history, rows }) {
   return { imported, availableRows: rows.length };
 }
 
-function seedShortHistory(fundHistory, latest) {
-  const latestDate = new Date(`${latest.navDate}T00:00:00Z`);
-  const current = Number(latest.aumMillionBaht || 0);
-  if (!current) return;
-
-  for (let i = 365; i >= 1; i -= 1) {
-    const d = new Date(latestDate);
-    d.setUTCDate(d.getUTCDate() - i);
-    const day = d.getUTCDay();
-    if (day === 0 || day === 6) continue;
-    const date = d.toISOString().slice(0, 10);
-    if (fundHistory[date] && !fundHistory[date].raw?.estimated) continue;
-    const wobble = Math.sin((i + latest.code.length) * 0.13) * 0.018;
-    const cycle = Math.cos((i + latest.code.length) * 0.047) * 0.012;
-    const trend = 1 - i * 0.00022;
-    fundHistory[date] = {
-      ...latest,
-      navDate: date,
-      aumMillionBaht: round2(Math.max(0, current * trend * (1 + wobble + cycle))),
-      raw: {
-        ...latest.raw,
-        source: `${latest.raw.source} (365-day estimated bridge until historical feed is enabled)`,
-        estimated: true
+export function purgeEstimatedHistory(history) {
+  let removed = 0;
+  for (const [code, fundHistory] of Object.entries(history || {})) {
+    for (const [date, point] of Object.entries(fundHistory || {})) {
+      if (point?.raw?.estimated) {
+        delete history[code][date];
+        removed += 1;
       }
-    };
+    }
+    if (Object.keys(history[code] || {}).length === 0) delete history[code];
   }
+  return removed;
 }
 
 function cleanCell(value) {

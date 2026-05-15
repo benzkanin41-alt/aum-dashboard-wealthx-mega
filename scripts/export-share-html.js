@@ -295,7 +295,36 @@ function buildHtml(data) {
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, width, height);
-      if (!points.length) return;
+      if (!points.length) {
+        document.getElementById("chartMeta").textContent = bucket.name + " | ยังไม่มีข้อมูลจริงสะสมสำหรับกราฟ";
+        return;
+      }
+
+      if (points.length === 1) {
+        const point = points[0];
+        const cx = width / 2;
+        const cy = height / 2;
+        ctx.strokeStyle = "#e5e9f2";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, cy);
+        ctx.lineTo(width - pad.right, cy);
+        ctx.stroke();
+        ctx.fillStyle = bucket.color || "#1f5fbf";
+        ctx.beginPath();
+        ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#13233a";
+        ctx.font = "700 18px Segoe UI, Tahoma, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(fmt.format(point.totalMillionBaht) + " ล้านบาท", cx, cy - 22);
+        ctx.fillStyle = "#667085";
+        ctx.font = "13px Segoe UI, Tahoma, sans-serif";
+        ctx.fillText("ข้อมูลจริงที่มีตอนนี้ 1 จุด: " + point.date, cx, cy + 34);
+        ctx.textAlign = "left";
+        document.getElementById("chartMeta").textContent = bucket.name + " | 1 จุดข้อมูลจริง | ไม่มี estimated history";
+        return;
+      }
 
       const values = points.map((point) => point.totalMillionBaht);
       const min = Math.min(...values);
