@@ -64,7 +64,54 @@
             <div id="groupMix" class="mix-list"></div>
           </section>
           <section>
-            <div class="section-title">Latest Funds</div>
+            <div class="fund-table-head">
+              <div>
+                <div class="section-title">Latest Funds</div>
+                <div id="fundTableSummary" class="table-summary">-</div>
+              </div>
+              <button id="resetTableBtn" class="secondary small-button">Reset</button>
+            </div>
+            <div class="table-controls" aria-label="Fund table controls">
+              <label>
+                <span>ค้นหา</span>
+                <input id="fundSearch" type="search" placeholder="ชื่อกองทุน">
+              </label>
+              <label>
+                <span>เรียงลำดับ</span>
+                <select id="sortSelect">
+                  <option value="aum_desc">AUM มากไปน้อย</option>
+                  <option value="aum_asc">AUM น้อยไปมาก</option>
+                  <option value="change_desc">Change มากไปน้อย</option>
+                  <option value="change_asc">Change น้อยไปมาก</option>
+                  <option value="change_pct_desc">% Change มากไปน้อย</option>
+                  <option value="date_desc">วันที่ล่าสุดก่อน</option>
+                  <option value="fund_asc">ชื่อกอง A-Z</option>
+                  <option value="group_asc">กลุ่ม A-Z</option>
+                </select>
+              </label>
+              <label>
+                <span>ประเทศ/ธีม</span>
+                <select id="themeFilter"></select>
+              </label>
+              <label>
+                <span>ประเภท</span>
+                <select id="typeFilter"></select>
+              </label>
+              <label>
+                <span>ค่าย</span>
+                <select id="providerFilter"></select>
+              </label>
+              <label>
+                <span>จัดกลุ่ม</span>
+                <select id="groupBySelect">
+                  <option value="none">ไม่จัดกลุ่ม</option>
+                  <option value="theme">ตามประเทศ/ธีม</option>
+                  <option value="type">ตาม RMF/SSF/ทั่วไป</option>
+                  <option value="provider">ตาม TL/MEGA</option>
+                  <option value="group">ตามกลุ่มเดิม</option>
+                </select>
+              </label>
+            </div>
             <div class="table-wrap">
               <table>
                 <thead>

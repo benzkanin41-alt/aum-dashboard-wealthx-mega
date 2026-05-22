@@ -128,10 +128,64 @@ function buildHtml(data) {
     h2 { margin: 0; font-size: 20px; letter-spacing: 0; }
     canvas { width: 100%; height: 330px; display: block; }
     .meta { color: var(--muted); font-size: 13px; margin-top: 8px; }
+    .fund-table-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .table-summary {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    .small-button { min-height: 34px; padding: 0 11px; }
+    .table-controls {
+      display: grid;
+      grid-template-columns: minmax(150px, 1.2fr) repeat(5, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .table-controls label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .table-controls input,
+    .table-controls select {
+      width: 100%;
+      min-height: 38px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-size: 13px;
+    }
+    .table-wrap {
+      max-height: 520px;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th, td { padding: 10px 8px; border-bottom: 1px solid #edf0f5; text-align: right; vertical-align: top; }
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
-    th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .02em; }
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      background: #f8fafc;
+    }
     .code { font-weight: 800; white-space: nowrap; }
     .id-pill {
       display: inline-flex;
@@ -141,6 +195,34 @@ function buildHtml(data) {
       background: #f1f5f9;
       color: #24405f;
       white-space: nowrap;
+    }
+    .fund-tags {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .fund-group-row td {
+      position: sticky;
+      top: 39px;
+      z-index: 1;
+      padding: 9px 10px;
+      color: var(--ink);
+      background: #eef3f8;
+      border-bottom-color: #d6dde7;
+      text-align: left;
+    }
+    .fund-group-row td {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .empty-row {
+      height: 86px;
+      color: var(--muted);
+      font-weight: 800;
+      text-align: center !important;
     }
     .footer-note {
       margin-top: 16px;
@@ -152,7 +234,12 @@ function buildHtml(data) {
       header, .workbench, .cards { grid-template-columns: 1fr; }
       .stamp { text-align: left; }
       .panel-head { align-items: flex-start; flex-direction: column; }
+      .fund-table-head { align-items: stretch; }
+      .table-controls { grid-template-columns: 1fr 1fr; }
       canvas { height: 280px; }
+    }
+    @media (max-width: 560px) {
+      .table-controls { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -184,8 +271,55 @@ function buildHtml(data) {
 
     <section class="workbench">
       <section class="panel">
-        <div class="panel-head"><h2 id="tableTitle">รายการกองทุน</h2></div>
-        <div style="overflow:auto">
+        <div class="fund-table-head">
+          <div>
+            <h2 id="tableTitle">รายการกองทุน</h2>
+            <div id="fundTableSummary" class="table-summary">-</div>
+          </div>
+          <button id="resetTableBtn" class="small-button">Reset</button>
+        </div>
+        <div class="table-controls" aria-label="Fund table controls">
+          <label>
+            <span>ค้นหา</span>
+            <input id="fundSearch" type="search" placeholder="ชื่อกองทุน">
+          </label>
+          <label>
+            <span>เรียงลำดับ</span>
+            <select id="sortSelect">
+              <option value="aum_desc">AUM มากไปน้อย</option>
+              <option value="aum_asc">AUM น้อยไปมาก</option>
+              <option value="change_desc">Change มากไปน้อย</option>
+              <option value="change_asc">Change น้อยไปมาก</option>
+              <option value="change_pct_desc">% Change มากไปน้อย</option>
+              <option value="date_desc">วันที่ล่าสุดก่อน</option>
+              <option value="fund_asc">ชื่อกอง A-Z</option>
+              <option value="group_asc">กลุ่ม A-Z</option>
+            </select>
+          </label>
+          <label>
+            <span>ประเทศ/ธีม</span>
+            <select id="themeFilter"></select>
+          </label>
+          <label>
+            <span>ประเภท</span>
+            <select id="typeFilter"></select>
+          </label>
+          <label>
+            <span>ค่าย</span>
+            <select id="providerFilter"></select>
+          </label>
+          <label>
+            <span>จัดกลุ่ม</span>
+            <select id="groupBySelect">
+              <option value="none">ไม่จัดกลุ่ม</option>
+              <option value="theme">ตามประเทศ/ธีม</option>
+              <option value="type">ตาม RMF/SSF/ทั่วไป</option>
+              <option value="provider">ตาม TL/MEGA</option>
+              <option value="group">ตามกลุ่มเดิม</option>
+            </select>
+          </label>
+        </div>
+        <div class="table-wrap">
           <table>
             <thead>
               <tr><th>กองทุน</th><th>กลุ่ม</th><th>Project ID / Class</th><th>AUM ลบ.</th><th>Change</th><th>NAV</th><th>วันที่</th></tr>
@@ -197,7 +331,7 @@ function buildHtml(data) {
       <section class="panel">
         <div class="panel-head"><h2>สรุป Bucket</h2></div>
         <div id="bucketDetails"></div>
-        <p class="footer-note">ไฟล์นี้เป็น static snapshot สำหรับส่งต่อ จึงไม่มีการ refresh ข้อมูลจาก API อัตโนมัติ ตัวเลขสร้างจากข้อมูล dashboard ในเครื่อง ณ เวลาที่ export</p>
+        <p class="footer-note">หน้า GitHub Pages เป็น static dashboard ที่ workflow จะ rebuild พร้อม refresh AUM history ทุกวันเวลา 09:00 Asia/Bangkok เมื่อ GitHub runner เริ่มทำงาน ส่วนปุ่ม timeline/sort/filter/group ใช้งานได้ทันทีบนข้อมูลล่าสุดที่ deploy แล้ว</p>
       </section>
     </section>
   </main>
@@ -206,6 +340,15 @@ function buildHtml(data) {
     const DATA = ${encoded};
     let activeBucketId = DATA.buckets[0]?.id || "";
     let activeDays = 365;
+    let fundSort = "aum_desc";
+    let groupBy = "none";
+    let tableControlsReady = false;
+    let tableFilters = {
+      search: "",
+      theme: "all",
+      type: "all",
+      provider: "all"
+    };
     const rangeLabels = { 365: "1Y", 183: "6M", 92: "3M", 31: "1M" };
 
     const fmt = new Intl.NumberFormat("th-TH", { maximumFractionDigits: 2, minimumFractionDigits: 2 });
@@ -288,6 +431,7 @@ function buildHtml(data) {
         });
       });
 
+      bindTableControls();
       renderChart(activeBucket());
       renderFunds(activeBucket());
       renderBucketDetails();
@@ -295,14 +439,227 @@ function buildHtml(data) {
 
     function renderFunds(bucket) {
       document.getElementById("tableTitle").textContent = "รายการกองทุน - " + bucket.name;
-      document.getElementById("fundRows").innerHTML = bucket.funds.slice().sort((a, b) => (b.latest?.aumMillionBaht || 0) - (a.latest?.aumMillionBaht || 0)).map((fund) => {
-        const latest = fund.latest || {};
-        return '<tr><td class="code">' + fund.code + '</td><td>' + (fund.group || "-") + '</td><td><span class="id-pill">' +
-          fund.identifierType + ': ' + fund.identifier + '</span></td><td>' +
-          (latest.aumMillionBaht === undefined ? "-" : fmt.format(latest.aumMillionBaht)) + '</td><td class="delta ' +
-          deltaClass(fund.changeMillionBaht) + '">' + signedDeltaText(fund.changeMillionBaht, fund.changePct) + '</td><td>' +
-          (latest.nav === undefined ? "-" : fmt.format(latest.nav)) + '</td><td>' + (latest.navDate || "-") + '</td></tr>';
+      renderFundControls(bucket);
+      const funds = filteredFunds(bucket).sort(compareFunds);
+      const totalAum = funds.reduce((sum, fund) => sum + (fund.latestAum || 0), 0);
+      document.getElementById("fundTableSummary").textContent = "แสดง " + funds.length + "/" + bucket.funds.length + " กอง | รวม " + fmt.format(totalAum) + " ลบ. | " + groupByLabel(groupBy);
+
+      if (!funds.length) {
+        document.getElementById("fundRows").innerHTML = '<tr><td colspan="7" class="empty-row">ไม่พบกองทุนตามเงื่อนไขที่เลือก</td></tr>';
+        return;
+      }
+
+      if (groupBy === "none") {
+        document.getElementById("fundRows").innerHTML = funds.map(renderFundRow).join("");
+        return;
+      }
+
+      document.getElementById("fundRows").innerHTML = groupFunds(funds, groupBy).map((group) => {
+        return '<tr class="fund-group-row"><td colspan="7"><span>' + escapeHtml(group.label) + '</span><strong>' +
+          group.funds.length + ' กอง | ' + fmt.format(group.totalAum) + ' ลบ.</strong></td></tr>' +
+          group.funds.map(renderFundRow).join("");
       }).join("");
+    }
+
+    function bindTableControls() {
+      if (tableControlsReady) return;
+      tableControlsReady = true;
+      document.getElementById("fundSearch").addEventListener("input", (event) => {
+        tableFilters.search = event.target.value.trim();
+        renderFunds(activeBucket());
+      });
+      document.getElementById("sortSelect").addEventListener("change", (event) => {
+        fundSort = event.target.value;
+        renderFunds(activeBucket());
+      });
+      document.getElementById("themeFilter").addEventListener("change", (event) => {
+        tableFilters.theme = event.target.value;
+        renderFunds(activeBucket());
+      });
+      document.getElementById("typeFilter").addEventListener("change", (event) => {
+        tableFilters.type = event.target.value;
+        renderFunds(activeBucket());
+      });
+      document.getElementById("providerFilter").addEventListener("change", (event) => {
+        tableFilters.provider = event.target.value;
+        renderFunds(activeBucket());
+      });
+      document.getElementById("groupBySelect").addEventListener("change", (event) => {
+        groupBy = event.target.value;
+        renderFunds(activeBucket());
+      });
+      document.getElementById("resetTableBtn").addEventListener("click", () => {
+        fundSort = "aum_desc";
+        groupBy = "none";
+        tableFilters = { search: "", theme: "all", type: "all", provider: "all" };
+        renderFunds(activeBucket());
+      });
+    }
+
+    function renderFundControls(bucket) {
+      const funds = bucket.funds.map(annotateFund);
+      const themes = uniqueSorted(funds.map((fund) => fund.theme));
+      const types = uniqueSorted(funds.map((fund) => fund.type));
+      const providers = uniqueSorted(funds.map((fund) => fund.provider));
+
+      tableFilters.theme = valueOrAll(tableFilters.theme, themes);
+      tableFilters.type = valueOrAll(tableFilters.type, types);
+      tableFilters.provider = valueOrAll(tableFilters.provider, providers);
+
+      document.getElementById("fundSearch").value = tableFilters.search;
+      document.getElementById("sortSelect").value = fundSort;
+      document.getElementById("groupBySelect").value = groupBy;
+      setOptions(document.getElementById("themeFilter"), [{ value: "all", label: "ทั้งหมด" }].concat(themes.map((value) => ({ value, label: value }))), tableFilters.theme);
+      setOptions(document.getElementById("typeFilter"), [{ value: "all", label: "ทั้งหมด" }].concat(types.map((value) => ({ value, label: value }))), tableFilters.type);
+      setOptions(document.getElementById("providerFilter"), [{ value: "all", label: "ทั้งหมด" }].concat(providers.map((value) => ({ value, label: value }))), tableFilters.provider);
+    }
+
+    function filteredFunds(bucket) {
+      const search = tableFilters.search.toLowerCase();
+      return bucket.funds.map(annotateFund).filter((fund) => {
+        const matchesSearch = !search || [fund.code, fund.group, fund.identifier, fund.theme, fund.type, fund.provider]
+          .some((value) => String(value || "").toLowerCase().includes(search));
+        return matchesSearch &&
+          matchesFilter(fund.theme, tableFilters.theme) &&
+          matchesFilter(fund.type, tableFilters.type) &&
+          matchesFilter(fund.provider, tableFilters.provider);
+      });
+    }
+
+    function renderFundRow(fund) {
+      const latest = fund.latest || {};
+      return '<tr><td class="code">' + escapeHtml(fund.code) + '</td><td>' +
+        escapeHtml(fund.group || "-") + '<span class="fund-tags">' + escapeHtml(fund.theme) + ' | ' + escapeHtml(fund.type) + ' | ' + escapeHtml(fund.provider) + '</span></td><td><span class="id-pill">' +
+        escapeHtml(fund.identifierType) + ': ' + escapeHtml(fund.identifier) + '</span></td><td>' +
+        (latest.aumMillionBaht === undefined ? "-" : fmt.format(latest.aumMillionBaht)) + '</td><td class="delta ' +
+        deltaClass(fund.changeMillionBaht) + '">' + signedDeltaText(fund.changeMillionBaht, fund.changePct) + '</td><td>' +
+        (latest.nav === undefined ? "-" : fmt.format(latest.nav)) + '</td><td>' + escapeHtml(latest.navDate || "-") + '</td></tr>';
+    }
+
+    function annotateFund(fund) {
+      return Object.assign({}, fund, {
+        latestAum: fund.latest?.aumMillionBaht ?? null,
+        latestDate: fund.latest?.navDate ?? "",
+        theme: detectTheme(fund),
+        type: detectFundType(fund),
+        provider: detectProvider(fund)
+      });
+    }
+
+    function compareFunds(a, b) {
+      switch (fundSort) {
+        case "aum_asc":
+          return compareNullableNumber(a.latestAum, b.latestAum, "asc") || a.code.localeCompare(b.code);
+        case "change_desc":
+          return compareNullableNumber(a.changeMillionBaht, b.changeMillionBaht, "desc") || a.code.localeCompare(b.code);
+        case "change_asc":
+          return compareNullableNumber(a.changeMillionBaht, b.changeMillionBaht, "asc") || a.code.localeCompare(b.code);
+        case "change_pct_desc":
+          return compareNullableNumber(a.changePct, b.changePct, "desc") || a.code.localeCompare(b.code);
+        case "date_desc":
+          return String(b.latestDate).localeCompare(String(a.latestDate)) || compareNullableNumber(a.latestAum, b.latestAum, "desc");
+        case "fund_asc":
+          return a.code.localeCompare(b.code);
+        case "group_asc":
+          return a.group.localeCompare(b.group) || a.code.localeCompare(b.code);
+        case "aum_desc":
+        default:
+          return compareNullableNumber(a.latestAum, b.latestAum, "desc") || a.code.localeCompare(b.code);
+      }
+    }
+
+    function groupFunds(funds, selectedGroupBy) {
+      const keyFor = (fund) => {
+        if (selectedGroupBy === "theme") return fund.theme;
+        if (selectedGroupBy === "type") return fund.type;
+        if (selectedGroupBy === "provider") return fund.provider;
+        return fund.group;
+      };
+      const groups = new Map();
+      for (const fund of funds) {
+        const key = keyFor(fund) || "-";
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key).push(fund);
+      }
+      return Array.from(groups.entries()).map(([label, groupFunds]) => ({
+        label,
+        funds: groupFunds,
+        totalAum: groupFunds.reduce((sum, fund) => sum + (fund.latestAum || 0), 0)
+      })).sort((a, b) => b.totalAum - a.totalAum || a.label.localeCompare(b.label));
+    }
+
+    function detectTheme(fund) {
+      const code = fund.code.toUpperCase();
+      const group = String(fund.group || "").toUpperCase();
+      if (group.includes("CHINA") || code.includes("CHINA")) return "China";
+      if (group.includes("EURO") || code.includes("EURO")) return "Euro";
+      if (group.includes("THAILAND") || code.includes("THAI") || code.includes("TX8020")) return "Thailand";
+      if (group.includes("TLUSHD") || code.includes("USHD")) return "US High Dividend";
+      if (group.includes("YIELDTECH") || code.includes("INCOME")) return "Income / High Dividend";
+      if (group.includes("WORLD") || code.includes("WORLD")) return "World";
+      if (group.includes("US") || code.includes("US") || code.includes("NDQ") || code.includes("10-A") || code.includes("10AI")) return "US";
+      return fund.group || "Other";
+    }
+
+    function detectFundType(fund) {
+      const code = fund.code.toUpperCase();
+      if (code.includes("RMF")) return "RMF";
+      if (code.includes("SSF")) return "SSF";
+      if (code.includes("ESG")) return "Thai ESG";
+      return "กองปกติ";
+    }
+
+    function detectProvider(fund) {
+      const code = fund.code.toUpperCase();
+      if (code.startsWith("TL")) return "TL / Talis";
+      if (code.startsWith("MEGA")) return "MEGA";
+      return fund.source || "Other";
+    }
+
+    function compareNullableNumber(a, b, direction) {
+      const aMissing = a === null || a === undefined || Number.isNaN(Number(a));
+      const bMissing = b === null || b === undefined || Number.isNaN(Number(b));
+      if (aMissing && bMissing) return 0;
+      if (aMissing) return 1;
+      if (bMissing) return -1;
+      return direction === "asc" ? Number(a) - Number(b) : Number(b) - Number(a);
+    }
+
+    function uniqueSorted(values) {
+      return Array.from(new Set(values.filter(Boolean))).sort((a, b) => a.localeCompare(b));
+    }
+
+    function setOptions(select, options, selected) {
+      select.innerHTML = options.map((option) => '<option value="' + escapeHtml(option.value) + '"' +
+        (option.value === selected ? ' selected' : '') + '>' + escapeHtml(option.label) + '</option>').join("");
+    }
+
+    function valueOrAll(value, available) {
+      return value === "all" || available.includes(value) ? value : "all";
+    }
+
+    function matchesFilter(value, filter) {
+      return filter === "all" || value === filter;
+    }
+
+    function groupByLabel(value) {
+      const labels = {
+        none: "ไม่จัดกลุ่ม",
+        theme: "จัดกลุ่มตามประเทศ/ธีม",
+        type: "จัดกลุ่มตาม RMF/SSF/ทั่วไป",
+        provider: "จัดกลุ่มตาม TL/MEGA",
+        group: "จัดกลุ่มตามกลุ่มเดิม"
+      };
+      return labels[value] || labels.none;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
     function renderBucketDetails() {

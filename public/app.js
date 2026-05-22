@@ -1,4 +1,16 @@
-let state = { data: null, activeBucket: "wealthx_other", days: 365 };
+let state = {
+  data: null,
+  activeBucket: "wealthx_other",
+  days: 365,
+  fundSort: "aum_desc",
+  groupBy: "none",
+  tableFilters: {
+    search: "",
+    theme: "all",
+    type: "all",
+    provider: "all"
+  }
+};
 const ranges = { 365: "1Y", 183: "6M", 92: "3M", 31: "1M" };
 
 const $ = (id) => document.getElementById(id);
@@ -13,6 +25,36 @@ async function init() {
     if (!button) return;
     state.days = Number(button.dataset.days);
     render();
+  });
+  $("fundSearch").addEventListener("input", (event) => {
+    state.tableFilters.search = event.target.value.trim();
+    renderBucket();
+  });
+  $("sortSelect").addEventListener("change", (event) => {
+    state.fundSort = event.target.value;
+    renderBucket();
+  });
+  $("themeFilter").addEventListener("change", (event) => {
+    state.tableFilters.theme = event.target.value;
+    renderBucket();
+  });
+  $("typeFilter").addEventListener("change", (event) => {
+    state.tableFilters.type = event.target.value;
+    renderBucket();
+  });
+  $("providerFilter").addEventListener("change", (event) => {
+    state.tableFilters.provider = event.target.value;
+    renderBucket();
+  });
+  $("groupBySelect").addEventListener("change", (event) => {
+    state.groupBy = event.target.value;
+    renderBucket();
+  });
+  $("resetTableBtn").addEventListener("click", () => {
+    state.fundSort = "aum_desc";
+    state.groupBy = "none";
+    state.tableFilters = { search: "", theme: "all", type: "all", provider: "all" };
+    renderBucket();
   });
   await loadData();
   setInterval(loadStatus, 15000);
@@ -88,6 +130,7 @@ function renderBucket() {
   });
   renderChart(bucket);
   renderMix(bucket);
+  renderFundControls(bucket);
   renderTable(bucket);
 }
 
@@ -199,21 +242,214 @@ function renderMix(bucket) {
 }
 
 function renderTable(bucket) {
-  $("fundRows").innerHTML = bucket.funds
-    .slice()
-    .sort((a, b) => (b.latest?.aumMillionBaht || 0) - (a.latest?.aumMillionBaht || 0))
-    .map((fund) => `
+  const funds = filteredFunds(bucket).sort(compareFunds);
+  const totalAum = funds.reduce((sum, fund) => sum + (fund.latestAum || 0), 0);
+  $("fundTableSummary").textContent = `แสดง ${funds.length}/${bucket.funds.length} กอง | รวม ${money(totalAum)} ลบ. | ${groupByLabel(state.groupBy)}`;
+
+  if (!funds.length) {
+    $("fundRows").innerHTML = `
       <tr>
-        <td><strong>${fund.code}</strong></td>
-        <td>${fund.group}</td>
-        <td><span class="id-pill">${fund.identifierType}: ${fund.identifier}</span></td>
-        <td>${fund.latest?.aumMillionBaht === null || fund.latest?.aumMillionBaht === undefined ? "-" : money(fund.latest.aumMillionBaht)}</td>
-        <td class="${deltaClass(fund.changeMillionBaht)}">${formatDelta(fund.changeMillionBaht, fund.changePct)}</td>
-        <td>${fund.latest?.nav ?? "-"}</td>
-        <td>${fund.latest?.navDate ?? "-"}</td>
-        <td>${fund.source || "user list"}</td>
+        <td colspan="8" class="empty-row">ไม่พบกองทุนตามเงื่อนไขที่เลือก</td>
       </tr>
+    `;
+    return;
+  }
+
+  if (state.groupBy === "none") {
+    $("fundRows").innerHTML = funds.map(renderFundRow).join("");
+    return;
+  }
+
+  $("fundRows").innerHTML = groupFunds(funds, state.groupBy)
+    .map((group) => `
+      <tr class="fund-group-row">
+        <td colspan="8">
+          <span>${escapeHtml(group.label)}</span>
+          <strong>${group.funds.length} กอง | ${money(group.totalAum)} ลบ.</strong>
+        </td>
+      </tr>
+      ${group.funds.map(renderFundRow).join("")}
     `).join("");
+}
+
+function renderFundControls(bucket) {
+  const funds = bucket.funds.map(annotateFund);
+  const themes = uniqueSorted(funds.map((fund) => fund.theme));
+  const types = uniqueSorted(funds.map((fund) => fund.type));
+  const providers = uniqueSorted(funds.map((fund) => fund.provider));
+
+  state.tableFilters.theme = valueOrAll(state.tableFilters.theme, themes);
+  state.tableFilters.type = valueOrAll(state.tableFilters.type, types);
+  state.tableFilters.provider = valueOrAll(state.tableFilters.provider, providers);
+
+  $("fundSearch").value = state.tableFilters.search;
+  $("sortSelect").value = state.fundSort;
+  $("groupBySelect").value = state.groupBy;
+  setOptions($("themeFilter"), [{ value: "all", label: "ทั้งหมด" }, ...themes.map((value) => ({ value, label: value }))], state.tableFilters.theme);
+  setOptions($("typeFilter"), [{ value: "all", label: "ทั้งหมด" }, ...types.map((value) => ({ value, label: value }))], state.tableFilters.type);
+  setOptions($("providerFilter"), [{ value: "all", label: "ทั้งหมด" }, ...providers.map((value) => ({ value, label: value }))], state.tableFilters.provider);
+}
+
+function filteredFunds(bucket) {
+  const search = state.tableFilters.search.toLowerCase();
+  return bucket.funds
+    .map(annotateFund)
+    .filter((fund) => {
+      const matchesSearch = !search || [fund.code, fund.group, fund.identifier, fund.theme, fund.type, fund.provider]
+        .some((value) => String(value || "").toLowerCase().includes(search));
+      return matchesSearch
+        && matchesFilter(fund.theme, state.tableFilters.theme)
+        && matchesFilter(fund.type, state.tableFilters.type)
+        && matchesFilter(fund.provider, state.tableFilters.provider);
+    });
+}
+
+function renderFundRow(fund) {
+  return `
+    <tr>
+      <td><strong>${escapeHtml(fund.code)}</strong></td>
+      <td>
+        <span>${escapeHtml(fund.group)}</span>
+        <span class="fund-tags">${escapeHtml(fund.theme)} | ${escapeHtml(fund.type)} | ${escapeHtml(fund.provider)}</span>
+      </td>
+      <td><span class="id-pill">${escapeHtml(fund.identifierType)}: ${escapeHtml(fund.identifier)}</span></td>
+      <td>${fund.latestAum === null || fund.latestAum === undefined ? "-" : money(fund.latestAum)}</td>
+      <td class="${deltaClass(fund.changeMillionBaht)}">${formatDelta(fund.changeMillionBaht, fund.changePct)}</td>
+      <td>${fund.latest?.nav ?? "-"}</td>
+      <td>${fund.latest?.navDate ?? "-"}</td>
+      <td>${escapeHtml(fund.source || "user list")}</td>
+    </tr>
+  `;
+}
+
+function annotateFund(fund) {
+  return {
+    ...fund,
+    latestAum: fund.latest?.aumMillionBaht ?? null,
+    latestDate: fund.latest?.navDate ?? "",
+    theme: detectTheme(fund),
+    type: detectFundType(fund),
+    provider: detectProvider(fund)
+  };
+}
+
+function compareFunds(a, b) {
+  switch (state.fundSort) {
+    case "aum_asc":
+      return compareNullableNumber(a.latestAum, b.latestAum, "asc") || a.code.localeCompare(b.code);
+    case "change_desc":
+      return compareNullableNumber(a.changeMillionBaht, b.changeMillionBaht, "desc") || a.code.localeCompare(b.code);
+    case "change_asc":
+      return compareNullableNumber(a.changeMillionBaht, b.changeMillionBaht, "asc") || a.code.localeCompare(b.code);
+    case "change_pct_desc":
+      return compareNullableNumber(a.changePct, b.changePct, "desc") || a.code.localeCompare(b.code);
+    case "date_desc":
+      return String(b.latestDate).localeCompare(String(a.latestDate)) || compareNullableNumber(a.latestAum, b.latestAum, "desc");
+    case "fund_asc":
+      return a.code.localeCompare(b.code);
+    case "group_asc":
+      return a.group.localeCompare(b.group) || a.code.localeCompare(b.code);
+    case "aum_desc":
+    default:
+      return compareNullableNumber(a.latestAum, b.latestAum, "desc") || a.code.localeCompare(b.code);
+  }
+}
+
+function groupFunds(funds, groupBy) {
+  const keyFor = (fund) => {
+    if (groupBy === "theme") return fund.theme;
+    if (groupBy === "type") return fund.type;
+    if (groupBy === "provider") return fund.provider;
+    return fund.group;
+  };
+  const groups = new Map();
+  for (const fund of funds) {
+    const key = keyFor(fund) || "-";
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(fund);
+  }
+  return [...groups.entries()]
+    .map(([label, groupFunds]) => ({
+      label,
+      funds: groupFunds,
+      totalAum: groupFunds.reduce((sum, fund) => sum + (fund.latestAum || 0), 0)
+    }))
+    .sort((a, b) => b.totalAum - a.totalAum || a.label.localeCompare(b.label));
+}
+
+function detectTheme(fund) {
+  const code = fund.code.toUpperCase();
+  const group = String(fund.group || "").toUpperCase();
+  if (group.includes("CHINA") || code.includes("CHINA")) return "China";
+  if (group.includes("EURO") || code.includes("EURO")) return "Euro";
+  if (group.includes("THAILAND") || code.includes("THAI") || code.includes("TX8020")) return "Thailand";
+  if (group.includes("TLUSHD") || code.includes("USHD")) return "US High Dividend";
+  if (group.includes("YIELDTECH") || code.includes("INCOME")) return "Income / High Dividend";
+  if (group.includes("WORLD") || code.includes("WORLD")) return "World";
+  if (group.includes("US") || code.includes("US") || code.includes("NDQ") || code.includes("10-A") || code.includes("10AI")) return "US";
+  return fund.group || "Other";
+}
+
+function detectFundType(fund) {
+  const code = fund.code.toUpperCase();
+  if (code.includes("RMF")) return "RMF";
+  if (code.includes("SSF")) return "SSF";
+  if (code.includes("ESG")) return "Thai ESG";
+  return "กองปกติ";
+}
+
+function detectProvider(fund) {
+  const code = fund.code.toUpperCase();
+  if (code.startsWith("TL")) return "TL / Talis";
+  if (code.startsWith("MEGA")) return "MEGA";
+  return fund.source || "Other";
+}
+
+function compareNullableNumber(a, b, direction) {
+  const aMissing = a === null || a === undefined || Number.isNaN(Number(a));
+  const bMissing = b === null || b === undefined || Number.isNaN(Number(b));
+  if (aMissing && bMissing) return 0;
+  if (aMissing) return 1;
+  if (bMissing) return -1;
+  return direction === "asc" ? Number(a) - Number(b) : Number(b) - Number(a);
+}
+
+function uniqueSorted(values) {
+  return [...new Set(values.filter(Boolean))].sort((a, b) => a.localeCompare(b));
+}
+
+function setOptions(select, options, selected) {
+  select.innerHTML = options.map((option) => `
+    <option value="${escapeHtml(option.value)}"${option.value === selected ? " selected" : ""}>${escapeHtml(option.label)}</option>
+  `).join("");
+}
+
+function valueOrAll(value, available) {
+  return value === "all" || available.includes(value) ? value : "all";
+}
+
+function matchesFilter(value, filter) {
+  return filter === "all" || value === filter;
+}
+
+function groupByLabel(value) {
+  const labels = {
+    none: "ไม่จัดกลุ่ม",
+    theme: "จัดกลุ่มตามประเทศ/ธีม",
+    type: "จัดกลุ่มตาม RMF/SSF/ทั่วไป",
+    provider: "จัดกลุ่มตาม TL/MEGA",
+    group: "จัดกลุ่มตามกลุ่มเดิม"
+  };
+  return labels[value] || labels.none;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function activeBucket() {

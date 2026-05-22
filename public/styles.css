@@ -234,6 +234,59 @@ button:hover { border-color: #a8b0bb; }
   margin-bottom: 10px;
 }
 
+.fund-table-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.table-summary {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.small-button {
+  min-height: 34px;
+  padding: 0 11px;
+}
+
+.table-controls {
+  display: grid;
+  grid-template-columns: minmax(160px, 1.2fr) repeat(5, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.table-controls label {
+  display: grid;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.table-controls input,
+.table-controls select {
+  width: 100%;
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+}
+
+.table-controls input:focus,
+.table-controls select:focus {
+  outline: 2px solid rgba(37, 99, 235, .18);
+  border-color: #93c5fd;
+}
+
 .mix-list {
   display: grid;
   gap: 10px;
@@ -311,6 +364,43 @@ thead th {
   font-size: 12px;
 }
 
+.fund-tags {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.fund-group-row td {
+  position: sticky;
+  top: 43px;
+  z-index: 1;
+  padding: 9px 12px;
+  color: #17202a;
+  background: #eef3f8;
+  border-bottom-color: #d6dde7;
+  text-align: left;
+}
+
+.fund-group-row td {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.fund-group-row span,
+.fund-group-row strong {
+  white-space: normal;
+}
+
+.empty-row {
+  height: 88px;
+  color: var(--muted);
+  font-weight: 800;
+  text-align: center !important;
+}
+
 .toast {
   position: fixed;
   right: 22px;
@@ -344,11 +434,25 @@ thead th {
     grid-template-columns: 1fr;
   }
 
+  .fund-table-head {
+    align-items: stretch;
+  }
+
+  .table-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .actions {
     width: 100%;
   }
 
   .actions button {
     flex: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .table-controls {
+    grid-template-columns: 1fr;
   }
 }
