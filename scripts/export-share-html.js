@@ -57,14 +57,27 @@ function buildHtml(data) {
       --red: #c2413a;
       --shadow: 0 14px 38px rgba(19, 35, 58, 0.10);
     }
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+      min-width: 0;
+    }
+    html {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
     body {
       margin: 0;
       font-family: Inter, "Segoe UI", Tahoma, Arial, sans-serif;
       background: var(--bg);
       color: var(--ink);
+      overflow-x: hidden;
     }
-    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 44px; }
+    .shell {
+      width: min(1280px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
     header {
       display: grid;
       grid-template-columns: 1fr auto;
@@ -88,11 +101,18 @@ function buildHtml(data) {
       border-radius: 8px;
       padding: 18px 18px 16px;
       box-shadow: var(--shadow);
+      min-width: 0;
     }
     .card:nth-child(2) { border-left-color: var(--green); }
     .card-top { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
     .label { font-weight: 800; font-size: 20px; }
-    .desc { color: var(--muted); margin-top: 5px; font-size: 13px; line-height: 1.45; }
+    .desc {
+      color: var(--muted);
+      margin-top: 5px;
+      font-size: 13px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
     .value { font-size: clamp(34px, 5vw, 52px); font-weight: 850; margin: 16px 0 4px; }
     .unit { color: var(--muted); font-size: 16px; font-weight: 650; }
     .delta { font-weight: 750; font-size: 15px; }
@@ -109,11 +129,15 @@ function buildHtml(data) {
       font: inherit;
       font-weight: 750;
       cursor: pointer;
+      min-width: 0;
+      line-height: 1.15;
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
     button.active { background: var(--ink); border-color: var(--ink); color: #fff; }
     .workbench {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
+      grid-template-columns: 1fr;
       gap: 16px;
       margin-top: 14px;
     }
@@ -123,11 +147,21 @@ function buildHtml(data) {
       border-radius: 8px;
       padding: 16px;
       box-shadow: var(--shadow);
+      min-width: 0;
+      overflow: hidden;
     }
     .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
     h2 { margin: 0; font-size: 20px; letter-spacing: 0; }
     canvas { width: 100%; height: 330px; display: block; }
     .meta { color: var(--muted); font-size: 13px; margin-top: 8px; }
+    .meta,
+    .table-summary,
+    .footer-note,
+    h1,
+    h2,
+    .label {
+      overflow-wrap: anywhere;
+    }
     .fund-table-head {
       display: flex;
       justify-content: space-between;
@@ -144,7 +178,7 @@ function buildHtml(data) {
     .small-button { min-height: 34px; padding: 0 11px; }
     .table-controls {
       display: grid;
-      grid-template-columns: minmax(150px, 1.2fr) repeat(5, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 10px;
       margin-bottom: 12px;
     }
@@ -172,9 +206,23 @@ function buildHtml(data) {
       overflow: auto;
       border: 1px solid var(--line);
       border-radius: 8px;
+      width: 100%;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
     }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th, td { padding: 10px 8px; border-bottom: 1px solid #edf0f5; text-align: right; vertical-align: top; }
+    table {
+      width: 100%;
+      min-width: 940px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #edf0f5;
+      text-align: right;
+      vertical-align: top;
+      white-space: normal;
+    }
     th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
     th {
       position: sticky;
@@ -195,6 +243,9 @@ function buildHtml(data) {
       background: #f1f5f9;
       color: #24405f;
       white-space: nowrap;
+      max-width: min(230px, 100%);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .fund-tags {
       display: block;
@@ -230,16 +281,135 @@ function buildHtml(data) {
       font-size: 12px;
       line-height: 1.5;
     }
+    #bucketDetails {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    #bucketDetails > div {
+      border: 1px solid #edf0f5;
+      border-radius: 8px;
+      padding: 12px;
+      background: #fbfcff;
+    }
     @media (max-width: 860px) {
       header, .workbench, .cards { grid-template-columns: 1fr; }
       .stamp { text-align: left; }
       .panel-head { align-items: flex-start; flex-direction: column; }
       .fund-table-head { align-items: stretch; }
-      .table-controls { grid-template-columns: 1fr 1fr; }
       canvas { height: 280px; }
     }
-    @media (max-width: 560px) {
+    @media (max-width: 700px) {
+      body { background: #f7f9fc; }
+      .shell {
+        width: 100%;
+        padding: 16px 10px 28px;
+      }
+      header {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      h1 { font-size: clamp(25px, 7.2vw, 38px); }
+      .sub { font-size: 13px; }
+      .cards { grid-template-columns: 1fr; gap: 10px; }
+      .card { padding: 14px; }
+      .card-top { flex-direction: column; gap: 8px; }
+      .value { font-size: clamp(30px, 11vw, 42px); }
+      .panel { padding: 12px; border-radius: 8px; }
+      .tabs,
+      .ranges {
+        display: grid;
+        width: 100%;
+      }
+      .tabs { grid-template-columns: 1fr; }
+      .ranges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tabs button,
+      .ranges button {
+        width: 100%;
+        padding: 0 10px;
+      }
+      canvas { height: 240px; }
+      .fund-table-head {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .small-button { width: 100%; }
       .table-controls { grid-template-columns: 1fr; }
+      .table-wrap {
+        max-height: none;
+        overflow: visible;
+        border: 0;
+      }
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+      table { min-width: 0; }
+      thead { display: none; }
+      tbody tr {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #e5eaf2;
+        border-radius: 8px;
+        background: #fff;
+      }
+      td {
+        display: block;
+        padding: 7px 0;
+        border-bottom: 1px solid #f0f3f8;
+        text-align: left;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+      td:last-child { border-bottom: 0; }
+      td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 3px;
+        color: var(--muted);
+        font-weight: 800;
+        text-align: left;
+      }
+      td > * {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      td:first-child,
+      td:nth-child(2) {
+        text-align: left;
+      }
+      .code { white-space: normal; }
+      .id-pill {
+        justify-content: flex-end;
+        white-space: normal;
+        text-align: left;
+      }
+      .fund-tags { margin-top: 4px; }
+      .fund-group-row {
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+      .fund-group-row td {
+        position: static;
+        display: flex;
+        border: 1px solid #d8dee9;
+        border-radius: 8px;
+        padding: 10px;
+        background: #eef3f8;
+      }
+      .fund-group-row td::before { content: none; }
+      .empty-row {
+        display: block;
+        text-align: center !important;
+      }
+      .empty-row::before { content: none; }
+      #bucketDetails { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -528,12 +698,12 @@ function buildHtml(data) {
 
     function renderFundRow(fund) {
       const latest = fund.latest || {};
-      return '<tr><td class="code">' + escapeHtml(fund.code) + '</td><td>' +
-        escapeHtml(fund.group || "-") + '<span class="fund-tags">' + escapeHtml(fund.theme) + ' | ' + escapeHtml(fund.type) + ' | ' + escapeHtml(fund.provider) + '</span></td><td><span class="id-pill">' +
-        escapeHtml(fund.identifierType) + ': ' + escapeHtml(fund.identifier) + '</span></td><td>' +
-        (latest.aumMillionBaht === undefined ? "-" : fmt.format(latest.aumMillionBaht)) + '</td><td class="delta ' +
-        deltaClass(fund.changeMillionBaht) + '">' + signedDeltaText(fund.changeMillionBaht, fund.changePct) + '</td><td>' +
-        (latest.nav === undefined ? "-" : fmt.format(latest.nav)) + '</td><td>' + escapeHtml(latest.navDate || "-") + '</td></tr>';
+      return '<tr><td class="code" data-label="กองทุน">' + escapeHtml(fund.code) + '</td><td data-label="กลุ่ม">' +
+        escapeHtml(fund.group || "-") + '<span class="fund-tags">' + escapeHtml(fund.theme) + ' | ' + escapeHtml(fund.type) + ' | ' + escapeHtml(fund.provider) + '</span></td><td data-label="Project ID / Class"><span class="id-pill">' +
+        escapeHtml(fund.identifierType) + ': ' + escapeHtml(fund.identifier) + '</span></td><td data-label="AUM ลบ.">' +
+        (latest.aumMillionBaht === undefined ? "-" : fmt.format(latest.aumMillionBaht)) + '</td><td data-label="Change" class="delta ' +
+        deltaClass(fund.changeMillionBaht) + '">' + signedDeltaText(fund.changeMillionBaht, fund.changePct) + '</td><td data-label="NAV">' +
+        (latest.nav === undefined ? "-" : fmt.format(latest.nav)) + '</td><td data-label="วันที่">' + escapeHtml(latest.navDate || "-") + '</td></tr>';
     }
 
     function annotateFund(fund) {
@@ -665,7 +835,7 @@ function buildHtml(data) {
     function renderBucketDetails() {
       document.getElementById("bucketDetails").innerHTML = DATA.buckets.map((bucket) => {
         const latest = bucket.series.at(-1);
-        return '<div style="border-bottom:1px solid #edf0f5;padding:10px 0">' +
+        return '<div>' +
           '<div style="font-weight:850">' + bucket.name + '</div>' +
           '<div class="value" style="font-size:28px;margin:6px 0">' + fmt.format(bucket.latestTotal || 0) + ' <span class="unit">ลบ.</span></div>' +
           '<div class="meta">' + bucket.funds.length + ' กอง | ' + (latest?.date || "-") + '</div>' +
