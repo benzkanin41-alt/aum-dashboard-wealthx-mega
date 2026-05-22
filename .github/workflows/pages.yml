@@ -2,6 +2,9 @@ name: Build and deploy AUM dashboard
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
   schedule:
     # 09:00 Asia/Bangkok = 02:00 UTC
     - cron: "0 2 * * *"
