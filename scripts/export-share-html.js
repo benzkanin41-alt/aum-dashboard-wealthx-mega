@@ -90,7 +90,7 @@ function buildHtml(data) {
     .stamp { text-align: right; color: var(--muted); font-size: 13px; }
     .cards {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
       margin: 18px 0;
     }
@@ -104,6 +104,7 @@ function buildHtml(data) {
       min-width: 0;
     }
     .card:nth-child(2) { border-left-color: var(--green); }
+    .card:nth-child(3) { border-left-color: #ea580c; }
     .card-top { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; }
     .label { font-weight: 800; font-size: 20px; }
     .desc {
@@ -152,8 +153,29 @@ function buildHtml(data) {
     }
     .panel-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 10px; }
     h2 { margin: 0; font-size: 20px; letter-spacing: 0; }
-    canvas { width: 100%; height: 330px; display: block; }
+    canvas { width: 100%; height: 330px; display: block; cursor: crosshair; }
     .meta { color: var(--muted); font-size: 13px; margin-top: 8px; }
+    .chart-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .chart-meta span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      font-weight: 700;
+    }
+    .chart-meta .selected-point {
+      color: #fff;
+      border-color: var(--ink);
+      background: var(--ink);
+    }
     .meta,
     .table-summary,
     .footer-note,
@@ -417,8 +439,8 @@ function buildHtml(data) {
   <main class="shell">
     <header>
       <div>
-        <h1>WealthX SeriesX และ MEGA30+TLUSHD</h1>
-        <p class="sub">Snapshot dashboard สำหรับดูยอด AUM แยกตาม bucket ล่าสุด</p>
+        <h1>WealthX SeriesX, MEGA30+TLUSHD และกองทุนอื่นๆ</h1>
+        <p class="sub">Snapshot dashboard สำหรับดูยอด AUM แยกตาม bucket ล่าสุด พร้อมกราฟรายวันและตารางกองทุนย่อย</p>
       </div>
       <div class="stamp" id="stamp"></div>
     </header>
@@ -436,7 +458,7 @@ function buildHtml(data) {
         </div>
       </div>
       <canvas id="chart" width="1000" height="360" aria-label="AUM chart"></canvas>
-      <div class="meta" id="chartMeta"></div>
+      <div class="meta chart-meta" id="chartMeta"></div>
     </section>
 
     <section class="workbench">
@@ -492,7 +514,7 @@ function buildHtml(data) {
         <div class="table-wrap">
           <table>
             <thead>
-              <tr><th>กองทุน</th><th>กลุ่ม</th><th>Project ID / Class</th><th>AUM ลบ.</th><th>Change</th><th>NAV</th><th>วันที่</th></tr>
+              <tr><th>กองทุน</th><th>กลุ่ม</th><th>Project ID / Class</th><th>AUM ลบ.</th><th>Change</th><th>NAV</th><th>วันที่</th><th>Source</th></tr>
             </thead>
             <tbody id="fundRows"></tbody>
           </table>
@@ -513,6 +535,8 @@ function buildHtml(data) {
     let fundSort = "aum_desc";
     let groupBy = "none";
     let tableControlsReady = false;
+    let selectedChartPoint = {};
+    let chartHitPoints = [];
     let tableFilters = {
       search: "",
       theme: "all",
@@ -602,6 +626,7 @@ function buildHtml(data) {
       });
 
       bindTableControls();
+      bindChartInteraction();
       renderChart(activeBucket());
       renderFunds(activeBucket());
       renderBucketDetails();
@@ -615,7 +640,7 @@ function buildHtml(data) {
       document.getElementById("fundTableSummary").textContent = "แสดง " + funds.length + "/" + bucket.funds.length + " กอง | รวม " + fmt.format(totalAum) + " ลบ. | " + groupByLabel(groupBy);
 
       if (!funds.length) {
-        document.getElementById("fundRows").innerHTML = '<tr><td colspan="7" class="empty-row">ไม่พบกองทุนตามเงื่อนไขที่เลือก</td></tr>';
+        document.getElementById("fundRows").innerHTML = '<tr><td colspan="8" class="empty-row">ไม่พบกองทุนตามเงื่อนไขที่เลือก</td></tr>';
         return;
       }
 
@@ -625,10 +650,36 @@ function buildHtml(data) {
       }
 
       document.getElementById("fundRows").innerHTML = groupFunds(funds, groupBy).map((group) => {
-        return '<tr class="fund-group-row"><td colspan="7"><span>' + escapeHtml(group.label) + '</span><strong>' +
+        return '<tr class="fund-group-row"><td colspan="8"><span>' + escapeHtml(group.label) + '</span><strong>' +
           group.funds.length + ' กอง | ' + fmt.format(group.totalAum) + ' ลบ.</strong></td></tr>' +
           group.funds.map(renderFundRow).join("");
       }).join("");
+    }
+
+    function bindChartInteraction() {
+      const canvas = document.getElementById("chart");
+      if (canvas.dataset.bound === "1") return;
+      canvas.dataset.bound = "1";
+      canvas.addEventListener("click", (event) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const x = (event.clientX - rect.left) * scaleX;
+        const y = (event.clientY - rect.top) * scaleY;
+        const hit = nearestChartPoint(x, y);
+        if (!hit) return;
+        selectedChartPoint[activeBucketId] = hit.point.date;
+        renderChart(activeBucket());
+      });
+    }
+
+    function nearestChartPoint(x, y) {
+      let best = null;
+      for (const hit of chartHitPoints) {
+        const distance = Math.hypot(hit.x - x, hit.y - y);
+        if (distance <= 18 && (!best || distance < best.distance)) best = { ...hit, distance };
+      }
+      return best;
     }
 
     function bindTableControls() {
@@ -703,7 +754,7 @@ function buildHtml(data) {
         escapeHtml(fund.identifierType) + ': ' + escapeHtml(fund.identifier) + '</span></td><td data-label="AUM ลบ.">' +
         (latest.aumMillionBaht === undefined ? "-" : fmt.format(latest.aumMillionBaht)) + '</td><td data-label="Change" class="delta ' +
         deltaClass(fund.changeMillionBaht) + '">' + signedDeltaText(fund.changeMillionBaht, fund.changePct) + '</td><td data-label="NAV">' +
-        (latest.nav === undefined ? "-" : fmt.format(latest.nav)) + '</td><td data-label="วันที่">' + escapeHtml(latest.navDate || "-") + '</td></tr>';
+        (latest.nav === undefined ? "-" : fmt.format(latest.nav)) + '</td><td data-label="วันที่">' + escapeHtml(latest.navDate || "-") + '</td><td data-label="Source">' + escapeHtml(fund.source || "user list") + '</td></tr>';
     }
 
     function annotateFund(fund) {
@@ -761,6 +812,10 @@ function buildHtml(data) {
     function detectTheme(fund) {
       const code = fund.code.toUpperCase();
       const group = String(fund.group || "").toUpperCase();
+      if (group.includes("GOLD") || code.includes("GOLD")) return "Gold";
+      if (group.includes("GRID") || code.includes("GRID")) return "Smart Grid";
+      if (group.includes("DRAM") || code.includes("DRAM")) return "DRAM / AI Memory";
+      if (group.includes("HYDROGEN") || code.includes("HYDROGEN")) return "Hydrogen";
       if (group.includes("CHINA") || code.includes("CHINA")) return "China";
       if (group.includes("EURO") || code.includes("EURO")) return "Euro";
       if (group.includes("THAILAND") || code.includes("THAI") || code.includes("TX8020")) return "Thailand";
@@ -783,6 +838,10 @@ function buildHtml(data) {
       const code = fund.code.toUpperCase();
       if (code.startsWith("TL")) return "TL / Talis";
       if (code.startsWith("MEGA")) return "MEGA";
+      if (code.startsWith("LH")) return "LH Fund";
+      if (code.startsWith("ONE")) return "ONEAM";
+      if (code.startsWith("ES")) return "Eastspring";
+      if (code.startsWith("DAOL")) return "DAOL";
       return fund.source || "Other";
     }
 
@@ -851,11 +910,12 @@ function buildHtml(data) {
       const pad = { left: 70, right: 24, top: 28, bottom: 48 };
       const range = filteredSeries(bucket);
       const points = range.points;
+      chartHitPoints = [];
       ctx.clearRect(0, 0, width, height);
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, width, height);
       if (!points.length) {
-        document.getElementById("chartMeta").textContent = bucket.name + " | " + range.coverageLabel;
+        renderChartMeta(bucket, range, 0, null);
         return;
       }
 
@@ -863,6 +923,7 @@ function buildHtml(data) {
         const point = points[0];
         const cx = width / 2;
         const cy = height / 2;
+        chartHitPoints = [{ x: cx, y: cy, point }];
         ctx.strokeStyle = "#e5e9f2";
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -881,7 +942,9 @@ function buildHtml(data) {
         ctx.font = "13px Segoe UI, Tahoma, sans-serif";
         ctx.fillText("ข้อมูลจริงที่มีตอนนี้ 1 จุด: " + point.date, cx, cy + 34);
         ctx.textAlign = "left";
-        document.getElementById("chartMeta").textContent = bucket.name + " | Timeline " + activeRangeLabel() + " | Actual coverage " + range.coverageLabel + " | 1 จุดข้อมูลจริง";
+        const selectedPoint = selectedChartPoint[bucket.id] === point.date ? point : null;
+        if (selectedPoint) drawSelectedPointLabel(ctx, selectedPoint, cx, cy, width, pad, bucket.color || "#1f5fbf");
+        renderChartMeta(bucket, range, 1, selectedPoint);
         return;
       }
 
@@ -937,6 +1000,33 @@ function buildHtml(data) {
       ctx.lineCap = "round";
       ctx.stroke();
 
+      chartHitPoints = points.map((point, index) => ({
+        x: x(index),
+        y: y(point.totalMillionBaht),
+        point
+      }));
+
+      for (const hit of chartHitPoints) {
+        ctx.fillStyle = bucket.color || "#1f5fbf";
+        ctx.beginPath();
+        ctx.arc(hit.x, hit.y, 3.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      const selectedIndex = points.findIndex((point) => point.date === selectedChartPoint[bucket.id]);
+      const selectedPoint = selectedIndex >= 0 ? points[selectedIndex] : null;
+      if (selectedPoint) {
+        drawSelectedPointLabel(
+          ctx,
+          selectedPoint,
+          x(selectedIndex),
+          y(selectedPoint.totalMillionBaht),
+          width,
+          pad,
+          bucket.color || "#1f5fbf"
+        );
+      }
+
       const first = points[0];
       const mid = points[Math.floor(points.length / 2)];
       const last = points.at(-1);
@@ -945,7 +1035,60 @@ function buildHtml(data) {
       ctx.fillText(first.date, pad.left, height - 16);
       ctx.fillText(mid.date, width / 2 - 40, height - 16);
       ctx.fillText(last.date, width - pad.right - 86, height - 16);
-      document.getElementById("chartMeta").textContent = bucket.name + " | Timeline " + activeRangeLabel() + " | Actual coverage " + range.coverageLabel + " | " + points.length + " จุดข้อมูล";
+      renderChartMeta(bucket, range, points.length, selectedPoint);
+    }
+
+    function drawSelectedPointLabel(ctx, point, cx, cy, width, pad, color) {
+      const labelWidth = 178;
+      const labelHeight = 50;
+      const labelX = Math.max(pad.left + 6, Math.min(width - labelWidth - 10, cx - labelWidth / 2));
+      const labelY = Math.max(42, cy - 66);
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 0.3;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(cx, pad.top);
+      ctx.lineTo(cx, pad.top + 999);
+      ctx.stroke();
+      ctx.restore();
+
+      ctx.fillStyle = "#ffffff";
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = "#13233a";
+      roundRect(ctx, labelX, labelY, labelWidth, labelHeight, 8);
+      ctx.fill();
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "800 12px Segoe UI, Tahoma, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText(point.date, labelX + 12, labelY + 20);
+      ctx.font = "900 14px Segoe UI, Tahoma, sans-serif";
+      ctx.fillText(fmt.format(point.totalMillionBaht) + " ล้านบาท", labelX + 12, labelY + 38);
+    }
+
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.arcTo(x + width, y, x + width, y + height, radius);
+      ctx.arcTo(x + width, y + height, x, y + height, radius);
+      ctx.arcTo(x, y + height, x, y, radius);
+      ctx.arcTo(x, y, x + width, y, radius);
+      ctx.closePath();
+    }
+
+    function renderChartMeta(bucket, range, count, selectedPoint) {
+      document.getElementById("chartMeta").innerHTML =
+        '<span>' + escapeHtml(bucket.name) + '</span>' +
+        '<span>Timeline: ' + activeRangeLabel() + '</span>' +
+        '<span>Actual coverage: ' + escapeHtml(range.coverageLabel) + '</span>' +
+        '<span>' + count + ' จุดข้อมูล</span>' +
+        (selectedPoint ? '<span class="selected-point">เลือก: ' + escapeHtml(selectedPoint.date) + ' | ' + fmt.format(selectedPoint.totalMillionBaht) + ' ลบ.</span>' : '');
     }
 
     render();

@@ -2,6 +2,7 @@ import fsSync from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fetchTalisFundHistory, fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "./talis-public.js";
+import { mergeSettradeHistoryRows } from "./settrade-public.js";
 
 const ROOT = process.cwd();
 const DATA_DIR = path.join(ROOT, "data");
@@ -69,9 +70,19 @@ export async function refreshAll({ full = false } = {}) {
       refreshState.errors.push(`Talis public fallback: ${error.message}`);
     }
 
+    try {
+      const settrade = await mergeSettradeHistoryRows({ config, history });
+      refreshState.message = `${refreshState.message}; imported ${settrade.imported} Settrade rows`;
+      await writeJson(HISTORY_PATH, history);
+    } catch (error) {
+      refreshState.errors.push(`Settrade public: ${error.message}`);
+    }
+
     const useSecApi = process.env.USE_SEC_API === "1";
     if (!useSecApi) {
-      refreshState.message = refreshState.errors.length ? refreshState.message : "completed via Talis public NAV";
+      if (!refreshState.errors.length && refreshState.message === "starting") {
+        refreshState.message = "completed via public NAV sources";
+      }
       return refreshState;
     }
 

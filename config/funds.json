@@ -13,7 +13,9 @@
         { "code": "TLUSNDQ-UH-X", "group": "Series X / Nasdaq 100", "identifierType": "fund_class_name", "identifier": "TLUSNDQ-UH-X", "source": "WealthX Series X" },
         { "code": "TLUSNDQRMF", "group": "Series X / Nasdaq 100 RMF", "identifierType": "proj_id", "identifier": "M0271_2569", "source": "WealthX Series X" },
         { "code": "TLNDQINCOME-UH-X", "group": "Income / YIELDTECH", "identifierType": "proj_id", "identifier": "M0231_2569", "source": "WealthX exclusive Income/YIELDTECH" },
-        { "code": "TLNDQINCOME-H-X", "group": "Income / YIELDTECH", "identifierType": "proj_id", "identifier": "M0093_2569", "source": "WealthX exclusive Income/YIELDTECH" }
+        { "code": "TLNDQINCOME-H-X", "group": "Income / YIELDTECH", "identifierType": "proj_id", "identifier": "M0093_2569", "source": "WealthX exclusive Income/YIELDTECH" },
+        { "code": "LHGRID", "group": "Series X / Smart Grid", "identifierType": "proj_id", "identifier": "M0534_2569", "source": "WealthX Series X / LH Fund", "dataSource": "settrade" },
+        { "code": "ONE-GOLD-X-UH", "group": "SeriesX ZERO / Gold", "identifierType": "fund_class_name", "identifier": "ONE-GOLD-X-UH", "source": "WealthX SeriesX ZERO / ONEAM", "dataSource": "settrade" }
       ]
     },
     {
@@ -55,6 +57,17 @@
         { "code": "TLUSHD-H", "group": "TLUSHD", "identifierType": "fund_class_name", "identifier": "TLUSHD-H" },
         { "code": "TLUSHD-UH", "group": "TLUSHD", "identifierType": "fund_class_name", "identifier": "TLUSHD-UH" },
         { "code": "TLUSHDRMF", "group": "TLUSHD RMF", "identifierType": "fund_class_name", "identifier": "TLUSHDRMF" }
+      ]
+    },
+    {
+      "id": "other_funds",
+      "name": "กองทุนอื่นๆ",
+      "description": "กองใหม่หรือกอง thematic ที่ประกาศ/เปิดขายบน WealthX แต่ยังไม่จัดเป็น WealthX SeriesX bucket หลัก",
+      "color": "#ea580c",
+      "funds": [
+        { "code": "LHDRAM", "group": "DRAM / AI Memory", "identifierType": "proj_id", "identifier": "M0561_2569", "source": "WealthX promoted / LH Fund", "dataSource": "settrade" },
+        { "code": "ES-GRID", "group": "Smart Grid", "identifierType": "proj_id", "identifier": "M0288_2569", "source": "WealthX announcement / Eastspring", "dataSource": "settrade" },
+        { "code": "DAOL-HYDROGEN", "group": "Hydrogen", "identifierType": "proj_id", "identifier": "M0529_2569", "source": "WealthX announcement / DAOL", "dataSource": "settrade" }
       ]
     }
   ]

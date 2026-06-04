@@ -4,6 +4,7 @@ let state = {
   days: 365,
   fundSort: "aum_desc",
   groupBy: "none",
+  selectedChartPoint: {},
   tableFilters: {
     search: "",
     theme: "all",
@@ -25,6 +26,13 @@ async function init() {
     if (!button) return;
     state.days = Number(button.dataset.days);
     render();
+  });
+  $("aumChart").addEventListener("click", (event) => {
+    const target = event.target.closest("[data-point-index]");
+    if (!target) return;
+    const bucket = activeBucket();
+    state.selectedChartPoint[bucket.id] = target.dataset.date;
+    renderChart(bucket);
   });
   $("fundSearch").addEventListener("input", (event) => {
     state.tableFilters.search = event.target.value.trim();
@@ -143,9 +151,9 @@ function renderChart(bucket) {
   const pad = { top: 28, right: 24, bottom: 48, left: 74 };
   const innerW = width - pad.left - pad.right;
   const innerH = height - pad.top - pad.bottom;
-  renderChartMeta(bucket, range);
 
   if (!points.length) {
+    renderChartMeta(bucket, range, null);
     svg.innerHTML = `
       <text x="50%" y="46%" text-anchor="middle" fill="#17202a" font-size="15" font-weight="700">${bucket.funds.length} configured funds</text>
       <text x="50%" y="54%" text-anchor="middle" fill="#687382">ยังไม่มีข้อมูลจริงสะสมสำหรับกราฟ</text>
@@ -172,12 +180,18 @@ function renderChart(bucket) {
   const start = points[0];
   const mid = points[Math.floor(points.length / 2)];
   const end = points.at(-1);
+  const requestedIndex = points.findIndex((point) => point.date === state.selectedChartPoint[bucket.id]);
+  const selectedIndex = requestedIndex >= 0 ? requestedIndex : -1;
+  const selectedPoint = selectedIndex >= 0 ? points[selectedIndex] : null;
+  renderChartMeta(bucket, range, selectedPoint);
   if (points.length === 1) {
     const cx = pad.left + innerW / 2;
     const cy = pad.top + innerH / 2;
+    state.selectedChartPoint[bucket.id] ||= end.date;
     svg.innerHTML = `
       <line x1="${pad.left}" x2="${pad.left + innerW}" y1="${cy}" y2="${cy}" stroke="#e5e7eb"/>
-      <circle cx="${cx}" cy="${cy}" r="7" fill="${bucket.color}"/>
+      <circle class="chart-point-hit" data-point-index="0" data-date="${end.date}" cx="${cx}" cy="${cy}" r="18"/>
+      <circle class="chart-point" data-point-index="0" data-date="${end.date}" cx="${cx}" cy="${cy}" r="7" fill="${bucket.color}"/>
       <text x="${cx}" y="${cy - 18}" text-anchor="middle" fill="#17202a" font-size="15" font-weight="800">${money(end.totalMillionBaht)} ล้านบาท</text>
       <text x="${cx}" y="${cy + 30}" text-anchor="middle" fill="#687382" font-size="12">ข้อมูลจริงที่มีตอนนี้ 1 จุด: ${end.date}</text>
       <text x="${pad.left}" y="22" fill="#17202a" font-size="13" font-weight="700">${ranges[state.days]} actual AUM history</text>
@@ -185,6 +199,23 @@ function renderChart(bucket) {
     `;
     return;
   }
+
+  const visibleDots = points.map((point, i) => `
+    <circle class="chart-point" data-point-index="${i}" data-date="${point.date}" cx="${x(i)}" cy="${y(point.totalMillionBaht)}" r="3.5" fill="${bucket.color}"/>
+  `).join("");
+  const hitDots = points.map((point, i) => `
+    <circle class="chart-point-hit" data-point-index="${i}" data-date="${point.date}" cx="${x(i)}" cy="${y(point.totalMillionBaht)}" r="11"/>
+  `).join("");
+  const selectedOverlay = selectedPoint
+    ? renderSelectedPointOverlay({
+        point: selectedPoint,
+        cx: x(selectedIndex),
+        cy: y(selectedPoint.totalMillionBaht),
+        width,
+        pad,
+        color: bucket.color
+      })
+    : "";
 
   svg.innerHTML = `
     <defs>
@@ -196,7 +227,9 @@ function renderChart(bucket) {
     ${ticks}
     <polyline points="${area}" fill="url(#areaGradient)"/>
     <polyline points="${line}" fill="none" stroke="${bucket.color}" stroke-width="3" stroke-linecap="round"/>
-    <circle cx="${x(points.length - 1)}" cy="${y(end.totalMillionBaht)}" r="5" fill="${bucket.color}"/>
+    ${visibleDots}
+    ${selectedOverlay}
+    ${hitDots}
     <text x="${pad.left}" y="${height - 18}" fill="#687382" font-size="12">${start.date}</text>
     <text x="${pad.left + innerW / 2}" y="${height - 18}" text-anchor="middle" fill="#687382" font-size="12">${mid.date}</text>
     <text x="${pad.left + innerW}" y="${height - 18}" text-anchor="end" fill="#687382" font-size="12">${end.date}</text>
@@ -205,7 +238,23 @@ function renderChart(bucket) {
   `;
 }
 
-function renderChartMeta(bucket, range) {
+function renderSelectedPointOverlay({ point, cx, cy, width, pad, color }) {
+  const labelWidth = 178;
+  const labelHeight = 50;
+  const labelX = Math.max(pad.left + 6, Math.min(width - labelWidth - 10, cx - labelWidth / 2));
+  const labelY = Math.max(42, cy - 66);
+  return `
+    <line x1="${cx}" x2="${cx}" y1="${pad.top}" y2="${pad.top + 999}" stroke="${color}" stroke-opacity=".28" stroke-dasharray="4 4"/>
+    <circle cx="${cx}" cy="${cy}" r="7" fill="#fff" stroke="${color}" stroke-width="3"/>
+    <g class="chart-selected-label">
+      <rect x="${labelX}" y="${labelY}" width="${labelWidth}" height="${labelHeight}" rx="8" fill="#17202a"/>
+      <text x="${labelX + 12}" y="${labelY + 20}" fill="#fff" font-size="12" font-weight="800">${point.date}</text>
+      <text x="${labelX + 12}" y="${labelY + 38}" fill="#fff" font-size="14" font-weight="900">${money(point.totalMillionBaht)} ล้านบาท</text>
+    </g>
+  `;
+}
+
+function renderChartMeta(bucket, range, selectedPoint) {
   const selected = ranges[state.days] || `${state.days}D`;
   const all = bucket.series || [];
   const hasMoreThanRange = range.points.length < all.length;
@@ -217,6 +266,7 @@ function renderChartMeta(bucket, range) {
     <span>${mode}</span>
     <span>Actual coverage: ${range.coverageLabel}</span>
     <span>${range.points.length} จุดข้อมูล</span>
+    ${selectedPoint ? `<span class="selected-point">เลือก: ${selectedPoint.date} | ${money(selectedPoint.totalMillionBaht)} ลบ.</span>` : ""}
   `;
 }
 
@@ -307,17 +357,17 @@ function filteredFunds(bucket) {
 function renderFundRow(fund) {
   return `
     <tr>
-      <td><strong>${escapeHtml(fund.code)}</strong></td>
-      <td>
+      <td data-label="Fund"><strong>${escapeHtml(fund.code)}</strong></td>
+      <td data-label="Group">
         <span>${escapeHtml(fund.group)}</span>
         <span class="fund-tags">${escapeHtml(fund.theme)} | ${escapeHtml(fund.type)} | ${escapeHtml(fund.provider)}</span>
       </td>
-      <td><span class="id-pill">${escapeHtml(fund.identifierType)}: ${escapeHtml(fund.identifier)}</span></td>
-      <td>${fund.latestAum === null || fund.latestAum === undefined ? "-" : money(fund.latestAum)}</td>
-      <td class="${deltaClass(fund.changeMillionBaht)}">${formatDelta(fund.changeMillionBaht, fund.changePct)}</td>
-      <td>${fund.latest?.nav ?? "-"}</td>
-      <td>${fund.latest?.navDate ?? "-"}</td>
-      <td>${escapeHtml(fund.source || "user list")}</td>
+      <td data-label="Project ID / Class"><span class="id-pill">${escapeHtml(fund.identifierType)}: ${escapeHtml(fund.identifier)}</span></td>
+      <td data-label="AUM (ลบ.)">${fund.latestAum === null || fund.latestAum === undefined ? "-" : money(fund.latestAum)}</td>
+      <td data-label="Change" class="${deltaClass(fund.changeMillionBaht)}">${formatDelta(fund.changeMillionBaht, fund.changePct)}</td>
+      <td data-label="NAV">${fund.latest?.nav ?? "-"}</td>
+      <td data-label="NAV Date">${fund.latest?.navDate ?? "-"}</td>
+      <td data-label="Source">${escapeHtml(fund.source || "user list")}</td>
     </tr>
   `;
 }
@@ -380,6 +430,10 @@ function groupFunds(funds, groupBy) {
 function detectTheme(fund) {
   const code = fund.code.toUpperCase();
   const group = String(fund.group || "").toUpperCase();
+  if (group.includes("GOLD") || code.includes("GOLD")) return "Gold";
+  if (group.includes("GRID") || code.includes("GRID")) return "Smart Grid";
+  if (group.includes("DRAM") || code.includes("DRAM")) return "DRAM / AI Memory";
+  if (group.includes("HYDROGEN") || code.includes("HYDROGEN")) return "Hydrogen";
   if (group.includes("CHINA") || code.includes("CHINA")) return "China";
   if (group.includes("EURO") || code.includes("EURO")) return "Euro";
   if (group.includes("THAILAND") || code.includes("THAI") || code.includes("TX8020")) return "Thailand";
@@ -402,6 +456,10 @@ function detectProvider(fund) {
   const code = fund.code.toUpperCase();
   if (code.startsWith("TL")) return "TL / Talis";
   if (code.startsWith("MEGA")) return "MEGA";
+  if (code.startsWith("LH")) return "LH Fund";
+  if (code.startsWith("ONE")) return "ONEAM";
+  if (code.startsWith("ES")) return "Eastspring";
+  if (code.startsWith("DAOL")) return "DAOL";
   return fund.source || "Other";
 }
 

@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fetchTalisFundHistory, fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "../server-lib/talis-public.js";
+import { mergeSettradeHistoryRows } from "../server-lib/settrade-public.js";
 
 const ROOT = process.cwd();
 const configPath = path.join(ROOT, "config", "funds.json");
@@ -29,6 +30,7 @@ const summary = {
   removedEstimatedRows,
   latestImported: latestImport.imported,
   importedHistoryRows: 0,
+  importedSettradeRows: 0,
   funds: []
 };
 
@@ -69,6 +71,10 @@ for (const fund of funds) {
     last: selected.at(-1)?.navDate || null
   });
 }
+
+const settrade = await mergeSettradeHistoryRows({ config, history });
+summary.importedSettradeRows = settrade.imported;
+summary.settradeFunds = settrade.funds;
 
 history = pruneHistory(history, new Set(funds.map((fund) => fund.code)), cutoff);
 await fs.mkdir(path.dirname(historyPath), { recursive: true });
