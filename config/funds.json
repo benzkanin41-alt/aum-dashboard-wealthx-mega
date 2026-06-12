@@ -67,7 +67,13 @@
       "funds": [
         { "code": "LHDRAM", "group": "DRAM / AI Memory", "identifierType": "proj_id", "identifier": "M0561_2569", "source": "WealthX promoted / LH Fund", "dataSource": "settrade" },
         { "code": "ES-GRID", "group": "Smart Grid", "identifierType": "proj_id", "identifier": "M0288_2569", "source": "WealthX announcement / Eastspring", "dataSource": "settrade" },
-        { "code": "DAOL-HYDROGEN", "group": "Hydrogen", "identifierType": "proj_id", "identifier": "M0529_2569", "source": "WealthX announcement / DAOL", "dataSource": "settrade" }
+        { "code": "DAOL-HYDROGEN", "group": "Hydrogen", "identifierType": "proj_id", "identifier": "M0529_2569", "source": "WealthX announcement / DAOL", "dataSource": "settrade" },
+        { "code": "TLGOLDPLUS", "group": "Gold", "identifierType": "fund_class_name", "identifier": "TLGOLDPLUS", "source": "WealthX public page / Talis" },
+        { "code": "KT-GOLDUH-A", "group": "Gold", "identifierType": "fund_class_name", "identifier": "KT-GOLDUH-A", "source": "WealthX announcement / KTAM", "dataSource": "settrade" },
+        { "code": "DAOL-GAS", "group": "Natural Gas", "identifierType": "fund_class_name", "identifier": "DAOL-GAS", "source": "WealthX announcement / DAOL", "dataSource": "settrade" },
+        { "code": "MATECH-A", "group": "Asia Technology", "identifierType": "fund_class_name", "identifier": "MATECH-A", "source": "WealthX announcement / MFC", "dataSource": "settrade" },
+        { "code": "MATECH-D", "group": "Asia Technology", "identifierType": "fund_class_name", "identifier": "MATECH-D", "source": "WealthX announcement / MFC", "dataSource": "settrade" },
+        { "code": "ES-GTECH", "group": "Global Technology", "identifierType": "fund_class_name", "identifier": "ES-GTECH", "source": "WealthX announcement / Eastspring", "dataSource": "settrade" }
       ]
     }
   ]
