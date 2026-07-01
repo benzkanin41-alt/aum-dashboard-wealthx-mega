@@ -121353,7 +121353,6 @@
       }
     }
   },
-  "KT-BAI": {},
   "PRINCIPAL VNEI-EX": {
     "2026-06-29": {
       "code": "PRINCIPAL VNEI-EX",
@@ -121533,5 +121532,6 @@
         "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
       }
     }
-  }
+  },
+  "KT-BAI": {}
 }
