@@ -83277,6 +83277,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40020&p_lang=EN&year1=year1",
         "talisFundCode": "40020"
       }
+    },
+    "2026-07-01": {
+      "code": "MEGA20THAIESG",
+      "group": "Thailand",
+      "projId": "M0822_2566",
+      "navDate": "2026-07-01",
+      "aumMillionBaht": 51.48,
+      "nav": 9.4846,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG FUND",
+        "netAsset": 51482579.96,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40020&p_lang=EN&year1=year1",
+        "talisFundCode": "40020"
+      }
     }
   },
   "MEGATX8020C-L": {
@@ -86667,6 +86681,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43038&p_lang=EN&year1=year1",
         "talisFundCode": "43038"
       }
+    },
+    "2026-07-01": {
+      "code": "MEGATX8020C-L",
+      "group": "Thailand",
+      "projId": null,
+      "navDate": "2026-07-01",
+      "aumMillionBaht": 10.19,
+      "nav": 10.9629,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 C-L",
+        "netAsset": 10187484.85,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43038&p_lang=EN&year1=year1",
+        "talisFundCode": "43038"
+      }
     }
   },
   "MEGATX8020C-N": {
@@ -90054,6 +90082,20 @@
       "raw": {
         "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 C-N",
         "netAsset": 85273397.11,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42038&p_lang=EN&year1=year1",
+        "talisFundCode": "42038"
+      }
+    },
+    "2026-07-01": {
+      "code": "MEGATX8020C-N",
+      "group": "Thailand",
+      "projId": null,
+      "navDate": "2026-07-01",
+      "aumMillionBaht": 85.26,
+      "nav": 10.9629,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 C-N",
+        "netAsset": 85256299.99,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42038&p_lang=EN&year1=year1",
         "talisFundCode": "42038"
       }
@@ -106593,7 +106635,7 @@
     "2026-06-09": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-09",
       "aumMillionBaht": 27.93,
       "nav": 10,
@@ -106609,7 +106651,7 @@
     "2026-06-10": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-10",
       "aumMillionBaht": 27.93,
       "nav": 10.0029,
@@ -106625,7 +106667,7 @@
     "2026-06-11": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-11",
       "aumMillionBaht": 28.72,
       "nav": 10.2826,
@@ -106641,7 +106683,7 @@
     "2026-06-12": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-12",
       "aumMillionBaht": 29.95,
       "nav": 10.2193,
@@ -106657,7 +106699,7 @@
     "2026-06-15": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-15",
       "aumMillionBaht": 31.87,
       "nav": 10.4242,
@@ -106673,7 +106715,7 @@
     "2026-06-16": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-16",
       "aumMillionBaht": 32.86,
       "nav": 10.435,
@@ -106689,7 +106731,7 @@
     "2026-06-17": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-17",
       "aumMillionBaht": 32.86,
       "nav": 10.2264,
@@ -106705,7 +106747,7 @@
     "2026-06-18": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-18",
       "aumMillionBaht": 34.55,
       "nav": 10.2442,
@@ -106721,7 +106763,7 @@
     "2026-06-19": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-19",
       "aumMillionBaht": 35.11,
       "nav": 10.2647,
@@ -106737,7 +106779,7 @@
     "2026-06-22": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-22",
       "aumMillionBaht": 35.01,
       "nav": 10.2344,
@@ -106753,7 +106795,7 @@
     "2026-06-23": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-23",
       "aumMillionBaht": 36.42,
       "nav": 10.1176,
@@ -106769,7 +106811,7 @@
     "2026-06-24": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-24",
       "aumMillionBaht": 36.11,
       "nav": 9.896,
@@ -106785,7 +106827,7 @@
     "2026-06-25": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-25",
       "aumMillionBaht": 37.11,
       "nav": 9.9716,
@@ -106801,7 +106843,7 @@
     "2026-06-26": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-26",
       "aumMillionBaht": 39.06,
       "nav": 10.0913,
@@ -106817,7 +106859,7 @@
     "2026-06-29": {
       "code": "ONE-GOLD-X-UH",
       "group": "SeriesX ZERO / Gold",
-      "projId": null,
+      "projId": "M0517_2569",
       "navDate": "2026-06-29",
       "aumMillionBaht": 39.15,
       "nav": 9.9288,
@@ -109543,7 +109585,7 @@
     "2026-01-05": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-05",
       "aumMillionBaht": 0,
       "nav": 11.7253,
@@ -109557,7 +109599,7 @@
     "2026-01-06": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-06",
       "aumMillionBaht": 3.08,
       "nav": 11.742,
@@ -109571,7 +109613,7 @@
     "2026-01-07": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-07",
       "aumMillionBaht": 6.15,
       "nav": 11.7354,
@@ -109585,7 +109627,7 @@
     "2026-01-08": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-08",
       "aumMillionBaht": 9.55,
       "nav": 11.8165,
@@ -109599,7 +109641,7 @@
     "2026-01-09": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-09",
       "aumMillionBaht": 13.36,
       "nav": 11.873,
@@ -109613,7 +109655,7 @@
     "2026-01-12": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-12",
       "aumMillionBaht": 14.44,
       "nav": 11.8137,
@@ -109627,7 +109669,7 @@
     "2026-01-13": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-13",
       "aumMillionBaht": 15.75,
       "nav": 11.8862,
@@ -109641,7 +109683,7 @@
     "2026-01-14": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-14",
       "aumMillionBaht": 19.89,
       "nav": 11.8038,
@@ -109655,7 +109697,7 @@
     "2026-01-15": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-15",
       "aumMillionBaht": 20.13,
       "nav": 11.8265,
@@ -109669,7 +109711,7 @@
     "2026-01-16": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-16",
       "aumMillionBaht": 23.32,
       "nav": 11.8014,
@@ -109683,7 +109725,7 @@
     "2026-01-20": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-20",
       "aumMillionBaht": 23.79,
       "nav": 11.4531,
@@ -109697,7 +109739,7 @@
     "2026-01-21": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-21",
       "aumMillionBaht": 24.52,
       "nav": 11.6046,
@@ -109711,7 +109753,7 @@
     "2026-01-22": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-22",
       "aumMillionBaht": 25.22,
       "nav": 11.757,
@@ -109725,7 +109767,7 @@
     "2026-01-23": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-23",
       "aumMillionBaht": 27.1,
       "nav": 11.7041,
@@ -109739,7 +109781,7 @@
     "2026-01-26": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-26",
       "aumMillionBaht": 27.37,
       "nav": 11.7164,
@@ -109753,7 +109795,7 @@
     "2026-01-27": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-27",
       "aumMillionBaht": 30.68,
       "nav": 11.7756,
@@ -109767,7 +109809,7 @@
     "2026-01-28": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-28",
       "aumMillionBaht": 31.76,
       "nav": 11.7388,
@@ -109781,7 +109823,7 @@
     "2026-01-29": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-29",
       "aumMillionBaht": 32.25,
       "nav": 11.7765,
@@ -109795,7 +109837,7 @@
     "2026-01-30": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-01-30",
       "aumMillionBaht": 34.69,
       "nav": 11.8247,
@@ -109809,7 +109851,7 @@
     "2026-02-02": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-02",
       "aumMillionBaht": 35.24,
       "nav": 11.9571,
@@ -109823,7 +109865,7 @@
     "2026-02-03": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-03",
       "aumMillionBaht": 35.43,
       "nav": 11.8026,
@@ -109837,7 +109879,7 @@
     "2026-02-04": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-04",
       "aumMillionBaht": 38.24,
       "nav": 11.7983,
@@ -109851,7 +109893,7 @@
     "2026-02-05": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-05",
       "aumMillionBaht": 40.28,
       "nav": 11.7049,
@@ -109865,7 +109907,7 @@
     "2026-02-06": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-06",
       "aumMillionBaht": 41.67,
       "nav": 11.8992,
@@ -109879,7 +109921,7 @@
     "2026-02-09": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-09",
       "aumMillionBaht": 41.81,
       "nav": 11.7828,
@@ -109893,7 +109935,7 @@
     "2026-02-10": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-10",
       "aumMillionBaht": 41.86,
       "nav": 11.7234,
@@ -109907,7 +109949,7 @@
     "2026-02-11": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-11",
       "aumMillionBaht": 42.95,
       "nav": 11.6953,
@@ -109921,7 +109963,7 @@
     "2026-02-12": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-12",
       "aumMillionBaht": 42.32,
       "nav": 11.4949,
@@ -109935,7 +109977,7 @@
     "2026-02-13": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-13",
       "aumMillionBaht": 42.59,
       "nav": 11.5167,
@@ -109949,7 +109991,7 @@
     "2026-02-17": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-17",
       "aumMillionBaht": 44.04,
       "nav": 11.6029,
@@ -109963,7 +110005,7 @@
     "2026-02-18": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-18",
       "aumMillionBaht": 45.88,
       "nav": 11.6847,
@@ -109977,7 +110019,7 @@
     "2026-02-19": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-19",
       "aumMillionBaht": 45.64,
       "nav": 11.5908,
@@ -109991,7 +110033,7 @@
     "2026-02-20": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-20",
       "aumMillionBaht": 46.2,
       "nav": 11.7005,
@@ -110005,7 +110047,7 @@
     "2026-02-23": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-23",
       "aumMillionBaht": 45.84,
       "nav": 11.519,
@@ -110019,7 +110061,7 @@
     "2026-02-24": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-24",
       "aumMillionBaht": 56.61,
       "nav": 11.6106,
@@ -110033,7 +110075,7 @@
     "2026-02-25": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-25",
       "aumMillionBaht": 57.27,
       "nav": 11.7099,
@@ -110047,7 +110089,7 @@
     "2026-02-26": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-26",
       "aumMillionBaht": 57.13,
       "nav": 11.6394,
@@ -110061,7 +110103,7 @@
     "2026-02-27": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-02-27",
       "aumMillionBaht": 57.26,
       "nav": 11.5989,
@@ -110075,7 +110117,7 @@
     "2026-03-02": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-02",
       "aumMillionBaht": 61.95,
       "nav": 11.7359,
@@ -110089,7 +110131,7 @@
     "2026-03-04": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-04",
       "aumMillionBaht": 63.4,
       "nav": 11.7562,
@@ -110103,7 +110145,7 @@
     "2026-03-05": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-05",
       "aumMillionBaht": 64.11,
       "nav": 11.7308,
@@ -110117,7 +110159,7 @@
     "2026-03-06": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-06",
       "aumMillionBaht": 63.84,
       "nav": 11.6359,
@@ -110131,7 +110173,7 @@
     "2026-03-09": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-09",
       "aumMillionBaht": 64.87,
       "nav": 11.8461,
@@ -110145,7 +110187,7 @@
     "2026-03-10": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-10",
       "aumMillionBaht": 64.5,
       "nav": 11.6527,
@@ -110159,7 +110201,7 @@
     "2026-03-11": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-11",
       "aumMillionBaht": 64.87,
       "nav": 11.6533,
@@ -110173,7 +110215,7 @@
     "2026-03-12": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-12",
       "aumMillionBaht": 64.67,
       "nav": 11.5252,
@@ -110187,7 +110229,7 @@
     "2026-03-13": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-13",
       "aumMillionBaht": 66.83,
       "nav": 11.6272,
@@ -110201,7 +110243,7 @@
     "2026-03-16": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-16",
       "aumMillionBaht": 69.63,
       "nav": 11.814,
@@ -110215,7 +110257,7 @@
     "2026-03-17": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-17",
       "aumMillionBaht": 70.3,
       "nav": 11.7935,
@@ -110229,7 +110271,7 @@
     "2026-03-18": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-18",
       "aumMillionBaht": 69.9,
       "nav": 11.6452,
@@ -110243,7 +110285,7 @@
     "2026-03-19": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-19",
       "aumMillionBaht": 72.78,
       "nav": 11.76,
@@ -110257,7 +110299,7 @@
     "2026-03-20": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-20",
       "aumMillionBaht": 72.13,
       "nav": 11.5478,
@@ -110271,7 +110313,7 @@
     "2026-03-23": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-23",
       "aumMillionBaht": 74.85,
       "nav": 11.7682,
@@ -110285,7 +110327,7 @@
     "2026-03-24": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-24",
       "aumMillionBaht": 73.06,
       "nav": 11.5987,
@@ -110299,7 +110341,7 @@
     "2026-03-25": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-25",
       "aumMillionBaht": 73.44,
       "nav": 11.6758,
@@ -110313,7 +110355,7 @@
     "2026-03-26": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-26",
       "aumMillionBaht": 74.45,
       "nav": 11.5353,
@@ -110327,7 +110369,7 @@
     "2026-03-27": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-27",
       "aumMillionBaht": 74.56,
       "nav": 11.3608,
@@ -110341,7 +110383,7 @@
     "2026-03-30": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-30",
       "aumMillionBaht": 75.59,
       "nav": 11.3166,
@@ -110355,7 +110397,7 @@
     "2026-03-31": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-03-31",
       "aumMillionBaht": 77.61,
       "nav": 11.6512,
@@ -110369,7 +110411,7 @@
     "2026-04-01": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-01",
       "aumMillionBaht": 78.39,
       "nav": 11.6276,
@@ -110383,7 +110425,7 @@
     "2026-04-02": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-02",
       "aumMillionBaht": 82.23,
       "nav": 11.6897,
@@ -110397,7 +110439,7 @@
     "2026-04-07": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-07",
       "aumMillionBaht": 83.33,
       "nav": 11.6767,
@@ -110411,7 +110453,7 @@
     "2026-04-08": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-08",
       "aumMillionBaht": 84.58,
       "nav": 11.7891,
@@ -110425,7 +110467,7 @@
     "2026-04-09": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-09",
       "aumMillionBaht": 86.09,
       "nav": 11.884,
@@ -110439,7 +110481,7 @@
     "2026-04-10": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-10",
       "aumMillionBaht": 86.53,
       "nav": 11.9152,
@@ -110453,7 +110495,7 @@
     "2026-04-16": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-16",
       "aumMillionBaht": 89.04,
       "nav": 12.2124,
@@ -110467,7 +110509,7 @@
     "2026-04-17": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-17",
       "aumMillionBaht": 95.43,
       "nav": 12.3952,
@@ -110481,7 +110523,7 @@
     "2026-04-20": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-20",
       "aumMillionBaht": 99.89,
       "nav": 12.3835,
@@ -110495,7 +110537,7 @@
     "2026-04-21": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-21",
       "aumMillionBaht": 100.65,
       "nav": 12.295,
@@ -110509,7 +110551,7 @@
     "2026-04-22": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-22",
       "aumMillionBaht": 103.14,
       "nav": 12.4574,
@@ -110523,7 +110565,7 @@
     "2026-04-23": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-23",
       "aumMillionBaht": 105.29,
       "nav": 12.5076,
@@ -110537,7 +110579,7 @@
     "2026-04-24": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-24",
       "aumMillionBaht": 107.52,
       "nav": 12.6105,
@@ -110551,7 +110593,7 @@
     "2026-04-27": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-27",
       "aumMillionBaht": 107.86,
       "nav": 12.5807,
@@ -110565,7 +110607,7 @@
     "2026-04-28": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-28",
       "aumMillionBaht": 111.14,
       "nav": 12.5805,
@@ -110579,7 +110621,7 @@
     "2026-04-29": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-29",
       "aumMillionBaht": 113.36,
       "nav": 12.6565,
@@ -110593,7 +110635,7 @@
     "2026-04-30": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-04-30",
       "aumMillionBaht": 117.79,
       "nav": 12.7723,
@@ -110607,7 +110649,7 @@
     "2026-05-05": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-05",
       "aumMillionBaht": 120.3,
       "nav": 12.8876,
@@ -110621,7 +110663,7 @@
     "2026-05-06": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-06",
       "aumMillionBaht": 123.72,
       "nav": 12.8831,
@@ -110635,7 +110677,7 @@
     "2026-05-07": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-07",
       "aumMillionBaht": 126.47,
       "nav": 12.7886,
@@ -110649,7 +110691,7 @@
     "2026-05-08": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-08",
       "aumMillionBaht": 129.97,
       "nav": 12.9253,
@@ -110663,7 +110705,7 @@
     "2026-05-11": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-11",
       "aumMillionBaht": 134.9,
       "nav": 13.0431,
@@ -110677,7 +110719,7 @@
     "2026-05-12": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-12",
       "aumMillionBaht": 157.99,
       "nav": 13.0224,
@@ -110691,7 +110733,7 @@
     "2026-05-13": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-13",
       "aumMillionBaht": 160.49,
       "nav": 13.0812,
@@ -110705,7 +110747,7 @@
     "2026-05-14": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-14",
       "aumMillionBaht": 163.49,
       "nav": 13.1632,
@@ -110719,7 +110761,7 @@
     "2026-05-15": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-15",
       "aumMillionBaht": 168.59,
       "nav": 13.1257,
@@ -110733,7 +110775,7 @@
     "2026-05-18": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-18",
       "aumMillionBaht": 170.09,
       "nav": 13.0904,
@@ -110747,7 +110789,7 @@
     "2026-05-19": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-19",
       "aumMillionBaht": 178.64,
       "nav": 13.0324,
@@ -110761,7 +110803,7 @@
     "2026-05-20": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-20",
       "aumMillionBaht": 182.6,
       "nav": 13.1924,
@@ -110775,7 +110817,7 @@
     "2026-05-21": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-21",
       "aumMillionBaht": 184.38,
       "nav": 13.185,
@@ -110789,7 +110831,7 @@
     "2026-05-22": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-22",
       "aumMillionBaht": 190.14,
       "nav": 13.256,
@@ -110803,7 +110845,7 @@
     "2026-05-26": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-26",
       "aumMillionBaht": 192.3,
       "nav": 13.3378,
@@ -110817,7 +110859,7 @@
     "2026-05-27": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-27",
       "aumMillionBaht": 202.03,
       "nav": 13.3013,
@@ -110831,7 +110873,7 @@
     "2026-05-28": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-28",
       "aumMillionBaht": 207.31,
       "nav": 13.4212,
@@ -110845,7 +110887,7 @@
     "2026-05-29": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-05-29",
       "aumMillionBaht": 213.09,
       "nav": 13.416,
@@ -110859,7 +110901,7 @@
     "2026-06-02": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-02",
       "aumMillionBaht": 215.98,
       "nav": 13.4558,
@@ -110873,7 +110915,7 @@
     "2026-06-04": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-04",
       "aumMillionBaht": 222.01,
       "nav": 13.4651,
@@ -110887,7 +110929,7 @@
     "2026-06-05": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-05",
       "aumMillionBaht": 230.9,
       "nav": 13.0939,
@@ -110901,7 +110943,7 @@
     "2026-06-08": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-08",
       "aumMillionBaht": 235.33,
       "nav": 13.2185,
@@ -110915,7 +110957,7 @@
     "2026-06-09": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-09",
       "aumMillionBaht": 240.66,
       "nav": 13.174,
@@ -110929,7 +110971,7 @@
     "2026-06-10": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-10",
       "aumMillionBaht": 239.04,
       "nav": 12.98,
@@ -110943,7 +110985,7 @@
     "2026-06-11": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-11",
       "aumMillionBaht": 246.88,
       "nav": 13.216,
@@ -110957,7 +110999,7 @@
     "2026-06-12": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-12",
       "aumMillionBaht": 250.4,
       "nav": 13.1875,
@@ -110971,7 +111013,7 @@
     "2026-06-15": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-15",
       "aumMillionBaht": 253.4,
       "nav": 13.3669,
@@ -110985,7 +111027,7 @@
     "2026-06-16": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-16",
       "aumMillionBaht": 253.98,
       "nav": 13.2699,
@@ -110999,7 +111041,7 @@
     "2026-06-17": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-17",
       "aumMillionBaht": 254.99,
       "nav": 13.1284,
@@ -111013,7 +111055,7 @@
     "2026-06-18": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-18",
       "aumMillionBaht": 261.73,
       "nav": 13.3377,
@@ -111027,7 +111069,7 @@
     "2026-06-22": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-22",
       "aumMillionBaht": 270.75,
       "nav": 13.3608,
@@ -111041,7 +111083,7 @@
     "2026-06-23": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-23",
       "aumMillionBaht": 269.51,
       "nav": 13.264,
@@ -111055,7 +111097,7 @@
     "2026-06-24": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-24",
       "aumMillionBaht": 270.66,
       "nav": 13.3461,
@@ -111069,7 +111111,7 @@
     "2026-06-25": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-25",
       "aumMillionBaht": 275.59,
       "nav": 13.3218,
@@ -111083,7 +111125,7 @@
     "2026-06-26": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-26",
       "aumMillionBaht": 277.57,
       "nav": 13.2261,
@@ -111097,7 +111139,7 @@
     "2026-06-29": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-29",
       "aumMillionBaht": 284.86,
       "nav": 13.4362,
@@ -111111,7 +111153,7 @@
     "2026-06-30": {
       "code": "TLUS500-UH-X",
       "group": "Series X / S&P 500",
-      "projId": null,
+      "projId": "M0140_2568",
       "navDate": "2026-06-30",
       "aumMillionBaht": 294.45,
       "nav": 13.4938,
@@ -114565,7 +114607,7 @@
     "2026-01-05": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-05",
       "aumMillionBaht": 0,
       "nav": 10.5708,
@@ -114579,7 +114621,7 @@
     "2026-01-06": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-06",
       "aumMillionBaht": 1.05,
       "nav": 10.6161,
@@ -114593,7 +114635,7 @@
     "2026-01-07": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-07",
       "aumMillionBaht": 3.58,
       "nav": 10.6549,
@@ -114607,7 +114649,7 @@
     "2026-01-08": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-08",
       "aumMillionBaht": 4.3,
       "nav": 10.6693,
@@ -114621,7 +114663,7 @@
     "2026-01-09": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-09",
       "aumMillionBaht": 4.85,
       "nav": 10.7573,
@@ -114635,7 +114677,7 @@
     "2026-01-12": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-12",
       "aumMillionBaht": 5.59,
       "nav": 10.6952,
@@ -114649,7 +114691,7 @@
     "2026-01-13": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-13",
       "aumMillionBaht": 6.46,
       "nav": 10.7656,
@@ -114663,7 +114705,7 @@
     "2026-01-14": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-14",
       "aumMillionBaht": 7.02,
       "nav": 10.6296,
@@ -114677,7 +114719,7 @@
     "2026-01-15": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-15",
       "aumMillionBaht": 7.29,
       "nav": 10.659,
@@ -114691,7 +114733,7 @@
     "2026-01-16": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-16",
       "aumMillionBaht": 15.57,
       "nav": 10.6344,
@@ -114705,7 +114747,7 @@
     "2026-01-20": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-20",
       "aumMillionBaht": 18.06,
       "nav": 10.313,
@@ -114719,7 +114761,7 @@
     "2026-01-21": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-21",
       "aumMillionBaht": 18.63,
       "nav": 10.4698,
@@ -114733,7 +114775,7 @@
     "2026-01-22": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-22",
       "aumMillionBaht": 19.57,
       "nav": 10.6304,
@@ -114747,7 +114789,7 @@
     "2026-01-23": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-23",
       "aumMillionBaht": 20.34,
       "nav": 10.6114,
@@ -114761,7 +114803,7 @@
     "2026-01-26": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-26",
       "aumMillionBaht": 20.54,
       "nav": 10.614,
@@ -114775,7 +114817,7 @@
     "2026-01-27": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-27",
       "aumMillionBaht": 20.84,
       "nav": 10.7211,
@@ -114789,7 +114831,7 @@
     "2026-01-28": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-28",
       "aumMillionBaht": 21.3,
       "nav": 10.724,
@@ -114803,7 +114845,7 @@
     "2026-01-29": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-29",
       "aumMillionBaht": 21.37,
       "nav": 10.7165,
@@ -114817,7 +114859,7 @@
     "2026-01-30": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-01-30",
       "aumMillionBaht": 22.01,
       "nav": 10.6647,
@@ -114831,7 +114873,7 @@
     "2026-02-02": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-02",
       "aumMillionBaht": 22.52,
       "nav": 10.8044,
@@ -114845,7 +114887,7 @@
     "2026-02-03": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-03",
       "aumMillionBaht": 22.32,
       "nav": 10.5889,
@@ -114859,7 +114901,7 @@
     "2026-02-04": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-04",
       "aumMillionBaht": 22.13,
       "nav": 10.4508,
@@ -114873,7 +114915,7 @@
     "2026-02-05": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-05",
       "aumMillionBaht": 22.33,
       "nav": 10.3528,
@@ -114887,7 +114929,7 @@
     "2026-02-06": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-06",
       "aumMillionBaht": 23.65,
       "nav": 10.5418,
@@ -114901,7 +114943,7 @@
     "2026-02-09": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-09",
       "aumMillionBaht": 24.32,
       "nav": 10.4653,
@@ -114915,7 +114957,7 @@
     "2026-02-10": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-10",
       "aumMillionBaht": 24.18,
       "nav": 10.394,
@@ -114929,7 +114971,7 @@
     "2026-02-11": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-11",
       "aumMillionBaht": 23.86,
       "nav": 10.3973,
@@ -114943,7 +114985,7 @@
     "2026-02-12": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-12",
       "aumMillionBaht": 23.46,
       "nav": 10.1685,
@@ -114957,7 +114999,7 @@
     "2026-02-13": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-13",
       "aumMillionBaht": 23.64,
       "nav": 10.2025,
@@ -114971,7 +115013,7 @@
     "2026-02-17": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-17",
       "aumMillionBaht": 23.8,
       "nav": 10.2522,
@@ -114985,7 +115027,7 @@
     "2026-02-18": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-18",
       "aumMillionBaht": 24.43,
       "nav": 10.3478,
@@ -114999,7 +115041,7 @@
     "2026-02-19": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-19",
       "aumMillionBaht": 24.29,
       "nav": 10.2534,
@@ -115013,7 +115055,7 @@
     "2026-02-20": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-20",
       "aumMillionBaht": 24.62,
       "nav": 10.3679,
@@ -115027,7 +115069,7 @@
     "2026-02-23": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-23",
       "aumMillionBaht": 24.29,
       "nav": 10.1857,
@@ -115041,7 +115083,7 @@
     "2026-02-24": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-24",
       "aumMillionBaht": 25.33,
       "nav": 10.3026,
@@ -115055,7 +115097,7 @@
     "2026-02-25": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-25",
       "aumMillionBaht": 25.8,
       "nav": 10.4503,
@@ -115069,7 +115111,7 @@
     "2026-02-26": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-26",
       "aumMillionBaht": 25.42,
       "nav": 10.3235,
@@ -115083,7 +115125,7 @@
     "2026-02-27": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-02-27",
       "aumMillionBaht": 25.25,
       "nav": 10.299,
@@ -115097,7 +115139,7 @@
     "2026-03-02": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-02",
       "aumMillionBaht": 25.57,
       "nav": 10.4335,
@@ -115111,7 +115153,7 @@
     "2026-03-04": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-04",
       "aumMillionBaht": 26.15,
       "nav": 10.5116,
@@ -115125,7 +115167,7 @@
     "2026-03-05": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-05",
       "aumMillionBaht": 26.56,
       "nav": 10.5199,
@@ -115139,7 +115181,7 @@
     "2026-03-06": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-06",
       "aumMillionBaht": 26.41,
       "nav": 10.4154,
@@ -115153,7 +115195,7 @@
     "2026-03-09": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-09",
       "aumMillionBaht": 26.98,
       "nav": 10.6501,
@@ -115167,7 +115209,7 @@
     "2026-03-10": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-10",
       "aumMillionBaht": 27.42,
       "nav": 10.4975,
@@ -115181,7 +115223,7 @@
     "2026-03-11": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-11",
       "aumMillionBaht": 27.72,
       "nav": 10.5068,
@@ -115195,7 +115237,7 @@
     "2026-03-12": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-12",
       "aumMillionBaht": 27.76,
       "nav": 10.3734,
@@ -115209,7 +115251,7 @@
     "2026-03-13": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-13",
       "aumMillionBaht": 28.98,
       "nav": 10.4611,
@@ -115223,7 +115265,7 @@
     "2026-03-16": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-16",
       "aumMillionBaht": 29.97,
       "nav": 10.6415,
@@ -115237,7 +115279,7 @@
     "2026-03-17": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-17",
       "aumMillionBaht": 30.27,
       "nav": 10.6477,
@@ -115251,7 +115293,7 @@
     "2026-03-18": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-18",
       "aumMillionBaht": 30.5,
       "nav": 10.5083,
@@ -115265,7 +115307,7 @@
     "2026-03-19": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-19",
       "aumMillionBaht": 31.15,
       "nav": 10.611,
@@ -115279,7 +115321,7 @@
     "2026-03-20": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-20",
       "aumMillionBaht": 30.84,
       "nav": 10.3753,
@@ -115293,7 +115335,7 @@
     "2026-03-23": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-23",
       "aumMillionBaht": 31.88,
       "nav": 10.5796,
@@ -115307,7 +115349,7 @@
     "2026-03-24": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-24",
       "aumMillionBaht": 30.9,
       "nav": 10.3939,
@@ -115321,7 +115363,7 @@
     "2026-03-25": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-25",
       "aumMillionBaht": 31.52,
       "nav": 10.4749,
@@ -115335,7 +115377,7 @@
     "2026-03-26": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-26",
       "aumMillionBaht": 31.32,
       "nav": 10.2842,
@@ -115349,7 +115391,7 @@
     "2026-03-27": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-27",
       "aumMillionBaht": 33,
       "nav": 10.1054,
@@ -115363,7 +115405,7 @@
     "2026-03-30": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-30",
       "aumMillionBaht": 32.95,
       "nav": 10.0239,
@@ -115377,7 +115419,7 @@
     "2026-03-31": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-03-31",
       "aumMillionBaht": 36.02,
       "nav": 10.369,
@@ -115391,7 +115433,7 @@
     "2026-04-01": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-01",
       "aumMillionBaht": 36.57,
       "nav": 10.3992,
@@ -115405,7 +115447,7 @@
     "2026-04-02": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-02",
       "aumMillionBaht": 37.6,
       "nav": 10.4536,
@@ -115419,7 +115461,7 @@
     "2026-04-07": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-07",
       "aumMillionBaht": 38.13,
       "nav": 10.4534,
@@ -115433,7 +115475,7 @@
     "2026-04-08": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-08",
       "aumMillionBaht": 39.27,
       "nav": 10.6001,
@@ -115447,7 +115489,7 @@
     "2026-04-09": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-09",
       "aumMillionBaht": 39.78,
       "nav": 10.6926,
@@ -115461,7 +115503,7 @@
     "2026-04-10": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-10",
       "aumMillionBaht": 40.55,
       "nav": 10.7252,
@@ -115475,7 +115517,7 @@
     "2026-04-16": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-16",
       "aumMillionBaht": 45.3,
       "nav": 11.1546,
@@ -115489,7 +115531,7 @@
     "2026-04-17": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-17",
       "aumMillionBaht": 46.23,
       "nav": 11.3311,
@@ -115503,7 +115545,7 @@
     "2026-04-20": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-20",
       "aumMillionBaht": 45.95,
       "nav": 11.3052,
@@ -115517,7 +115559,7 @@
     "2026-04-21": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-21",
       "aumMillionBaht": 46.53,
       "nav": 11.2596,
@@ -115531,7 +115573,7 @@
     "2026-04-22": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-22",
       "aumMillionBaht": 53.53,
       "nav": 11.4758,
@@ -115545,7 +115587,7 @@
     "2026-04-23": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-23",
       "aumMillionBaht": 54.28,
       "nav": 11.5077,
@@ -115559,7 +115601,7 @@
     "2026-04-24": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-24",
       "aumMillionBaht": 57.48,
       "nav": 11.7344,
@@ -115573,7 +115615,7 @@
     "2026-04-27": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-27",
       "aumMillionBaht": 57.92,
       "nav": 11.6924,
@@ -115587,7 +115629,7 @@
     "2026-04-28": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-28",
       "aumMillionBaht": 61.45,
       "nav": 11.6326,
@@ -115601,7 +115643,7 @@
     "2026-04-29": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-29",
       "aumMillionBaht": 63.11,
       "nav": 11.7747,
@@ -115615,7 +115657,7 @@
     "2026-04-30": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-04-30",
       "aumMillionBaht": 63.82,
       "nav": 11.8735,
@@ -115629,7 +115671,7 @@
     "2026-05-05": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-05",
       "aumMillionBaht": 66.61,
       "nav": 12.1475,
@@ -115643,7 +115685,7 @@
     "2026-05-06": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-06",
       "aumMillionBaht": 72.08,
       "nav": 12.2161,
@@ -115657,7 +115699,7 @@
     "2026-05-07": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-07",
       "aumMillionBaht": 72.81,
       "nav": 12.1535,
@@ -115671,7 +115713,7 @@
     "2026-05-08": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-08",
       "aumMillionBaht": 77.43,
       "nav": 12.4695,
@@ -115685,7 +115727,7 @@
     "2026-05-11": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-11",
       "aumMillionBaht": 80.23,
       "nav": 12.5925,
@@ -115699,7 +115741,7 @@
     "2026-05-12": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-12",
       "aumMillionBaht": 80.31,
       "nav": 12.4449,
@@ -115713,7 +115755,7 @@
     "2026-05-13": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-13",
       "aumMillionBaht": 84.04,
       "nav": 12.5609,
@@ -115727,7 +115769,7 @@
     "2026-05-14": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-14",
       "aumMillionBaht": 84.72,
       "nav": 12.6359,
@@ -115741,7 +115783,7 @@
     "2026-05-15": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-15",
       "aumMillionBaht": 90.59,
       "nav": 12.5627,
@@ -115755,7 +115797,7 @@
     "2026-05-18": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-18",
       "aumMillionBaht": 91.92,
       "nav": 12.4838,
@@ -115769,7 +115811,7 @@
     "2026-05-19": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-19",
       "aumMillionBaht": 92.38,
       "nav": 12.4317,
@@ -115783,7 +115825,7 @@
     "2026-05-20": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-20",
       "aumMillionBaht": 94.77,
       "nav": 12.6636,
@@ -115797,7 +115839,7 @@
     "2026-05-21": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-21",
       "aumMillionBaht": 94.95,
       "nav": 12.6578,
@@ -115811,7 +115853,7 @@
     "2026-05-22": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-22",
       "aumMillionBaht": 96,
       "nav": 12.7293,
@@ -115825,7 +115867,7 @@
     "2026-05-26": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-26",
       "aumMillionBaht": 98.45,
       "nav": 12.9506,
@@ -115839,7 +115881,7 @@
     "2026-05-27": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-27",
       "aumMillionBaht": 104.69,
       "nav": 12.8993,
@@ -115853,7 +115895,7 @@
     "2026-05-28": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-28",
       "aumMillionBaht": 106.67,
       "nav": 13.0546,
@@ -115867,7 +115909,7 @@
     "2026-05-29": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-05-29",
       "aumMillionBaht": 107.34,
       "nav": 13.0643,
@@ -115881,7 +115923,7 @@
     "2026-06-02": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-02",
       "aumMillionBaht": 111.76,
       "nav": 13.1917,
@@ -115895,7 +115937,7 @@
     "2026-06-04": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-04",
       "aumMillionBaht": 114.59,
       "nav": 13.142,
@@ -115909,7 +115951,7 @@
     "2026-06-05": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-05",
       "aumMillionBaht": 111.29,
       "nav": 12.4966,
@@ -115923,7 +115965,7 @@
     "2026-06-08": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-08",
       "aumMillionBaht": 116.12,
       "nav": 12.7798,
@@ -115937,7 +115979,7 @@
     "2026-06-09": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-09",
       "aumMillionBaht": 118.8,
       "nav": 12.6266,
@@ -115951,7 +115993,7 @@
     "2026-06-10": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-10",
       "aumMillionBaht": 117.9,
       "nav": 12.3991,
@@ -115965,7 +116007,7 @@
     "2026-06-11": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-11",
       "aumMillionBaht": 122.55,
       "nav": 12.8112,
@@ -115979,7 +116021,7 @@
     "2026-06-12": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-12",
       "aumMillionBaht": 122.09,
       "nav": 12.799,
@@ -115993,7 +116035,7 @@
     "2026-06-15": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-15",
       "aumMillionBaht": 126.52,
       "nav": 13.1444,
@@ -116007,7 +116049,7 @@
     "2026-06-16": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-16",
       "aumMillionBaht": 128.41,
       "nav": 12.8808,
@@ -116021,7 +116063,7 @@
     "2026-06-17": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-17",
       "aumMillionBaht": 128.88,
       "nav": 12.7761,
@@ -116035,7 +116077,7 @@
     "2026-06-18": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-18",
       "aumMillionBaht": 137.17,
       "nav": 13.1512,
@@ -116049,7 +116091,7 @@
     "2026-06-22": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-22",
       "aumMillionBaht": 139.63,
       "nav": 13.2065,
@@ -116063,7 +116105,7 @@
     "2026-06-23": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-23",
       "aumMillionBaht": 138.13,
       "nav": 12.8612,
@@ -116077,7 +116119,7 @@
     "2026-06-24": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-24",
       "aumMillionBaht": 142.36,
       "nav": 12.8946,
@@ -116091,7 +116133,7 @@
     "2026-06-25": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-25",
       "aumMillionBaht": 145.02,
       "nav": 12.9728,
@@ -116105,7 +116147,7 @@
     "2026-06-26": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-26",
       "aumMillionBaht": 144.49,
       "nav": 12.8174,
@@ -116119,7 +116161,7 @@
     "2026-06-29": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-29",
       "aumMillionBaht": 149.88,
       "nav": 13.0875,
@@ -116133,7 +116175,7 @@
     "2026-06-30": {
       "code": "TLUSNDQ-UH-X",
       "group": "Series X / Nasdaq 100",
-      "projId": null,
+      "projId": "M0055_2568",
       "navDate": "2026-06-30",
       "aumMillionBaht": 152.42,
       "nav": 13.2764,
@@ -120236,6 +120278,1259 @@
         "netAsset": 48347200.48,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40058&p_lang=EN&year1=year1",
         "talisFundCode": "40058"
+      }
+    }
+  },
+  "TLSPACE-X": {
+    "2026-06-30": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-30",
+      "aumMillionBaht": 68.12,
+      "nav": 10.2552,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 68123317.55,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-16": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-16",
+      "aumMillionBaht": 69.31,
+      "nav": 9.9925,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 69310627.7,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-17": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-17",
+      "aumMillionBaht": 70.15,
+      "nav": 10.1132,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 70148063.58,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-18": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-18",
+      "aumMillionBaht": 70.68,
+      "nav": 10.048,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 70680665.68,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-22": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-22",
+      "aumMillionBaht": 68.51,
+      "nav": 9.6743,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 68505000.83,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-23": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-23",
+      "aumMillionBaht": 66.03,
+      "nav": 9.4974,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 66028938.43,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-24": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-24",
+      "aumMillionBaht": 61.74,
+      "nav": 9.0092,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 61741131.98,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-25": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-25",
+      "aumMillionBaht": 59.18,
+      "nav": 8.6374,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 59182620.59,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-26": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-26",
+      "aumMillionBaht": 60.76,
+      "nav": 8.8921,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 60761106.13,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-06-29": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-06-29",
+      "aumMillionBaht": 65.79,
+      "nav": 9.9016,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 65787352.69,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    }
+  },
+  "TLUSHG-UH-X": {
+    "2026-06-30": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-30",
+      "aumMillionBaht": 135.15,
+      "nav": 9.9292,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 135150082.58,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-05-27": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-05-27",
+      "aumMillionBaht": 117.12,
+      "nav": 9.992,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 117119947.96,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-05-28": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-05-28",
+      "aumMillionBaht": 118.51,
+      "nav": 10.1105,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 118509061.22,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-05-29": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-05-29",
+      "aumMillionBaht": 119.44,
+      "nav": 10.1188,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 119435129.04,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-02": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-02",
+      "aumMillionBaht": 120.44,
+      "nav": 10.1022,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 120438008.33,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-04": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-04",
+      "aumMillionBaht": 125.16,
+      "nav": 10.048,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 125159530.01,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-05": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-05",
+      "aumMillionBaht": 120.8,
+      "nav": 9.7339,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 120801792.09,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-08": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-08",
+      "aumMillionBaht": 122.59,
+      "nav": 9.8173,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 122586665.83,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-09": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-09",
+      "aumMillionBaht": 123.54,
+      "nav": 9.731,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 123535717.64,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-10": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-10",
+      "aumMillionBaht": 124.4,
+      "nav": 9.5502,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 124397119.84,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-11": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-11",
+      "aumMillionBaht": 126.61,
+      "nav": 9.7125,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 126611309.79,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-12": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-12",
+      "aumMillionBaht": 126.63,
+      "nav": 9.65,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 126629803.61,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-15": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-15",
+      "aumMillionBaht": 130.18,
+      "nav": 9.8394,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 130181682.37,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-16": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-16",
+      "aumMillionBaht": 130.17,
+      "nav": 9.7496,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 130168031.02,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-17": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-17",
+      "aumMillionBaht": 129.36,
+      "nav": 9.6239,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 129360495.11,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-18": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-18",
+      "aumMillionBaht": 132.03,
+      "nav": 9.8072,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 132025229.48,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-22": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-22",
+      "aumMillionBaht": 131.34,
+      "nav": 9.7362,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 131335815.31,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-23": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-23",
+      "aumMillionBaht": 130.25,
+      "nav": 9.6702,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 130251481.54,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-24": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-24",
+      "aumMillionBaht": 131.29,
+      "nav": 9.7327,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 131294617.29,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-25": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-25",
+      "aumMillionBaht": 130.04,
+      "nav": 9.6114,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 130039016.01,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-26": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-26",
+      "aumMillionBaht": 131.36,
+      "nav": 9.6886,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 131357892.23,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    },
+    "2026-06-29": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-06-29",
+      "aumMillionBaht": 133.57,
+      "nav": 9.8382,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 133571722.7,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
+    }
+  },
+  "TLUSHG-H-X": {
+    "2026-06-30": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-30",
+      "aumMillionBaht": 38.16,
+      "nav": 9.7515,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 38159901.89,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-05-27": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-05-27",
+      "aumMillionBaht": 35.99,
+      "nav": 9.992,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 35986378.79,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-05-28": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-05-28",
+      "aumMillionBaht": 36.4,
+      "nav": 10.1078,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36403458.97,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-05-29": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-05-29",
+      "aumMillionBaht": 36.93,
+      "nav": 10.1437,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36932721.65,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-02": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-02",
+      "aumMillionBaht": 37.57,
+      "nav": 10.1334,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 37574423.15,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-04": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-04",
+      "aumMillionBaht": 38.25,
+      "nav": 10.042,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 38250178.19,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-05": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-05",
+      "aumMillionBaht": 37.45,
+      "nav": 9.7452,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 37453173.26,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-08": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-08",
+      "aumMillionBaht": 35.81,
+      "nav": 9.7544,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 35810106.98,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-09": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-09",
+      "aumMillionBaht": 35.68,
+      "nav": 9.6759,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 35677865.87,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-10": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-10",
+      "aumMillionBaht": 35.36,
+      "nav": 9.486,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 35358804.96,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-11": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-11",
+      "aumMillionBaht": 35.96,
+      "nav": 9.6321,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 35962201.27,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-12": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-12",
+      "aumMillionBaht": 36.03,
+      "nav": 9.6412,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36028218,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-15": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-15",
+      "aumMillionBaht": 37.03,
+      "nav": 9.8647,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 37028797.83,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-16": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-16",
+      "aumMillionBaht": 37.17,
+      "nav": 9.792,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 37165536.89,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-17": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-17",
+      "aumMillionBaht": 36.91,
+      "nav": 9.6486,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36908848.47,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-18": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-18",
+      "aumMillionBaht": 37.58,
+      "nav": 9.7736,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 37575244.42,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-22": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-22",
+      "aumMillionBaht": 37.11,
+      "nav": 9.6483,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 37106269.8,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-23": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-23",
+      "aumMillionBaht": 36.66,
+      "nav": 9.5136,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36659705.07,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-24": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-24",
+      "aumMillionBaht": 36.7,
+      "nav": 9.5087,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36696169.67,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-25": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-25",
+      "aumMillionBaht": 36.29,
+      "nav": 9.4024,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36286301,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-26": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-26",
+      "aumMillionBaht": 36.57,
+      "nav": 9.4635,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 36567814.77,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-06-29": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-06-29",
+      "aumMillionBaht": 37.7,
+      "nav": 9.6424,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 37697342.28,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    }
+  },
+  "TLUSHGRMF": {
+    "2026-06-30": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-30",
+      "aumMillionBaht": 28.96,
+      "nav": 9.9305,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 28959643.76,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-05-27": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-05-27",
+      "aumMillionBaht": 22.06,
+      "nav": 9.9919,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 22063962.73,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-05-28": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-05-28",
+      "aumMillionBaht": 22.32,
+      "nav": 10.1093,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 22323097.1,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-05-29": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-05-29",
+      "aumMillionBaht": 22.94,
+      "nav": 10.1179,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 22940615.32,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-02": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-02",
+      "aumMillionBaht": 23.54,
+      "nav": 10.1014,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 23538765.65,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-04": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-04",
+      "aumMillionBaht": 23.94,
+      "nav": 10.0474,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 23942707.15,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-05": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-05",
+      "aumMillionBaht": 23.76,
+      "nav": 9.7389,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 23755305.47,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-08": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-08",
+      "aumMillionBaht": 24.06,
+      "nav": 9.8208,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 24059435.06,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-09": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-09",
+      "aumMillionBaht": 25.18,
+      "nav": 9.7394,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 25180013.53,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-10": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-10",
+      "aumMillionBaht": 25.09,
+      "nav": 9.5583,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 25094884.33,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-11": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-11",
+      "aumMillionBaht": 26.41,
+      "nav": 9.7138,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 26407380.92,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-12": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-12",
+      "aumMillionBaht": 26.31,
+      "nav": 9.6524,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 26314090.06,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-15": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-15",
+      "aumMillionBaht": 26.96,
+      "nav": 9.8424,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 26958364.23,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-16": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-16",
+      "aumMillionBaht": 27.15,
+      "nav": 9.7539,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 27150846.19,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-17": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-17",
+      "aumMillionBaht": 26.87,
+      "nav": 9.6289,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 26874347.16,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-18": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-18",
+      "aumMillionBaht": 27.53,
+      "nav": 9.8111,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 27532275.36,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-22": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-22",
+      "aumMillionBaht": 27.23,
+      "nav": 9.74,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 27228465.02,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-23": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-23",
+      "aumMillionBaht": 27.09,
+      "nav": 9.6743,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 27086586.53,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-24": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-24",
+      "aumMillionBaht": 27.61,
+      "nav": 9.7357,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 27611024.65,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-25": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-25",
+      "aumMillionBaht": 27.44,
+      "nav": 9.6151,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 27436423.76,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-26": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-26",
+      "aumMillionBaht": 27.89,
+      "nav": 9.6913,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 27885571.41,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    },
+    "2026-06-29": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-06-29",
+      "aumMillionBaht": 28.52,
+      "nav": 9.84,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 28524038.55,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
+    }
+  },
+  "KT-BAI": {},
+  "PRINCIPAL VNEI-EX": {
+    "2026-06-29": {
+      "code": "PRINCIPAL VNEI-EX",
+      "group": "Vietnam / VN30",
+      "projId": "M0528_2569",
+      "navDate": "2026-06-29",
+      "aumMillionBaht": 17.46,
+      "nav": 9.9774,
+      "raw": {
+        "fundName": "กองทุนเปิดพรินซิเพิล เวียดนาม อิควิตี้ อินเด็กซ์",
+        "netAsset": 17457930.81,
+        "source": "https://www.settrade.com/th/mutualfund/quote/PRINCIPAL%20VNEI-EX/overview",
+        "settradeSymbol": "PRINCIPAL VNEI-EX",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน พรินซิเพิล จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0528_2569.pdf"
+      }
+    },
+    "2026-06-30": {
+      "code": "PRINCIPAL VNEI-EX",
+      "group": "Vietnam / VN30",
+      "projId": "M0528_2569",
+      "navDate": "2026-06-30",
+      "aumMillionBaht": 17.3,
+      "nav": 9.8883,
+      "raw": {
+        "fundName": "กองทุนเปิดพรินซิเพิล เวียดนาม อิควิตี้ อินเด็กซ์",
+        "netAsset": 17302057.87,
+        "source": "https://www.settrade.com/th/mutualfund/quote/PRINCIPAL%20VNEI-EX/overview",
+        "settradeSymbol": "PRINCIPAL VNEI-EX",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน พรินซิเพิล จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0528_2569.pdf"
+      }
+    }
+  },
+  "LHPHOTONICS": {
+    "2026-06-17": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-17",
+      "aumMillionBaht": 46.5,
+      "nav": 10,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 46499447.36,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-18": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-18",
+      "aumMillionBaht": 46.6,
+      "nav": 10.0208,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 46596303.81,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-19": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-19",
+      "aumMillionBaht": 46.56,
+      "nav": 10.0135,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 46562395.58,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-22": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-22",
+      "aumMillionBaht": 47.99,
+      "nav": 10.3207,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 47991017.05,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-23": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-23",
+      "aumMillionBaht": 50.24,
+      "nav": 9.588,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 50239267.96,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-24": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-24",
+      "aumMillionBaht": 51.35,
+      "nav": 9.5672,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 51353734.54,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-25": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-25",
+      "aumMillionBaht": 54.21,
+      "nav": 9.9326,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 54206515.27,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-26": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-26",
+      "aumMillionBaht": 52.47,
+      "nav": 9.5047,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 52473232.24,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
+    },
+    "2026-06-29": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-06-29",
+      "aumMillionBaht": 53.21,
+      "nav": 10.0852,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 53210958.9,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
       }
     }
   }

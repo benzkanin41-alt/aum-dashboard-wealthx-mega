@@ -16,7 +16,7 @@ export async function fetchSettradeFundHistory(symbol) {
   const state = extractNuxtState(html);
   const overview = state?.mutualfund?.overviewInfo || {};
   const quotations = state?.mutualfund?.quotationChart?.quotations || [];
-  const rows = quotations.map((row) => normalizeQuotation(row, symbol, url)).filter(Boolean);
+  const rows = filterSeedPlaceholderRows(quotations.map((row) => normalizeQuotation(row, symbol, url)).filter(Boolean));
 
   if (!rows.length) {
     const latest = normalizeOverview(overview, symbol, url);
@@ -39,6 +39,7 @@ export async function mergeSettradeHistoryRows({ config, history }) {
     try {
       const result = await fetchSettradeFundHistory(fund.code);
       history[fund.code] ||= {};
+      purgeSettradeSeedPlaceholders(history[fund.code]);
       for (const row of result.rows) {
         history[fund.code][row.navDate] = {
           code: fund.code,
@@ -70,6 +71,24 @@ export async function mergeSettradeHistoryRows({ config, history }) {
   }
 
   return { imported, funds: summary };
+}
+
+function filterSeedPlaceholderRows(rows) {
+  const sorted = rows.sort((a, b) => a.navDate.localeCompare(b.navDate));
+  const hasPublishedAum = sorted.some((row) => Number(row.netAsset) > 0 && Number(row.netAsset) < 100_000_000);
+  if (!hasPublishedAum) return sorted;
+  return sorted.filter((row) => !isSeedPlaceholder(row));
+}
+
+function purgeSettradeSeedPlaceholders(fundHistory) {
+  for (const [date, point] of Object.entries(fundHistory || {})) {
+    const row = { netAsset: point?.raw?.netAsset, nav: point?.nav };
+    if (point?.raw?.settradeSymbol && isSeedPlaceholder(row)) delete fundHistory[date];
+  }
+}
+
+function isSeedPlaceholder(row) {
+  return Number(row?.netAsset) === 1_000_000_000 && Number(row?.nav) === 10;
 }
 
 function extractNuxtState(html) {

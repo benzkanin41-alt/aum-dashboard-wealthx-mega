@@ -8,14 +8,21 @@
       "funds": [
         { "code": "TLWORLD-X", "group": "Series X / World", "identifierType": "proj_id", "identifier": "M0051_2569", "source": "WealthX Series X" },
         { "code": "TLWORLDRMF", "group": "Series X / World RMF", "identifierType": "proj_id", "identifier": "M0153_2569", "source": "WealthX Series X" },
-        { "code": "TLUS500-UH-X", "group": "Series X / S&P 500", "identifierType": "fund_class_name", "identifier": "TLUS500-UH-X", "source": "WealthX Series X" },
+        { "code": "TLUS500-UH-X", "group": "Series X / S&P 500", "identifierType": "proj_id", "identifier": "M0140_2568", "source": "WealthX Series X" },
         { "code": "TLUS500RMF", "group": "Series X / S&P 500 RMF", "identifierType": "proj_id", "identifier": "M1027_2568", "source": "WealthX Series X" },
-        { "code": "TLUSNDQ-UH-X", "group": "Series X / Nasdaq 100", "identifierType": "fund_class_name", "identifier": "TLUSNDQ-UH-X", "source": "WealthX Series X" },
+        { "code": "TLUSNDQ-UH-X", "group": "Series X / Nasdaq 100", "identifierType": "proj_id", "identifier": "M0055_2568", "source": "WealthX Series X" },
         { "code": "TLUSNDQRMF", "group": "Series X / Nasdaq 100 RMF", "identifierType": "proj_id", "identifier": "M0271_2569", "source": "WealthX Series X" },
         { "code": "TLNDQINCOME-UH-X", "group": "Income / YIELDTECH", "identifierType": "proj_id", "identifier": "M0231_2569", "source": "WealthX exclusive Income/YIELDTECH" },
         { "code": "TLNDQINCOME-H-X", "group": "Income / YIELDTECH", "identifierType": "proj_id", "identifier": "M0093_2569", "source": "WealthX exclusive Income/YIELDTECH" },
         { "code": "LHGRID", "group": "Series X / Smart Grid", "identifierType": "proj_id", "identifier": "M0534_2569", "source": "WealthX Series X / LH Fund", "dataSource": "settrade" },
-        { "code": "ONE-GOLD-X-UH", "group": "SeriesX ZERO / Gold", "identifierType": "fund_class_name", "identifier": "ONE-GOLD-X-UH", "source": "WealthX SeriesX ZERO / ONEAM", "dataSource": "settrade" }
+        { "code": "ONE-GOLD-X-UH", "group": "SeriesX ZERO / Gold", "identifierType": "proj_id", "identifier": "M0517_2569", "source": "WealthX SeriesX ZERO / ONEAM", "dataSource": "settrade" },
+        { "code": "KT-BAI", "group": "AI / World Equity", "identifierType": "proj_id", "identifier": "M0629_2569", "source": "WealthX Series X / KTAM", "dataSource": "settrade" },
+        { "code": "PRINCIPAL VNEI-EX", "group": "Vietnam / VN30", "identifierType": "proj_id", "identifier": "M0528_2569", "source": "WealthX Series X / Principal", "dataSource": "settrade" },
+        { "code": "LHPHOTONICS", "group": "Semiconductor / Photonics", "identifierType": "proj_id", "identifier": "M0514_2569", "source": "WealthX Series X / LH Fund", "dataSource": "settrade" },
+        { "code": "TLSPACE-X", "group": "Space / ORBX", "identifierType": "proj_id", "identifier": "M0610_2569", "source": "WealthX Series X / Talis" },
+        { "code": "TLUSHG-UH-X", "group": "U.S. Growth / SCHG Unhedged", "identifierType": "proj_id", "identifier": "M0552_2569", "source": "WealthX Series X / Talis" },
+        { "code": "TLUSHG-H-X", "group": "U.S. Growth / SCHG Hedged", "identifierType": "proj_id", "identifier": "M0553_2569", "source": "WealthX Series X / Talis" },
+        { "code": "TLUSHGRMF", "group": "U.S. Growth / SCHG RMF", "identifierType": "proj_id", "identifier": "M0530_2569", "source": "WealthX Series X / Talis" }
       ]
     },
     {
