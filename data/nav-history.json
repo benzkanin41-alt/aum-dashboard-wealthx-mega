@@ -639,6 +639,22 @@
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน ดาโอ จำกัด",
         "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0442_2569.pdf"
       }
+    },
+    "2026-07-02": {
+      "code": "DAOL-GAS",
+      "group": "Natural Gas",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 329.72,
+      "nav": 8.4967,
+      "raw": {
+        "fundName": "กองทุนเปิด ดาโอ แนเชอรัล แก๊ส",
+        "netAsset": 329724588.91,
+        "source": "https://www.settrade.com/th/mutualfund/quote/DAOL-GAS/overview",
+        "settradeSymbol": "DAOL-GAS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน ดาโอ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0442_2569.pdf"
+      }
     }
   },
   "DAOL-HYDROGEN": {
@@ -972,6 +988,22 @@
       "raw": {
         "fundName": "กองทุนเปิด ดาโอ โกลบอล ไฮโดรเจน",
         "netAsset": 79144885.74,
+        "source": "https://www.settrade.com/th/mutualfund/quote/DAOL-HYDROGEN/overview",
+        "settradeSymbol": "DAOL-HYDROGEN",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน ดาโอ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0529_2569.pdf"
+      }
+    },
+    "2026-07-02": {
+      "code": "DAOL-HYDROGEN",
+      "group": "Hydrogen",
+      "projId": "M0529_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 78.09,
+      "nav": 9.602,
+      "raw": {
+        "fundName": "กองทุนเปิด ดาโอ โกลบอล ไฮโดรเจน",
+        "netAsset": 78089912.36,
         "source": "https://www.settrade.com/th/mutualfund/quote/DAOL-HYDROGEN/overview",
         "settradeSymbol": "DAOL-HYDROGEN",
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน ดาโอ จำกัด",
@@ -1838,6 +1870,22 @@
       "raw": {
         "fundName": "กองทุนเปิดอีสท์สปริง Smart Grid Infrastructure",
         "netAsset": 5101292963.68,
+        "source": "https://www.settrade.com/th/mutualfund/quote/ES-GRID/overview",
+        "settradeSymbol": "ES-GRID",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน อีสท์สปริง (ประเทศไทย) จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0288_2569.pdf"
+      }
+    },
+    "2026-07-02": {
+      "code": "ES-GRID",
+      "group": "Smart Grid",
+      "projId": "M0288_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 5046.85,
+      "nav": 10.9901,
+      "raw": {
+        "fundName": "กองทุนเปิดอีสท์สปริง Smart Grid Infrastructure",
+        "netAsset": 5046852186.44,
         "source": "https://www.settrade.com/th/mutualfund/quote/ES-GRID/overview",
         "settradeSymbol": "ES-GRID",
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน อีสท์สปริง (ประเทศไทย) จำกัด",
@@ -5440,6 +5488,22 @@
       "raw": {
         "fundName": "กองทุนเปิดอีสท์สปริง Global Technology",
         "netAsset": 11769615987.13,
+        "source": "https://www.settrade.com/th/mutualfund/quote/ES-GTECH/overview",
+        "settradeSymbol": "ES-GTECH",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน อีสท์สปริง (ประเทศไทย) จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0692_2562.pdf"
+      }
+    },
+    "2026-07-01": {
+      "code": "ES-GTECH",
+      "group": "Global Technology",
+      "projId": null,
+      "navDate": "2026-07-01",
+      "aumMillionBaht": 11522.03,
+      "nav": 38.8809,
+      "raw": {
+        "fundName": "กองทุนเปิดอีสท์สปริง Global Technology",
+        "netAsset": 11522032227.49,
         "source": "https://www.settrade.com/th/mutualfund/quote/ES-GTECH/overview",
         "settradeSymbol": "ES-GTECH",
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน อีสท์สปริง (ประเทศไทย) จำกัด",
@@ -9385,6 +9449,22 @@
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
         "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0561_2569.pdf"
       }
+    },
+    "2026-07-02": {
+      "code": "LHDRAM",
+      "group": "DRAM / AI Memory",
+      "projId": "M0561_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 850.9,
+      "nav": 8.509,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เมมโมรี",
+        "netAsset": 850896285.97,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHDRAM/overview",
+        "settradeSymbol": "LHDRAM",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0561_2569.pdf"
+      }
     }
   },
   "LHGRID": {
@@ -9734,6 +9814,22 @@
       "raw": {
         "fundName": "กองทุนเปิด แอล เอช กริด",
         "netAsset": 119298447.29,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHGRID/overview",
+        "settradeSymbol": "LHGRID",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0534_2569.pdf"
+      }
+    },
+    "2026-07-02": {
+      "code": "LHGRID",
+      "group": "Series X / Smart Grid",
+      "projId": "M0534_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 118.59,
+      "nav": 9.5983,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช กริด",
+        "netAsset": 118585778.74,
         "source": "https://www.settrade.com/th/mutualfund/quote/LHGRID/overview",
         "settradeSymbol": "LHGRID",
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
@@ -19247,6 +19343,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42017&p_lang=EN&year1=year1",
         "talisFundCode": "42017"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10-A",
+      "group": "US",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 392.98,
+      "nav": 21.7291,
+      "raw": {
+        "fundName": "MEGA 10 FUND-A",
+        "netAsset": 392981098.61,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42017&p_lang=EN&year1=year1",
+        "talisFundCode": "42017"
+      }
     }
   },
   "MEGA10-SSF": {
@@ -22508,6 +22618,20 @@
       "raw": {
         "fundName": "MEGA 10 FUND-SSF",
         "netAsset": 205640446.32,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43017&p_lang=EN&year1=year1",
+        "talisFundCode": "43017"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGA10-SSF",
+      "group": "US",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 205.97,
+      "nav": 21.7259,
+      "raw": {
+        "fundName": "MEGA 10 FUND-SSF",
+        "netAsset": 205971563.32,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43017&p_lang=EN&year1=year1",
         "talisFundCode": "43017"
       }
@@ -25775,6 +25899,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42025&p_lang=EN&year1=year1",
         "talisFundCode": "42025"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10AI-A",
+      "group": "US",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 438.9,
+      "nav": 14.5912,
+      "raw": {
+        "fundName": "MEGA 10 ARTIFICIAL INTELLIGENCE FUND-A",
+        "netAsset": 438898538.48,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42025&p_lang=EN&year1=year1",
+        "talisFundCode": "42025"
+      }
     }
   },
   "MEGA10AI-SSF": {
@@ -29039,6 +29177,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43025&p_lang=EN&year1=year1",
         "talisFundCode": "43025"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10AI-SSF",
+      "group": "US",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 41.67,
+      "nav": 14.5843,
+      "raw": {
+        "fundName": "MEGA10AI FUND-SSF",
+        "netAsset": 41669498.22,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43025&p_lang=EN&year1=year1",
+        "talisFundCode": "43025"
+      }
     }
   },
   "MEGA10AICHINA-A": {
@@ -32177,6 +32329,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42035&p_lang=EN&year1=year1",
         "talisFundCode": "42035"
       }
+    },
+    "2026-07-03": {
+      "code": "MEGA10AICHINA-A",
+      "group": "China",
+      "projId": null,
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 421.79,
+      "nav": 9.3369,
+      "raw": {
+        "fundName": "MEGA 10 ARTIFICAIL INTELLIGENCE CHINA FUND-A",
+        "netAsset": 421790214.25,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42035&p_lang=EN&year1=year1",
+        "talisFundCode": "42035"
+      }
     }
   },
   "MEGA10AICHINARMF": {
@@ -35312,6 +35478,20 @@
       "raw": {
         "fundName": "MEGA 10 ARTIFICAIL INTELLIGENCE CHINA RETIREMENT MUTUAL FUND",
         "netAsset": 25486517.35,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40034&p_lang=EN&year1=year1",
+        "talisFundCode": "40034"
+      }
+    },
+    "2026-07-03": {
+      "code": "MEGA10AICHINARMF",
+      "group": "China",
+      "projId": "M0187_2568",
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 25.56,
+      "nav": 9.104,
+      "raw": {
+        "fundName": "MEGA 10 ARTIFICAIL INTELLIGENCE CHINA RETIREMENT MUTUAL FUND",
+        "netAsset": 25556382.26,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40034&p_lang=EN&year1=year1",
         "talisFundCode": "40034"
       }
@@ -38579,6 +38759,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40024&p_lang=EN&year1=year1",
         "talisFundCode": "40024"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10AIRMF",
+      "group": "US",
+      "projId": "M0241_2567",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 107,
+      "nav": 14.1489,
+      "raw": {
+        "fundName": "MEGA 10 ARTIFICIAL INTELLIGENCE RETIREMENT MUTUAL FUND",
+        "netAsset": 107004713.67,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40024&p_lang=EN&year1=year1",
+        "talisFundCode": "40024"
+      }
     }
   },
   "MEGA10CHINA-A": {
@@ -41714,6 +41908,20 @@
       "raw": {
         "fundName": "MEGA 10 CHINA FUND-A",
         "netAsset": 1641029949.77,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42021&p_lang=EN&year1=year1",
+        "talisFundCode": "42021"
+      }
+    },
+    "2026-07-03": {
+      "code": "MEGA10CHINA-A",
+      "group": "China",
+      "projId": null,
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 1660.65,
+      "nav": 11.7311,
+      "raw": {
+        "fundName": "MEGA 10 CHINA FUND-A",
+        "netAsset": 1660645452.39,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42021&p_lang=EN&year1=year1",
         "talisFundCode": "42021"
       }
@@ -44855,6 +45063,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43021&p_lang=EN&year1=year1",
         "talisFundCode": "43021"
       }
+    },
+    "2026-07-03": {
+      "code": "MEGA10CHINA-SSF",
+      "group": "China",
+      "projId": null,
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 66.33,
+      "nav": 11.727,
+      "raw": {
+        "fundName": "MEGA 10 CHINA-SSF",
+        "netAsset": 66331888.11,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43021&p_lang=EN&year1=year1",
+        "talisFundCode": "43021"
+      }
     }
   },
   "MEGA10CHINAPOP-A": {
@@ -47041,6 +47263,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42045&p_lang=EN&year1=year1",
         "talisFundCode": "42045"
       }
+    },
+    "2026-07-03": {
+      "code": "MEGA10CHINAPOP-A",
+      "group": "China",
+      "projId": null,
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 24.36,
+      "nav": 7.5362,
+      "raw": {
+        "fundName": "MEGA 10 CHINA POPULAR CONSUMER BRAND FUND-A",
+        "netAsset": 24358547.79,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42045&p_lang=EN&year1=year1",
+        "talisFundCode": "42045"
+      }
     }
   },
   "MEGA10CHINAPOPRMF": {
@@ -49210,6 +49446,20 @@
       "raw": {
         "fundName": "MEGA 10 CHINA POPULAR CONSUMER BRAND RETIREMENT MUTUAL FUND",
         "netAsset": 3128968.59,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40047&p_lang=EN&year1=year1",
+        "talisFundCode": "40047"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGA10CHINAPOPRMF",
+      "group": "China",
+      "projId": "M0917_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 3.15,
+      "nav": 7.5271,
+      "raw": {
+        "fundName": "MEGA 10 CHINA POPULAR CONSUMER BRAND RETIREMENT MUTUAL FUND",
+        "netAsset": 3152012.94,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40047&p_lang=EN&year1=year1",
         "talisFundCode": "40047"
       }
@@ -52351,6 +52601,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40022&p_lang=EN&year1=year1",
         "talisFundCode": "40022"
       }
+    },
+    "2026-07-03": {
+      "code": "MEGA10CHINARMF",
+      "group": "China",
+      "projId": "M0761_2566",
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 156.83,
+      "nav": 11.994,
+      "raw": {
+        "fundName": "MEGA 10 CHINA RETIREMENT MUTUAL FUND",
+        "netAsset": 156829964.57,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40022&p_lang=EN&year1=year1",
+        "talisFundCode": "40022"
+      }
     }
   },
   "MEGA10CHINATECH-A": {
@@ -54537,6 +54801,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42046&p_lang=EN&year1=year1",
         "talisFundCode": "42046"
       }
+    },
+    "2026-07-03": {
+      "code": "MEGA10CHINATECH-A",
+      "group": "China",
+      "projId": null,
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 103.83,
+      "nav": 7.7668,
+      "raw": {
+        "fundName": "MEGA 10 CHINA TECHNOLOGY FUND-A",
+        "netAsset": 103828191.71,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42046&p_lang=EN&year1=year1",
+        "talisFundCode": "42046"
+      }
     }
   },
   "MEGA10CHINATECHRMF": {
@@ -56709,6 +56987,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40048&p_lang=EN&year1=year1",
         "talisFundCode": "40048"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10CHINATECHRMF",
+      "group": "China",
+      "projId": "M0936_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 8.37,
+      "nav": 7.5459,
+      "raw": {
+        "fundName": "MEGA 10 CHINA TECHNOLOGY RETIREMENT MUTUAL FUND",
+        "netAsset": 8365547.69,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40048&p_lang=EN&year1=year1",
+        "talisFundCode": "40048"
+      }
     }
   },
   "MEGA10CYBER-A": {
@@ -58727,6 +59019,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42049&p_lang=EN&year1=year1",
         "talisFundCode": "42049"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10CYBER-A",
+      "group": "US",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 65.29,
+      "nav": 7.8608,
+      "raw": {
+        "fundName": "MEGA 10 CYBERSECURITY AND ENTERPRISE SOFTWARE FUND-A",
+        "netAsset": 65293240.57,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42049&p_lang=EN&year1=year1",
+        "talisFundCode": "42049"
+      }
     }
   },
   "MEGA10CYBERRMF": {
@@ -60742,6 +61048,20 @@
       "raw": {
         "fundName": "MEGA 10 CYBERSECURITY AND ENTERPRISE SOFTWARE FUND RETIREMENT MUTUAL FUND",
         "netAsset": 7797434.06,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40050&p_lang=EN&year1=year1",
+        "talisFundCode": "40050"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGA10CYBERRMF",
+      "group": "US",
+      "projId": "M1015_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 7.81,
+      "nav": 8.0905,
+      "raw": {
+        "fundName": "MEGA 10 CYBERSECURITY AND ENTERPRISE SOFTWARE FUND RETIREMENT MUTUAL FUND",
+        "netAsset": 7812234.22,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40050&p_lang=EN&year1=year1",
         "talisFundCode": "40050"
       }
@@ -64051,6 +64371,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42026&p_lang=EN&year1=year1",
         "talisFundCode": "42026"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10EURO-A",
+      "group": "Euro",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 19.6,
+      "nav": 11.0495,
+      "raw": {
+        "fundName": "MEGA 10 EURO FUND-A",
+        "netAsset": 19601103.33,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42026&p_lang=EN&year1=year1",
+        "talisFundCode": "42026"
+      }
     }
   },
   "MEGA10EURO-SSF": {
@@ -67354,6 +67688,20 @@
       "raw": {
         "fundName": "MEGA 10 EURO-SSF",
         "netAsset": 3247232.23,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43026&p_lang=EN&year1=year1",
+        "talisFundCode": "43026"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGA10EURO-SSF",
+      "group": "Euro",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 3.28,
+      "nav": 11.0477,
+      "raw": {
+        "fundName": "MEGA 10 EURO-SSF",
+        "netAsset": 3277893.42,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43026&p_lang=EN&year1=year1",
         "talisFundCode": "43026"
       }
@@ -70663,6 +71011,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40027&p_lang=EN&year1=year1",
         "talisFundCode": "40027"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10EURORMF",
+      "group": "Euro",
+      "projId": "M0539_2567",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 7.01,
+      "nav": 11.1783,
+      "raw": {
+        "fundName": "MEGA 10 EURO RETIREMENT MUTUAL FUND",
+        "netAsset": 7009642.33,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40027&p_lang=EN&year1=year1",
+        "talisFundCode": "40027"
+      }
     }
   },
   "MEGA10HEALTH-A": {
@@ -73924,6 +74286,20 @@
       "raw": {
         "fundName": "MEGA 10 HEALTHCARE FUND-A",
         "netAsset": 45142956.82,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42044&p_lang=EN&year1=year1",
+        "talisFundCode": "42044"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGA10HEALTH-A",
+      "group": "US",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 46.5,
+      "nav": 11.9388,
+      "raw": {
+        "fundName": "MEGA 10 HEALTHCARE FUND-A",
+        "netAsset": 46502964.89,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42044&p_lang=EN&year1=year1",
         "talisFundCode": "42044"
       }
@@ -77191,6 +77567,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40043&p_lang=EN&year1=year1",
         "talisFundCode": "40043"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGA10HEALTHRMF",
+      "group": "US",
+      "projId": "M0526_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 9.88,
+      "nav": 11.5861,
+      "raw": {
+        "fundName": "MEGA 10 HEALTHCARE RETIREMENT MUTUAL FUND",
+        "netAsset": 9877833.19,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40043&p_lang=EN&year1=year1",
+        "talisFundCode": "40043"
+      }
     }
   },
   "MEGA10RMF": {
@@ -80452,6 +80842,20 @@
       "raw": {
         "fundName": "MEGA 10 RETIREMENT MUTUAL FUND",
         "netAsset": 367882508.01,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40018&p_lang=EN&year1=year1",
+        "talisFundCode": "40018"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGA10RMF",
+      "group": "US",
+      "projId": "M0619_2565",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 368.74,
+      "nav": 21.8317,
+      "raw": {
+        "fundName": "MEGA 10 RETIREMENT MUTUAL FUND",
+        "netAsset": 368736989.38,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40018&p_lang=EN&year1=year1",
         "talisFundCode": "40018"
       }
@@ -83873,6 +84277,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40020&p_lang=EN&year1=year1",
         "talisFundCode": "40020"
       }
+    },
+    "2026-07-03": {
+      "code": "MEGA20THAIESG",
+      "group": "Thailand",
+      "projId": "M0822_2566",
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 52.67,
+      "nav": 9.7365,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG FUND",
+        "netAsset": 52674320.85,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40020&p_lang=EN&year1=year1",
+        "talisFundCode": "40020"
+      }
     }
   },
   "MEGATX8020C-L": {
@@ -87288,6 +87706,20 @@
       "raw": {
         "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 C-L",
         "netAsset": 10378277.11,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43038&p_lang=EN&year1=year1",
+        "talisFundCode": "43038"
+      }
+    },
+    "2026-07-03": {
+      "code": "MEGATX8020C-L",
+      "group": "Thailand",
+      "projId": null,
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 10.48,
+      "nav": 11.2799,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 C-L",
+        "netAsset": 10482139.16,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43038&p_lang=EN&year1=year1",
         "talisFundCode": "43038"
       }
@@ -90709,6 +91141,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42038&p_lang=EN&year1=year1",
         "talisFundCode": "42038"
       }
+    },
+    "2026-07-03": {
+      "code": "MEGATX8020C-N",
+      "group": "Thailand",
+      "projId": null,
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 87.69,
+      "nav": 11.28,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 C-N",
+        "netAsset": 87689912.07,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42038&p_lang=EN&year1=year1",
+        "talisFundCode": "42038"
+      }
     }
   },
   "MEGATX8020U-L": {
@@ -94110,6 +94556,20 @@
       "raw": {
         "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 U-L",
         "netAsset": 9235766.43,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43039&p_lang=EN&year1=year1",
+        "talisFundCode": "43039"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGATX8020U-L",
+      "group": "Thailand",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 9.38,
+      "nav": 11.761,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 U-L",
+        "netAsset": 9378430.38,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43039&p_lang=EN&year1=year1",
         "talisFundCode": "43039"
       }
@@ -97517,6 +97977,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42039&p_lang=EN&year1=year1",
         "talisFundCode": "42039"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGATX8020U-N",
+      "group": "Thailand",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 143.97,
+      "nav": 11.761,
+      "raw": {
+        "fundName": "MEGA 20 THAILAND ESG EXTRA FUND 80-20 U-N",
+        "netAsset": 143974853.13,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42039&p_lang=EN&year1=year1",
+        "talisFundCode": "42039"
+      }
     }
   },
   "MEGAWORLD30-A": {
@@ -100778,6 +101252,20 @@
       "raw": {
         "fundName": "MEGA WORLD 30 FUND-A",
         "netAsset": 78230512.96,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42029&p_lang=EN&year1=year1",
+        "talisFundCode": "42029"
+      }
+    },
+    "2026-07-02": {
+      "code": "MEGAWORLD30-A",
+      "group": "World",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 77.42,
+      "nav": 13.0311,
+      "raw": {
+        "fundName": "MEGA WORLD 30 FUND-A",
+        "netAsset": 77421722.54,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42029&p_lang=EN&year1=year1",
         "talisFundCode": "42029"
       }
@@ -104045,6 +104533,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43029&p_lang=EN&year1=year1",
         "talisFundCode": "43029"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGAWORLD30-SSF",
+      "group": "World",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 39.31,
+      "nav": 13.0301,
+      "raw": {
+        "fundName": "MEGA WORLD 30-SSF",
+        "netAsset": 39309657.6,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=43029&p_lang=EN&year1=year1",
+        "talisFundCode": "43029"
+      }
     }
   },
   "MEGAWORLD30RMF": {
@@ -107309,6 +107811,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40031&p_lang=EN&year1=year1",
         "talisFundCode": "40031"
       }
+    },
+    "2026-07-02": {
+      "code": "MEGAWORLD30RMF",
+      "group": "World",
+      "projId": "M0074_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 38.02,
+      "nav": 12.3695,
+      "raw": {
+        "fundName": "MEGA WORLD 30 RETIREMENT MUTUAL FUND",
+        "netAsset": 38023433.47,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40031&p_lang=EN&year1=year1",
+        "talisFundCode": "40031"
+      }
     }
   },
   "ONE-GOLD-X-UH": {
@@ -107578,6 +108094,22 @@
       "raw": {
         "fundName": "กองทุนเปิด วรรณ โกลด์",
         "netAsset": 38947474.48,
+        "source": "https://www.settrade.com/th/mutualfund/quote/ONE-GOLD-X-UH/overview",
+        "settradeSymbol": "ONE-GOLD-X-UH",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน วรรณ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0517_2569.pdf"
+      }
+    },
+    "2026-07-02": {
+      "code": "ONE-GOLD-X-UH",
+      "group": "SeriesX ZERO / Gold",
+      "projId": "M0517_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 40.53,
+      "nav": 10.1882,
+      "raw": {
+        "fundName": "กองทุนเปิด วรรณ โกลด์",
+        "netAsset": 40532986.41,
         "source": "https://www.settrade.com/th/mutualfund/quote/ONE-GOLD-X-UH/overview",
         "settradeSymbol": "ONE-GOLD-X-UH",
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน วรรณ จำกัด",
@@ -108450,6 +108982,20 @@
       "raw": {
         "fundName": "TALIS GOLD PLUS FUND",
         "netAsset": 22838293.29,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40061&p_lang=EN&year1=year1",
+        "talisFundCode": "40061"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLGOLDPLUS",
+      "group": "Gold",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 23.35,
+      "nav": 9.4545,
+      "raw": {
+        "fundName": "TALIS GOLD PLUS FUND",
+        "netAsset": 23352981.01,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40061&p_lang=EN&year1=year1",
         "talisFundCode": "40061"
       }
@@ -109393,6 +109939,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40059&p_lang=EN&year1=year1",
         "talisFundCode": "40059"
       }
+    },
+    "2026-07-02": {
+      "code": "TLNDQINCOME-H-X",
+      "group": "Income / YIELDTECH",
+      "projId": "M0093_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 36.93,
+      "nav": 10.6401,
+      "raw": {
+        "fundName": "TALIS NASDAQ EQUITY PREMIUM INCOME FUND-HEDGE",
+        "netAsset": 36934931.44,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40059&p_lang=EN&year1=year1",
+        "talisFundCode": "40059"
+      }
     }
   },
   "TLNDQINCOME-UH-X": {
@@ -110330,6 +110890,20 @@
       "raw": {
         "fundName": "TALIS NASDAQ EQUITY PREMIUM INCOME FUND-UNHEDGE",
         "netAsset": 170981515.48,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40060&p_lang=EN&year1=year1",
+        "talisFundCode": "40060"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLNDQINCOME-UH-X",
+      "group": "Income / YIELDTECH",
+      "projId": "M0231_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 166.67,
+      "nav": 11.0547,
+      "raw": {
+        "fundName": "TALIS NASDAQ EQUITY PREMIUM INCOME FUND-UNHEDGE",
+        "netAsset": 166672152.79,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40060&p_lang=EN&year1=year1",
         "talisFundCode": "40060"
       }
@@ -111928,6 +112502,20 @@
       "raw": {
         "fundName": "TALIS US EQUITY 500-UNHEDGE-X",
         "netAsset": 295945361.61,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42033&p_lang=EN&year1=year1",
+        "talisFundCode": "42033"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLUS500-UH-X",
+      "group": "Series X / S&P 500",
+      "projId": "M0140_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 296.56,
+      "nav": 13.5114,
+      "raw": {
+        "fundName": "TALIS US EQUITY 500-UNHEDGE-X",
+        "netAsset": 296560983.35,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42033&p_lang=EN&year1=year1",
         "talisFundCode": "42033"
       }
@@ -113739,6 +114327,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40052&p_lang=EN&year1=year1",
         "talisFundCode": "40052"
       }
+    },
+    "2026-07-02": {
+      "code": "TLUS500RMF",
+      "group": "Series X / S&P 500 RMF",
+      "projId": "M1027_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 44.88,
+      "nav": 11.3703,
+      "raw": {
+        "fundName": "TALIS US EQUITY 500 RETIREMENT MUTUAL FUND",
+        "netAsset": 44883055.51,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40052&p_lang=EN&year1=year1",
+        "talisFundCode": "40052"
+      }
     }
   },
   "TLUSHD-H": {
@@ -114298,6 +114900,20 @@
       "raw": {
         "fundName": "TALIS U.S. DIVIDEND EQUITY FUND-HEDGE",
         "netAsset": 78367145.77,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40063&p_lang=EN&year1=year1",
+        "talisFundCode": "40063"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLUSHD-H",
+      "group": "TLUSHD",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 80.39,
+      "nav": 10.2822,
+      "raw": {
+        "fundName": "TALIS U.S. DIVIDEND EQUITY FUND-HEDGE",
+        "netAsset": 80394204.11,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40063&p_lang=EN&year1=year1",
         "talisFundCode": "40063"
       }
@@ -114863,6 +115479,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40064&p_lang=EN&year1=year1",
         "talisFundCode": "40064"
       }
+    },
+    "2026-07-02": {
+      "code": "TLUSHD-UH",
+      "group": "TLUSHD",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 154.89,
+      "nav": 10.4676,
+      "raw": {
+        "fundName": "TALIS U.S. DIVIDEND EQUITY FUND-UNHEDGE",
+        "netAsset": 154892844.86,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40064&p_lang=EN&year1=year1",
+        "talisFundCode": "40064"
+      }
     }
   },
   "TLUSHDRMF": {
@@ -115422,6 +116052,20 @@
       "raw": {
         "fundName": "TALIS U.S. DIVIDEND EQUITY RETIREMENT MUTUAL FUND",
         "netAsset": 29218018.51,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40062&p_lang=EN&year1=year1",
+        "talisFundCode": "40062"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLUSHDRMF",
+      "group": "TLUSHD RMF",
+      "projId": null,
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 29.92,
+      "nav": 10.4667,
+      "raw": {
+        "fundName": "TALIS U.S. DIVIDEND EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 29917007.76,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40062&p_lang=EN&year1=year1",
         "talisFundCode": "40062"
       }
@@ -117020,6 +117664,20 @@
       "raw": {
         "fundName": "TALIS US EQUITY NDQ-UNHEDGE-X",
         "netAsset": 153014476.6,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42030&p_lang=EN&year1=year1",
+        "talisFundCode": "42030"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLUSNDQ-UH-X",
+      "group": "Series X / Nasdaq 100",
+      "projId": "M0055_2568",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 151.71,
+      "nav": 12.8833,
+      "raw": {
+        "fundName": "TALIS US EQUITY NDQ-UNHEDGE-X",
+        "netAsset": 151706460.07,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=42030&p_lang=EN&year1=year1",
         "talisFundCode": "42030"
       }
@@ -118831,6 +119489,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40053&p_lang=EN&year1=year1",
         "talisFundCode": "40053"
       }
+    },
+    "2026-07-02": {
+      "code": "TLUSNDQRMF",
+      "group": "Series X / Nasdaq 100 RMF",
+      "projId": "M0271_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 44.29,
+      "nav": 11.804,
+      "raw": {
+        "fundName": "TALIS US EQUITY NDQ RETIREMENT MUTUAL FUND",
+        "netAsset": 44288091.15,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40053&p_lang=EN&year1=year1",
+        "talisFundCode": "40053"
+      }
     }
   },
   "TLWORLD-X": {
@@ -119992,6 +120664,20 @@
       "raw": {
         "fundName": "TALIS WORLD STOCK FUND",
         "netAsset": 819221132.43,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40057&p_lang=EN&year1=year1",
+        "talisFundCode": "40057"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLWORLD-X",
+      "group": "Series X / World",
+      "projId": "M0051_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 831.28,
+      "nav": 11.3389,
+      "raw": {
+        "fundName": "TALIS WORLD STOCK FUND",
+        "netAsset": 831275582.47,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40057&p_lang=EN&year1=year1",
         "talisFundCode": "40057"
       }
@@ -121159,6 +121845,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40058&p_lang=EN&year1=year1",
         "talisFundCode": "40058"
       }
+    },
+    "2026-07-02": {
+      "code": "TLWORLDRMF",
+      "group": "Series X / World RMF",
+      "projId": "M0153_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 49.25,
+      "nav": 11.2968,
+      "raw": {
+        "fundName": "TALIS WORLD STOCK RETIREMENT MUTUAL FUND",
+        "netAsset": 49250852.62,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40058&p_lang=EN&year1=year1",
+        "talisFundCode": "40058"
+      }
     }
   },
   "TLSPACE-X": {
@@ -121312,6 +122012,20 @@
       "raw": {
         "fundName": "TALIS SPACE TECH FUND",
         "netAsset": 67871367.76,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
+        "talisFundCode": "40069"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLSPACE-X",
+      "group": "Space / ORBX",
+      "projId": "M0610_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 67.25,
+      "nav": 10.1088,
+      "raw": {
+        "fundName": "TALIS SPACE TECH FUND",
+        "netAsset": 67247105.11,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40069&p_lang=EN&year1=year1",
         "talisFundCode": "40069"
       }
@@ -121639,6 +122353,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
         "talisFundCode": "40068"
       }
+    },
+    "2026-07-02": {
+      "code": "TLUSHG-UH-X",
+      "group": "U.S. Growth / SCHG Unhedged",
+      "projId": "M0552_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 137.41,
+      "nav": 10.0295,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-UNHEDGE",
+        "netAsset": 137411481.85,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40068&p_lang=EN&year1=year1",
+        "talisFundCode": "40068"
+      }
     }
   },
   "TLUSHG-H-X": {
@@ -121960,6 +122688,20 @@
       "raw": {
         "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
         "netAsset": 38547171.93,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
+        "talisFundCode": "40067"
+      }
+    },
+    "2026-07-02": {
+      "code": "TLUSHG-H-X",
+      "group": "U.S. Growth / SCHG Hedged",
+      "projId": "M0553_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 38.67,
+      "nav": 9.8313,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY FUND-HEDGE",
+        "netAsset": 38670477.36,
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40067&p_lang=EN&year1=year1",
         "talisFundCode": "40067"
       }
@@ -122287,6 +123029,20 @@
         "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
         "talisFundCode": "40066"
       }
+    },
+    "2026-07-02": {
+      "code": "TLUSHGRMF",
+      "group": "U.S. Growth / SCHG RMF",
+      "projId": "M0530_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 29.84,
+      "nav": 10.0289,
+      "raw": {
+        "fundName": "TALIS U.S. LARGE-CAP GROWTH EQUITY RETIREMENT MUTUAL FUND",
+        "netAsset": 29836851.01,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40066&p_lang=EN&year1=year1",
+        "talisFundCode": "40066"
+      }
     }
   },
   "PRINCIPAL VNEI-EX": {
@@ -122348,6 +123104,22 @@
       "raw": {
         "fundName": "กองทุนเปิดพรินซิเพิล เวียดนาม อิควิตี้ อินเด็กซ์",
         "netAsset": 17619268.34,
+        "source": "https://www.settrade.com/th/mutualfund/quote/PRINCIPAL%20VNEI-EX/overview",
+        "settradeSymbol": "PRINCIPAL VNEI-EX",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน พรินซิเพิล จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0528_2569.pdf"
+      }
+    },
+    "2026-07-03": {
+      "code": "PRINCIPAL VNEI-EX",
+      "group": "Vietnam / VN30",
+      "projId": "M0528_2569",
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 17.54,
+      "nav": 9.8985,
+      "raw": {
+        "fundName": "กองทุนเปิดพรินซิเพิล เวียดนาม อิควิตี้ อินเด็กซ์",
+        "netAsset": 17535057.14,
         "source": "https://www.settrade.com/th/mutualfund/quote/PRINCIPAL%20VNEI-EX/overview",
         "settradeSymbol": "PRINCIPAL VNEI-EX",
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน พรินซิเพิล จำกัด",
@@ -122531,7 +123303,40 @@
         "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
         "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
       }
+    },
+    "2026-07-02": {
+      "code": "LHPHOTONICS",
+      "group": "Semiconductor / Photonics",
+      "projId": "M0514_2569",
+      "navDate": "2026-07-02",
+      "aumMillionBaht": 48.57,
+      "nav": 8.7883,
+      "raw": {
+        "fundName": "กองทุนเปิด แอล เอช เซมิคอน โฟโตนิกส์",
+        "netAsset": 48568288.39,
+        "source": "https://www.settrade.com/th/mutualfund/quote/LHPHOTONICS/overview",
+        "settradeSymbol": "LHPHOTONICS",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน แลนด์ แอนด์ เฮ้าส์ จำกัด",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0514_2569.pdf"
+      }
     }
   },
-  "KT-BAI": {}
+  "KT-BAI": {
+    "2026-07-03": {
+      "code": "KT-BAI",
+      "group": "AI / World Equity",
+      "projId": "M0629_2569",
+      "navDate": "2026-07-03",
+      "aumMillionBaht": 1000,
+      "nav": 10,
+      "raw": {
+        "fundName": "กองทุนเปิดเคแทม A.I. World Equity",
+        "netAsset": 1000000000,
+        "source": "https://www.settrade.com/th/mutualfund/quote/KT-BAI/overview",
+        "settradeSymbol": "KT-BAI",
+        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน กรุงไทย จำกัด (มหาชน)",
+        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0629_2569.pdf"
+      }
+    }
+  }
 }
