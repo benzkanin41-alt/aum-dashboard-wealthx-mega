@@ -20,7 +20,7 @@ export async function fetchSettradeFundHistory(symbol) {
 
   if (!rows.length) {
     const latest = normalizeOverview(overview, symbol, url);
-    if (latest) rows.push(latest);
+    if (latest && !isSeedPlaceholder(latest)) rows.push(latest);
   }
 
   return {
@@ -75,8 +75,6 @@ export async function mergeSettradeHistoryRows({ config, history }) {
 
 function filterSeedPlaceholderRows(rows) {
   const sorted = rows.sort((a, b) => a.navDate.localeCompare(b.navDate));
-  const hasPublishedAum = sorted.some((row) => Number(row.netAsset) > 0 && Number(row.netAsset) < 100_000_000);
-  if (!hasPublishedAum) return sorted;
   return sorted.filter((row) => !isSeedPlaceholder(row));
 }
 

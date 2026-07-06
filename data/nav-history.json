@@ -123419,22 +123419,5 @@
       }
     }
   },
-  "KT-BAI": {
-    "2026-07-03": {
-      "code": "KT-BAI",
-      "group": "AI / World Equity",
-      "projId": "M0629_2569",
-      "navDate": "2026-07-03",
-      "aumMillionBaht": 1000,
-      "nav": 10,
-      "raw": {
-        "fundName": "กองทุนเปิดเคแทม A.I. World Equity",
-        "netAsset": 1000000000,
-        "source": "https://www.settrade.com/th/mutualfund/quote/KT-BAI/overview",
-        "settradeSymbol": "KT-BAI",
-        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน กรุงไทย จำกัด (มหาชน)",
-        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0629_2569.pdf"
-      }
-    }
-  }
+  "KT-BAI": {}
 }
