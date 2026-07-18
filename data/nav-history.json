@@ -131340,5 +131340,65 @@
         "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0629_2569.pdf"
       }
     }
+  },
+  "TLWORLDXUS-X": {
+    "2026-07-16": {
+      "code": "TLWORLDXUS-X",
+      "group": "Series X / World ex US",
+      "projId": "M0689_2569",
+      "navDate": "2026-07-16",
+      "aumMillionBaht": 40.96,
+      "nav": 9.8659,
+      "raw": {
+        "fundName": "TALIS WORLD EX US FUND",
+        "netAsset": 40961849.66,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40073&p_lang=EN&year1=year1",
+        "talisFundCode": "40073"
+      }
+    },
+    "2026-07-15": {
+      "code": "TLWORLDXUS-X",
+      "group": "Series X / World ex US",
+      "projId": "M0689_2569",
+      "navDate": "2026-07-15",
+      "aumMillionBaht": 41.5,
+      "nav": 9.9952,
+      "raw": {
+        "fundName": "TALIS WORLD EX US FUND",
+        "netAsset": 41498773.56,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40073&p_lang=EN&year1=year1",
+        "talisFundCode": "40073"
+      }
+    }
+  },
+  "TLWORLDXUSRMF": {
+    "2026-07-16": {
+      "code": "TLWORLDXUSRMF",
+      "group": "Series X / World ex US RMF",
+      "projId": "M0700_2569",
+      "navDate": "2026-07-16",
+      "aumMillionBaht": 3.1,
+      "nav": 9.8746,
+      "raw": {
+        "fundName": "TALIS WORLD EX US RETIREMENT MUTUAL FUND",
+        "netAsset": 3099730.47,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40072&p_lang=EN&year1=year1",
+        "talisFundCode": "40072"
+      }
+    },
+    "2026-07-15": {
+      "code": "TLWORLDXUSRMF",
+      "group": "Series X / World ex US RMF",
+      "projId": "M0700_2569",
+      "navDate": "2026-07-15",
+      "aumMillionBaht": 3.14,
+      "nav": 9.9951,
+      "raw": {
+        "fundName": "TALIS WORLD EX US RETIREMENT MUTUAL FUND",
+        "netAsset": 3137570.04,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40072&p_lang=EN&year1=year1",
+        "talisFundCode": "40072"
+      }
+    }
   }
 }

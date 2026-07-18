@@ -6,7 +6,12 @@
       "description": "นับเฉพาะกอง SeriesX/Class-X ที่เป็นกองพิเศษเฉพาะ WealthX ตามรูป ไม่รวม TLUSHD",
       "color": "#2563eb",
       "funds": [
+        { "code": "TLCOREWEALTH-UH-X", "group": "Series X / Core Wealth 60/40 Unhedged", "identifierType": "proj_id", "identifier": "M0728_2569", "source": "WealthX Series X / Talis" },
+        { "code": "TLCOREWEALTH-H-X", "group": "Series X / Core Wealth 60/40 Hedged", "identifierType": "proj_id", "identifier": "M0726_2569", "source": "WealthX Series X / Talis" },
+        { "code": "TLCOREWEALTHRMF", "group": "Series X / Core Wealth 60/40 RMF", "identifierType": "proj_id", "identifier": "M0729_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLWORLD-X", "group": "Series X / World", "identifierType": "proj_id", "identifier": "M0051_2569", "source": "WealthX Series X" },
+        { "code": "TLWORLDXUS-X", "group": "Series X / World ex US", "identifierType": "proj_id", "identifier": "M0689_2569", "source": "WealthX Series X / Talis" },
+        { "code": "TLWORLDXUSRMF", "group": "Series X / World ex US RMF", "identifierType": "proj_id", "identifier": "M0700_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLWORLDRMF", "group": "Series X / World RMF", "identifierType": "proj_id", "identifier": "M0153_2569", "source": "WealthX Series X" },
         { "code": "TLUS500-UH-X", "group": "Series X / S&P 500", "identifierType": "proj_id", "identifier": "M0140_2568", "source": "WealthX Series X" },
         { "code": "TLUS500RMF", "group": "Series X / S&P 500 RMF", "identifierType": "proj_id", "identifier": "M1027_2568", "source": "WealthX Series X" },
