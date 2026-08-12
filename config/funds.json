@@ -6,6 +6,8 @@
       "description": "นับเฉพาะกอง SeriesX/Class-X ที่เป็นกองพิเศษเฉพาะ WealthX ตามรูป ไม่รวม TLUSHD",
       "color": "#2563eb",
       "funds": [
+        { "code": "M-ASIASEMI", "group": "Asia Semiconductor / Global X Asia Semiconductor ETF", "identifierType": "proj_id", "identifier": "M0802_2569", "source": "WealthX Series X / MFC", "dataSource": "settrade" },
+        { "code": "TLCNTECH100-X", "group": "China Technology / CNQQ", "identifierType": "proj_id", "identifier": "M0752_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLCOREWEALTH-UH-X", "group": "Series X / Core Wealth 60/40 Unhedged", "identifierType": "proj_id", "identifier": "M0728_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLCOREWEALTH-H-X", "group": "Series X / Core Wealth 60/40 Hedged", "identifierType": "proj_id", "identifier": "M0726_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLCOREWEALTHRMF", "group": "Series X / Core Wealth 60/40 RMF", "identifierType": "proj_id", "identifier": "M0729_2569", "source": "WealthX Series X / Talis" },
