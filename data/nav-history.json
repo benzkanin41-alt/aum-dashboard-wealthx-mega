@@ -124646,8 +124646,9 @@
       "raw": {
         "fundName": "TALIS GOLD PLUS FUND",
         "netAsset": 25398661.26,
-        "source": "https://nav.talisam.co.th/index_NAV_Sum_Table.jsp?p_fund_code=40061&p_lang=EN&year1=year1",
-        "talisFundCode": "40061"
+        "change": -0.081,
+        "changePct": -0.8,
+        "source": "https://nav.talisam.co.th/index_NAV_Sum.jsp?p_lang=EN"
       }
     }
   },
