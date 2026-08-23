@@ -151710,22 +151710,6 @@
     }
   },
   "M-ASIASEMI": {
-    "2026-08-14": {
-      "code": "M-ASIASEMI",
-      "group": "Asia Semiconductor / Global X Asia Semiconductor ETF",
-      "projId": "M0802_2569",
-      "navDate": "2026-08-14",
-      "aumMillionBaht": 2000,
-      "nav": 10,
-      "raw": {
-        "fundName": "กองทุนเปิดเอ็มเอฟซี เอเชีย เซมิคอนดักเตอร์",
-        "netAsset": 2000000000,
-        "source": "https://www.settrade.com/th/mutualfund/quote/M-ASIASEMI/overview",
-        "settradeSymbol": "M-ASIASEMI",
-        "amcName": "บริษัทหลักทรัพย์จัดการกองทุน เอ็มเอฟซี จำกัด (มหาชน)",
-        "factsheetUrl": "https://secdocumentstorage.blob.core.windows.net/fundfactsheet/M0802_2569.pdf"
-      }
-    },
     "2026-08-17": {
       "code": "M-ASIASEMI",
       "group": "Asia Semiconductor / Global X Asia Semiconductor ETF",

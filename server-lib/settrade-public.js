@@ -86,7 +86,11 @@ function purgeSettradeSeedPlaceholders(fundHistory) {
 }
 
 function isSeedPlaceholder(row) {
-  return Number(row?.netAsset) === 1_000_000_000 && Number(row?.nav) === 10;
+  const netAsset = Number(row?.netAsset);
+  const nav = Number(row?.nav);
+
+  // Settrade can expose registered project capital as a NAV-10 row before launch.
+  return nav === 10 && netAsset >= 1_000_000_000 && netAsset % 1_000_000_000 === 0;
 }
 
 function extractNuxtState(html) {
