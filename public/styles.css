@@ -590,6 +590,15 @@ thead th {
 }
 
 @media (max-width: 560px) {
+  .topbar > div {
+    width: 100%;
+    min-width: 0;
+  }
+
+  h1 {
+    overflow-wrap: anywhere;
+  }
+
   .table-controls {
     grid-template-columns: 1fr;
   }

@@ -11,6 +11,7 @@
         { "code": "TLCOREWEALTH-UH-X", "group": "Series X / Core Wealth 60/40 Unhedged", "identifierType": "proj_id", "identifier": "M0728_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLCOREWEALTH-H-X", "group": "Series X / Core Wealth 60/40 Hedged", "identifierType": "proj_id", "identifier": "M0726_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLCOREWEALTHRMF", "group": "Series X / Core Wealth 60/40 RMF", "identifierType": "proj_id", "identifier": "M0729_2569", "source": "WealthX Series X / Talis" },
+        { "code": "TLUSGOVRMF", "group": "U.S. Short Treasury / SGOV RMF", "identifierType": "proj_id", "identifier": "M0880_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLWORLD-X", "group": "Series X / World", "identifierType": "proj_id", "identifier": "M0051_2569", "source": "WealthX Series X" },
         { "code": "TLWORLDXUS-X", "group": "Series X / World ex US", "identifierType": "proj_id", "identifier": "M0689_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLWORLDXUSRMF", "group": "Series X / World ex US RMF", "identifierType": "proj_id", "identifier": "M0700_2569", "source": "WealthX Series X / Talis" },
