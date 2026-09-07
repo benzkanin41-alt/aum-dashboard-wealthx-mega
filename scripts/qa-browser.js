@@ -1,13 +1,11 @@
-import { spawn } from "node:child_process";
+import { existsSync, readdirSync } from "node:fs";
 import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
+import { chromium } from "playwright";
 
-const edge = process.env.BROWSER_PATH || "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
-const baseUrl = process.env.QA_BASE_URL || "http://127.0.0.1:5174";
-const outputDir = path.resolve(process.env.QA_OUTPUT || path.join(process.cwd(), "qa-output"));
-const profile = path.resolve(os.tmpdir(), `ltmh-dashboard-qa-${process.pid}`);
-const port = 9337;
+const baseUrl = process.env.QA_BASE_URL || process.argv[2] || "http://127.0.0.1:5174";
+const outputDir = path.resolve(process.env.QA_OUTPUT || process.argv[3] || path.join(process.cwd(), "qa-output"));
 const cases = [
   { name: "desktop-dark", width: 1440, height: 1100, mobile: false, theme: "dark" },
   { name: "desktop-light", width: 1440, height: 1100, mobile: false, theme: "light" },
@@ -18,51 +16,74 @@ const cases = [
 ];
 
 await fs.mkdir(outputDir, { recursive: true });
-const browser = spawn(edge, [
-  "--headless=new",
-  "--disable-gpu",
-  "--hide-scrollbars",
-  "--no-first-run",
-  "--disable-extensions",
-  `--remote-debugging-port=${port}`,
-  `--user-data-dir=${profile}`,
-  "about:blank"
-], { stdio: "ignore", windowsHide: true });
+const executablePath = resolveBrowserExecutable();
+const browser = await chromium.launch({
+  headless: true,
+  ...(executablePath ? { executablePath } : {})
+});
 
 try {
-  await waitForBrowser();
   const results = [];
-  for (const item of cases) results.push(await runCase(item));
-  console.log(JSON.stringify({ ok: results.every((item) => item.ok), outputDir, results }, null, 2));
+  for (const item of cases) {
+    console.error(`QA ${item.name}`);
+    results.push(await runCase(browser, item));
+  }
+  console.log(JSON.stringify({ ok: results.every((item) => item.ok), outputDir, browser: executablePath || "playwright-default", results }, null, 2));
   if (results.some((item) => !item.ok)) process.exitCode = 1;
 } finally {
-  browser.kill();
-  await sleep(400);
-  const tempRoot = path.resolve(os.tmpdir()) + path.sep;
-  if (profile.startsWith(tempRoot)) await fs.rm(profile, { recursive: true, force: true });
+  await browser.close();
 }
 
-async function runCase(item) {
-  const target = await fetch(`http://127.0.0.1:${port}/json/new?${encodeURIComponent(baseUrl)}`, { method: "PUT" }).then((response) => response.json());
-  const cdp = await connect(target.webSocketDebuggerUrl);
+async function runCase(browserInstance, item) {
+  const context = await browserInstance.newContext({
+    viewport: { width: item.width, height: item.height },
+    screen: { width: item.width, height: item.height },
+    deviceScaleFactor: 1,
+    isMobile: item.mobile,
+    hasTouch: item.mobile
+  });
+  const page = await context.newPage();
   try {
-    await cdp.send("Page.enable");
-    await cdp.send("Runtime.enable");
-    await cdp.send("Emulation.setDeviceMetricsOverride", {
-      width: item.width,
-      height: item.height,
-      deviceScaleFactor: 1,
-      mobile: item.mobile,
-      screenWidth: item.width,
-      screenHeight: item.height
-    });
-    await cdp.send("Page.navigate", { url: baseUrl });
-    await waitForReady(cdp);
-    await cdp.send("Runtime.evaluate", {
-      expression: `localStorage.setItem("ltmh-aum-theme", "${item.theme}"); location.reload()`
-    });
-    await waitForReady(cdp);
-    const metrics = await evaluate(cdp, `(() => {
+    await page.addInitScript((theme) => localStorage.setItem("ltmh-aum-theme", theme), item.theme);
+    await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
+    await page.waitForSelector(".kpi-grid", { state: "visible", timeout: 30_000 });
+    await page.waitForFunction(() => document.querySelectorAll(".metric-card").length === 5 && document.querySelectorAll(".recharts-wrapper").length >= 4);
+
+    const chartIds = ["aum-history", "official-aua", "aua-aum-comparison", "aua-aum-projection"];
+    const ranges = ["1Y", "6M", "3M", "1M"];
+    const timelineInteraction = { ranges: {}, buckets: {} };
+    for (const range of ranges) {
+      for (const chartId of chartIds) {
+        await page.locator(`[data-range-chart="${chartId}"][data-range="${range}"]`).click();
+      }
+      await page.waitForTimeout(100);
+      timelineInteraction.ranges[range] = await page.evaluate((ids) => Object.fromEntries(ids.map((chartId) => {
+        const panel = document.querySelector(`[data-chart-id="${chartId}"]`);
+        return [chartId, {
+          range: panel?.dataset.activeRange || null,
+          visiblePoints: Number(panel?.dataset.visiblePoints || 0),
+          activeButton: panel?.querySelector(".chart-ranges button.active")?.dataset.range || null
+        }];
+      })), chartIds);
+    }
+
+    await page.locator('[data-range-chart="aum-history"][data-range="1Y"]').click();
+    for (const bucketId of ["wealthx_other", "mega30", "other_funds"]) {
+      await page.locator(`[data-chart-id="aum-history"] [data-bucket-id="${bucketId}"]`).click();
+      await page.waitForTimeout(75);
+      timelineInteraction.buckets[bucketId] = await page.locator('[data-chart-id="aum-history"]').evaluate((panel) => ({
+        activeBucket: panel.querySelector(".chart-bucket-tabs button.active")?.dataset.bucketId || null,
+        visiblePoints: Number(panel.dataset.visiblePoints || 0)
+      }));
+    }
+
+    for (const chartId of chartIds) {
+      await page.locator(`[data-range-chart="${chartId}"][data-range="1Y"]`).click();
+    }
+    await page.locator('[data-chart-id="aum-history"] [data-bucket-id="wealthx_other"]').click();
+    await page.waitForTimeout(200);
+
+    const metrics = await page.evaluate(() => {
       const html = document.documentElement;
       const body = document.body;
       const visibleText = body.innerText;
@@ -74,6 +95,11 @@ async function runCase(item) {
         bodyWidth: body.scrollWidth,
         globalOverflow: html.scrollWidth > innerWidth + 1 || body.scrollWidth > innerWidth + 1,
         chartCount: document.querySelectorAll(".chart-panel").length,
+        rangeGroupCount: document.querySelectorAll(".chart-ranges").length,
+        rangeButtonCount: document.querySelectorAll(".chart-ranges button").length,
+        rangeButtonHeights: [...document.querySelectorAll(".chart-ranges button")].map((element) => Math.round(element.getBoundingClientRect().height)),
+        bucketButtonCount: document.querySelectorAll('[data-chart-id="aum-history"] .chart-bucket-tabs button').length,
+        bucketOrder: [...document.querySelectorAll('[data-chart-id="aum-history"] .chart-bucket-tabs button')].map((element) => element.dataset.bucketId),
         scatterSymbolCount: document.querySelectorAll(".recharts-scatter-symbol").length,
         scatterBounds: [...document.querySelectorAll(".recharts-scatter-symbol")].map((element) => {
           const rect = element.getBoundingClientRect();
@@ -84,78 +110,54 @@ async function runCase(item) {
         hasProjection: visibleText.includes("AUA Projection"),
         updateEnabled: !document.querySelector('[data-testid="refresh-button"]')?.disabled
       };
-    })()`);
-    const screenshot = await cdp.send("Page.captureScreenshot", { format: "png", fromSurface: true, captureBeyondViewport: false });
+    });
+
     const file = path.join(outputDir, `${item.name}.png`);
-    await fs.writeFile(file, Buffer.from(screenshot.data, "base64"));
+    await page.screenshot({ path: file, fullPage: false });
+    const rangeInteractionPassed = ranges.every((range) => Object.values(timelineInteraction.ranges[range])
+      .every((state) => state.range === range && state.activeButton === range && state.visiblePoints > 0));
+    const rangeCountsGrow = chartIds.every((chartId) => {
+      const counts = ["1M", "3M", "6M", "1Y"].map((range) => timelineInteraction.ranges[range][chartId].visiblePoints);
+      return counts.every((count, index) => index === 0 || count >= counts[index - 1]);
+    });
+    const bucketInteractionPassed = Object.entries(timelineInteraction.buckets)
+      .every(([bucketId, state]) => state.activeBucket === bucketId && state.visiblePoints > 0);
+    const interactionPassed = rangeInteractionPassed && rangeCountsGrow && bucketInteractionPassed;
     const ok = metrics.appId === "aum-dashboard"
       && metrics.theme === item.theme
       && !metrics.globalOverflow
-      && metrics.chartCount === 3
+      && metrics.chartCount === 4
+      && metrics.rangeGroupCount === 4
+      && metrics.rangeButtonCount === 16
+      && metrics.rangeButtonHeights.every((height) => height >= 36)
+      && metrics.bucketButtonCount === 3
+      && metrics.bucketOrder.join(",") === "wealthx_other,mega30,other_funds"
       && metrics.scatterSymbolCount === 7
       && metrics.scatterBounds.every((rect) => rect.width > 0 && rect.height > 0)
       && metrics.metricCount === 5
       && metrics.hasActual
       && metrics.hasProjection
-      && metrics.updateEnabled;
-    await cdp.send("Page.close");
-    return { ...item, ok, file, metrics };
+      && metrics.updateEnabled
+      && interactionPassed;
+    return { ...item, ok, file, metrics, timelineInteraction };
   } finally {
-    cdp.close();
+    await context.close();
   }
 }
 
-async function waitForReady(cdp) {
-  for (let attempt = 0; attempt < 80; attempt += 1) {
-    const ready = await evaluate(cdp, `Boolean(document.querySelector(".kpi-grid") && document.querySelectorAll(".metric-card").length === 5)`);
-    if (ready) return;
-    await sleep(150);
+function resolveBrowserExecutable() {
+  if (process.env.BROWSER_PATH && existsSync(process.env.BROWSER_PATH)) return process.env.BROWSER_PATH;
+  const root = process.env.PLAYWRIGHT_BROWSERS_PATH || path.join(os.homedir(), "AppData", "Local", "ms-playwright");
+  if (!existsSync(root)) return null;
+  const folders = readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && /^chromium-\d+$/.test(entry.name))
+    .map((entry) => entry.name)
+    .sort((a, b) => Number(b.split("-")[1]) - Number(a.split("-")[1]));
+  for (const folder of folders) {
+    for (const relative of [path.join("chrome-win64", "chrome.exe"), path.join("chrome-win", "chrome.exe")]) {
+      const candidate = path.join(root, folder, relative);
+      if (existsSync(candidate)) return candidate;
+    }
   }
-  throw new Error("Dashboard did not reach the ready state");
-}
-
-async function evaluate(cdp, expression) {
-  const result = await cdp.send("Runtime.evaluate", { expression, returnByValue: true, awaitPromise: true });
-  if (result.exceptionDetails) throw new Error(result.exceptionDetails.text || "Browser evaluation failed");
-  return result.result.value;
-}
-
-async function waitForBrowser() {
-  for (let attempt = 0; attempt < 80; attempt += 1) {
-    try {
-      const response = await fetch(`http://127.0.0.1:${port}/json/version`);
-      if (response.ok) return;
-    } catch {}
-    await sleep(100);
-  }
-  throw new Error("Headless browser did not start");
-}
-
-function connect(url) {
-  return new Promise((resolve, reject) => {
-    const socket = new WebSocket(url);
-    const pending = new Map();
-    let nextId = 1;
-    socket.addEventListener("open", () => resolve({
-      send(method, params = {}) {
-        const id = nextId++;
-        socket.send(JSON.stringify({ id, method, params }));
-        return new Promise((resolveMessage, rejectMessage) => pending.set(id, { resolve: resolveMessage, reject: rejectMessage }));
-      },
-      close() { socket.close(); }
-    }));
-    socket.addEventListener("message", (event) => {
-      const message = JSON.parse(String(event.data));
-      if (!message.id || !pending.has(message.id)) return;
-      const waiter = pending.get(message.id);
-      pending.delete(message.id);
-      if (message.error) waiter.reject(new Error(message.error.message));
-      else waiter.resolve(message.result);
-    });
-    socket.addEventListener("error", () => reject(new Error("CDP connection failed")));
-  });
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+  return null;
 }

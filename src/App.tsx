@@ -35,6 +35,8 @@ import { registerDashboardTools } from "./webmcp";
 
 const money = new Intl.NumberFormat("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const compactMoney = new Intl.NumberFormat("th-TH", { notation: "compact", maximumFractionDigits: 1 });
+type TimelineRange = "1Y" | "6M" | "3M" | "1M";
+const timelineRanges: TimelineRange[] = ["1Y", "6M", "3M", "1M"];
 
 export default function App() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -151,17 +153,12 @@ export default function App() {
               </div>
               <ModelBadge data={data} />
             </div>
+            <AumHistoryPanel data={data} />
             <div className="chart-grid">
-              <ChartPanel title="AUA ทางการ" subtitle="อ้างอิงตามวันที่ของตัวเลข ไม่ใช่วันที่เผยแพร่">
-                <OfficialAuaChart rows={data.charts.officialAua} />
-              </ChartPanel>
-              <ChartPanel title="AUA เทียบ AUM SeriesX" subtitle={`OLS ${data.model.pairCount} คู่ข้อมูล`}>
-                <ComparisonChart data={data} />
-              </ChartPanel>
+              <OfficialAuaPanel rows={data.charts.officialAua} />
+              <ComparisonPanel data={data} />
             </div>
-            <ChartPanel title="เส้นเวลา AUA / AUM / Projection" subtitle={`Projection ถึง ${formatDate(data.projection.asOfDate)} เท่านั้น`} wide>
-              <TimelineChart data={data} />
-            </ChartPanel>
+            <TimelinePanel data={data} />
             <div className="model-footnote">
               <Info size={16} />
               <span>{data.cautions.join(" • ")}</span>
@@ -230,8 +227,142 @@ function ModelBadge({ data }: { data: DashboardData }) {
   );
 }
 
-function ChartPanel({ title, subtitle, wide, children }: { title: string; subtitle: string; wide?: boolean; children: React.ReactNode }) {
-  return <section className={`chart-panel${wide ? " chart-wide" : ""}`}><div className="chart-title"><h3>{title}</h3><span>{subtitle}</span></div><div className="chart-canvas">{children}</div></section>;
+function ChartPanel({ title, subtitle, wide, controls, meta, chartId, activeRange, visiblePoints, children }: {
+  title: string;
+  subtitle: string;
+  wide?: boolean;
+  controls?: React.ReactNode;
+  meta?: React.ReactNode;
+  chartId: string;
+  activeRange: TimelineRange;
+  visiblePoints: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      className={`chart-panel${wide ? " chart-wide" : ""}`}
+      data-chart-id={chartId}
+      data-active-range={activeRange}
+      data-visible-points={visiblePoints}
+    >
+      <div className="chart-header">
+        <div className="chart-title"><h3>{title}</h3><span>{subtitle}</span></div>
+        {controls}
+      </div>
+      <div className="chart-canvas">{children}</div>
+      {meta && <div className="chart-meta">{meta}</div>}
+    </section>
+  );
+}
+
+function AumHistoryPanel({ data }: { data: DashboardData }) {
+  const initialBucket = data.buckets.find((bucket) => bucket.id === "wealthx_other")?.id || data.buckets[0]?.id || "";
+  const [bucketId, setBucketId] = useState(initialBucket);
+  const [range, setRange] = useState<TimelineRange>("1Y");
+  const bucket = data.buckets.find((item) => item.id === bucketId) || data.buckets[0];
+  const rows = useMemo(() => filterTimeline(bucket?.history || [], (row) => row.date, range), [bucket, range]);
+
+  return (
+    <ChartPanel
+      title="ประวัติ AUM รายกลุ่ม"
+      subtitle="สลับกลุ่มและช่วงเวลาได้อิสระ"
+      chartId="aum-history"
+      activeRange={range}
+      visiblePoints={rows.length}
+      wide
+      controls={<div className="chart-controls"><BucketSelector buckets={data.buckets} value={bucket?.id || ""} onChange={setBucketId} /><RangeSelector value={range} onChange={setRange} label="ช่วงเวลากราฟ AUM" chartId="aum-history" /></div>}
+      meta={<><span>{bucket?.name || "AUM"}</span><span>Timeline: {range}</span><span>{timelineCoverage(rows, (row) => row.date)}</span><span>{rows.length} จุดข้อมูล</span></>}
+    >
+      <AumHistoryChart rows={rows} color={bucket?.color || "#59a5ff"} />
+    </ChartPanel>
+  );
+}
+
+function OfficialAuaPanel({ rows }: { rows: AuaObservation[] }) {
+  const [range, setRange] = useState<TimelineRange>("1Y");
+  const filtered = useMemo(() => filterTimeline(rows, (row) => row.referenceDate, range), [range, rows]);
+  return (
+    <ChartPanel
+      title="AUA ทางการ"
+      subtitle="อ้างอิงตามวันที่ของตัวเลข ไม่ใช่วันที่เผยแพร่"
+      chartId="official-aua"
+      activeRange={range}
+      visiblePoints={filtered.length}
+      controls={<RangeSelector value={range} onChange={setRange} label="ช่วงเวลากราฟ AUA ทางการ" chartId="official-aua" />}
+      meta={<><span>Timeline: {range}</span><span>{timelineCoverage(filtered, (row) => row.referenceDate)}</span><span>{filtered.length} จุดข้อมูล</span></>}
+    >
+      <OfficialAuaChart rows={filtered} />
+    </ChartPanel>
+  );
+}
+
+function ComparisonPanel({ data }: { data: DashboardData }) {
+  const [range, setRange] = useState<TimelineRange>("1Y");
+  const rows = useMemo(() => filterTimeline(data.charts.comparison, (row) => row.referenceDate, range), [data.charts.comparison, range]);
+  return (
+    <ChartPanel
+      title="AUA เทียบ AUM SeriesX"
+      subtitle={`โมเดลปัจจุบัน OLS ${data.model.pairCount} คู่ข้อมูล`}
+      chartId="aua-aum-comparison"
+      activeRange={range}
+      visiblePoints={rows.length}
+      controls={<RangeSelector value={range} onChange={setRange} label="ช่วงเวลากราฟ AUA เทียบ AUM" chartId="aua-aum-comparison" />}
+      meta={<><span>Timeline: {range}</span><span>{timelineCoverage(rows, (row) => row.referenceDate)}</span><span>{rows.length} จาก {data.model.pairCount} คู่ข้อมูล</span></>}
+    >
+      <ComparisonChart data={data} rows={rows} />
+    </ChartPanel>
+  );
+}
+
+function TimelinePanel({ data }: { data: DashboardData }) {
+  const [range, setRange] = useState<TimelineRange>("1Y");
+  const rows = useMemo(() => filterTimeline(data.charts.timeline, (row) => row.date, range), [data.charts.timeline, range]);
+  return (
+    <ChartPanel
+      title="เส้นเวลา AUA / AUM / Projection"
+      subtitle={`Projection ถึง ${formatDate(data.projection.asOfDate)} เท่านั้น`}
+      chartId="aua-aum-projection"
+      activeRange={range}
+      visiblePoints={rows.length}
+      wide
+      controls={<RangeSelector value={range} onChange={setRange} label="ช่วงเวลากราฟ AUA AUM และ Projection" chartId="aua-aum-projection" />}
+      meta={<><span>Timeline: {range}</span><span>{timelineCoverage(rows, (row) => row.date)}</span><span>{rows.length} จุดข้อมูล</span><span>{data.model.id}</span></>}
+    >
+      <TimelineChart rows={rows} />
+    </ChartPanel>
+  );
+}
+
+function BucketSelector({ buckets, value, onChange }: { buckets: Bucket[]; value: string; onChange: (value: string) => void }) {
+  const bucketOrder: Record<string, number> = { wealthx_other: 0, mega30: 1, other_funds: 2 };
+  const orderedBuckets = [...buckets].sort((left, right) => (bucketOrder[left.id] ?? 99) - (bucketOrder[right.id] ?? 99));
+  return (
+    <div className="chart-bucket-tabs" role="group" aria-label="เลือกกลุ่ม AUM">
+      {orderedBuckets.map((bucket) => <button type="button" key={bucket.id} data-bucket-id={bucket.id} className={value === bucket.id ? "active" : ""} aria-pressed={value === bucket.id} onClick={() => onChange(bucket.id)}>{bucket.name}</button>)}
+    </div>
+  );
+}
+
+function RangeSelector({ value, onChange, label, chartId }: { value: TimelineRange; onChange: (value: TimelineRange) => void; label: string; chartId: string }) {
+  return (
+    <div className="chart-ranges" role="group" aria-label={label}>
+      {timelineRanges.map((range) => <button type="button" key={range} data-range={range} data-range-chart={chartId} className={value === range ? "active" : ""} aria-pressed={value === range} onClick={() => onChange(range)}>{range}</button>)}
+    </div>
+  );
+}
+
+function AumHistoryChart({ rows, color }: { rows: Bucket["history"]; color: string }) {
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <LineChart data={rows} margin={{ top: 12, right: 16, bottom: 8, left: 0 }}>
+        <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
+        <XAxis dataKey="date" tickFormatter={shortDate} minTickGap={42} stroke="var(--muted)" fontSize={11} />
+        <YAxis tickFormatter={(value) => compactMoney.format(value)} stroke="var(--muted)" fontSize={11} width={50} domain={["auto", "auto"]} />
+        <Tooltip content={<AumTooltip />} />
+        <Line type="monotone" dataKey="value" name="AUM" stroke={color} strokeWidth={2.6} dot={false} activeDot={{ r: 5 }} />
+      </LineChart>
+    </ResponsiveContainer>
+  );
 }
 
 function OfficialAuaChart({ rows }: { rows: AuaObservation[] }) {
@@ -248,12 +379,11 @@ function OfficialAuaChart({ rows }: { rows: AuaObservation[] }) {
   );
 }
 
-function ComparisonChart({ data }: { data: DashboardData }) {
-  const rows = data.charts.comparison;
+function ComparisonChart({ data, rows }: { data: DashboardData; rows: DashboardData["charts"]["comparison"] }) {
   const xs = rows.map((row) => row.seriesxAum);
   const min = Math.min(...xs);
   const max = Math.max(...xs);
-  const segment: readonly [{ x: number; y: number }, { x: number; y: number }] | undefined = data.model.slope === null || data.model.intercept === null ? undefined : [
+  const segment: readonly [{ x: number; y: number }, { x: number; y: number }] | undefined = rows.length < 2 || min === max || data.model.slope === null || data.model.intercept === null ? undefined : [
     { x: min, y: data.model.intercept + data.model.slope * min },
     { x: max, y: data.model.intercept + data.model.slope * max }
   ];
@@ -272,10 +402,10 @@ function ComparisonChart({ data }: { data: DashboardData }) {
   );
 }
 
-function TimelineChart({ data }: { data: DashboardData }) {
+function TimelineChart({ rows }: { rows: DashboardData["charts"]["timeline"] }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={data.charts.timeline} margin={{ top: 12, right: 18, bottom: 8, left: 2 }}>
+      <LineChart data={rows} margin={{ top: 12, right: 18, bottom: 8, left: 2 }}>
         <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
         <XAxis dataKey="date" tickFormatter={shortDate} minTickGap={42} stroke="var(--muted)" fontSize={11} />
         <YAxis tickFormatter={(value) => compactMoney.format(value)} stroke="var(--muted)" fontSize={11} width={50} />
@@ -389,6 +519,12 @@ function RefreshProgress({ job }: { job: RefreshJob }) {
 function LoadingScreen() { return <div className="loading-screen"><div className="brand-mark">LX</div><RefreshCw className="spin" size={20} /><span>กำลังโหลดฐานข้อมูลกลาง</span></div>; }
 function EmptyState({ onRetry }: { onRetry: () => void }) { return <main className="empty-state"><Database size={32} /><h2>ยังไม่มี snapshot พร้อมใช้งาน</h2><button className="primary-button" type="button" onClick={onRetry}><RefreshCw size={17} />ลองอีกครั้ง</button></main>; }
 
+function AumTooltip({ active, payload }: any) {
+  if (!active || !payload?.length) return null;
+  const row = payload[0].payload;
+  return <div className="chart-tooltip"><strong>{formatDate(row.date)}</strong><span>AUM: {formatMoney(row.value)} ลบ.</span><span>{row.fundCount} กองที่มีข้อมูล</span></div>;
+}
+
 function MoneyTooltip({ active, payload, labelKey, valueKey, valueLabel }: any) {
   if (!active || !payload?.length) return null;
   const row = payload[0].payload;
@@ -409,6 +545,28 @@ function ScatterDot({ cx, cy }: { cx?: number; cy?: number }) {
 function TimelineTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return <div className="chart-tooltip"><strong>{formatDate(label)}</strong>{payload.filter((item: any) => item.value !== null).map((item: any) => <span key={item.dataKey} style={{ color: item.color }}>{item.name}: {formatMoney(item.value)} ลบ.</span>)}</div>;
+}
+
+function filterTimeline<T>(rows: T[], dateOf: (row: T) => string | null | undefined, range: TimelineRange) {
+  const validRows = rows.filter((row) => /^\d{4}-\d{2}-\d{2}$/.test(dateOf(row) || ""));
+  if (!validRows.length) return [];
+  const endDate = validRows.reduce((latest, row) => {
+    const date = dateOf(row) || "";
+    return date > latest ? date : latest;
+  }, "");
+  const daysByRange: Record<TimelineRange, number> = { "1Y": 365, "6M": 183, "3M": 92, "1M": 31 };
+  const endMs = Date.parse(`${endDate}T00:00:00Z`);
+  const startDate = new Date(endMs - daysByRange[range] * 86_400_000).toISOString().slice(0, 10);
+  return validRows.filter((row) => {
+    const date = dateOf(row) || "";
+    return date >= startDate && date <= endDate;
+  });
+}
+
+function timelineCoverage<T>(rows: T[], dateOf: (row: T) => string | null | undefined) {
+  if (!rows.length) return "ไม่มีข้อมูลในช่วงนี้";
+  const dates = rows.map((row) => dateOf(row) || "").filter(Boolean).sort();
+  return `ข้อมูล ${formatDate(dates[0])} ถึง ${formatDate(dates[dates.length - 1])}`;
 }
 
 function formatMoney(value: number | null | undefined) { return value === null || value === undefined || !Number.isFinite(value) ? "–" : money.format(value); }
