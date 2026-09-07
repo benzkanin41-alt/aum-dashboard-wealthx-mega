@@ -1,14 +1,46 @@
 {
-  "name": "aum-3-bucket-dashboard",
-  "version": "1.0.0",
+  "name": "ltmh-wealthx-aum-aua-dashboard",
+  "version": "2.0.0",
   "private": true,
   "description": "Daily AUM/AUA tracker for WealthX, MEGA 30, and TLUSHD buckets.",
   "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
     "start": "node server.js",
+    "dev": "vite",
+    "build": "node scripts/clean-dist.js && vite build && node scripts/prepare-site-dist.js",
+    "preview": "wrangler dev --config dist/server/wrangler.json",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.js",
+    "db:generate": "node -r ./scripts/os-userinfo-shim.cjs ./node_modules/drizzle-kit/bin.cjs generate",
+    "data:bootstrap": "node scripts/build-bootstrap-data.js",
     "refresh": "node scripts/refresh.js",
     "import:talis": "node scripts/import-talis-nav.js",
     "import:talis:history": "node scripts/import-talis-history.js --days=365",
-    "export:share": "node scripts/export-share-html.js"
+    "export:share": "node scripts/export-share-html.js",
+    "sites:bootstrap": "node scripts/bootstrap-sites.js",
+    "sites:refresh": "node scripts/run-sites-refresh.js"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "lucide-react": "1.42.0",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "recharts": "3.10.1",
+    "unpdf": "1.8.1"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.37.1",
+    "@cloudflare/workers-types": "4.20260702.1",
+    "@openai/sites-vite-plugin": "0.2.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.2",
+    "drizzle-kit": "0.31.10",
+    "typescript": "5.9.3",
+    "vite": "8.0.13",
+    "wrangler": "4.92.0"
   }
 }

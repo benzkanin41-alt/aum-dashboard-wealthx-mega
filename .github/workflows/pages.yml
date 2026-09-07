@@ -1,31 +1,28 @@
-name: Build and deploy AUM dashboard
+name: Refresh canonical Sites AUM and AUA
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
   schedule:
-    # 09:00 Asia/Bangkok = 02:00 UTC
+    # 09:00 Asia/Bangkok = 02:00 UTC. GitHub may start scheduled jobs later when queues are busy.
     - cron: "0 2 * * *"
 
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: read
 
 concurrency:
-  group: pages
+  group: ltmh-wealthx-sites-refresh
   cancel-in-progress: false
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  SITES_BASE_URL: https://ltmh-wealthx-aum-aua.benzkanin41.chatgpt.site
 
 jobs:
-  build:
+  refresh:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Checkout
+      - name: Checkout scheduler client
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -33,37 +30,10 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Refresh public AUM history
-        run: npm run refresh
+      - name: Refresh AUM, official AUA, model, and snapshot
+        run: node scripts/run-sites-refresh.js
 
-      - name: Commit refreshed real history
+      - name: Verify canonical dashboard
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/nav-history.json
-          git diff --cached --quiet || git commit -m "Update AUM history"
-          git push
-
-      - name: Export shareable dashboard
-        run: |
-          mkdir -p dist
-          SHARE_HTML_OUTPUT=dist/index.html npm run export:share
-
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          curl --fail --silent --show-error "$SITES_BASE_URL/api/dashboard" \
+            | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const x=JSON.parse(s);if(x.appId!=="aum-dashboard"||!x.dataVersion||!x.model?.id)process.exit(1);console.log(JSON.stringify({dataVersion:x.dataVersion,modelVersion:x.model.id,generatedAt:x.generatedAt}))})'

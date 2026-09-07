@@ -1,6 +1,12 @@
 .env.local
+node_modules/
+.npm-cache/
+qa-output/
+.wrangler/
 data/project-map.json
 data/refresh-status.json
+data/dashboard-cache.json
+data/dashboard-cache.json.tmp
 dist/
 outputs/
 logs/

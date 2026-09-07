@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="th" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="application-id" content="aum-dashboard" />
+    <meta name="theme-color" content="#0b1118" />
+    <meta name="description" content="LTMH WealthX AUM and official AUA dashboard" />
+    <title>LTMH WealthX AUM & AUA</title>
+    <script>
+      document.documentElement.dataset.theme = localStorage.getItem("ltmh-aum-theme") || "dark";
+    </script>
+  </head>
+  <body data-app-id="aum-dashboard">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

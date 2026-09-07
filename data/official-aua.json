@@ -1,0 +1,114 @@
+[
+  {
+    "id": "aua-2025-12-31-58.5",
+    "referenceDate": "2025-12-31",
+    "amountMillionBaht": 58.5,
+    "announcedAt": null,
+    "label": "FY2025",
+    "status": "verified",
+    "sources": [{
+      "id": "ltmh-fy2025-mda",
+      "publisher": "LTMH",
+      "sourceKind": "company_mda",
+      "title": "Management Discussion and Analysis FY2025",
+      "url": "https://t0.ltmh.com/public/LTMH_MD_and_A_FY_2025_EN_eece101305.pdf",
+      "verificationStatus": "verified"
+    }]
+  },
+  {
+    "id": "aua-2026-03-31-901.5",
+    "referenceDate": "2026-03-31",
+    "amountMillionBaht": 901.5,
+    "announcedAt": null,
+    "label": "Q1/2026",
+    "status": "verified",
+    "sources": [{
+      "id": "ltmh-q1-2026-mda",
+      "publisher": "LTMH",
+      "sourceKind": "company_mda",
+      "title": "Management Discussion and Analysis Q1/2026",
+      "url": "https://t0.ltmh.com/public/LTMH_MD_and_A_Q1_2026_EN_34a9c79383.pdf",
+      "verificationStatus": "verified"
+    }]
+  },
+  {
+    "id": "aua-2026-04-16-1000",
+    "referenceDate": "2026-04-16",
+    "amountMillionBaht": 1000,
+    "announcedAt": "2026-06-22",
+    "label": "AUA 1,000 ล้านบาท",
+    "status": "verified",
+    "sources": [{
+      "id": "ltmh-aua-3000",
+      "publisher": "LTMH/SET",
+      "sourceKind": "official_news",
+      "title": "WealthX AUA reaches 3,000 million baht",
+      "url": "https://t0.ltmh.com/public/2020_NWS_220620261949385150_E_1526794b3c.pdf",
+      "verificationStatus": "verified"
+    }]
+  },
+  {
+    "id": "aua-2026-05-27-2000",
+    "referenceDate": "2026-05-27",
+    "amountMillionBaht": 2000,
+    "announcedAt": "2026-06-22",
+    "label": "AUA 2,000 ล้านบาท",
+    "status": "verified",
+    "sources": [{
+      "id": "ltmh-aua-3000",
+      "publisher": "LTMH/SET",
+      "sourceKind": "official_news",
+      "title": "WealthX AUA reaches 3,000 million baht",
+      "url": "https://t0.ltmh.com/public/2020_NWS_220620261949385150_E_1526794b3c.pdf",
+      "verificationStatus": "verified"
+    }]
+  },
+  {
+    "id": "aua-2026-06-18-3000",
+    "referenceDate": "2026-06-18",
+    "amountMillionBaht": 3000,
+    "announcedAt": "2026-06-22",
+    "label": "AUA 3,000 ล้านบาท",
+    "status": "verified",
+    "sources": [{
+      "id": "ltmh-aua-3000",
+      "publisher": "LTMH/SET",
+      "sourceKind": "official_news",
+      "title": "WealthX AUA reaches 3,000 million baht",
+      "url": "https://t0.ltmh.com/public/2020_NWS_220620261949385150_E_1526794b3c.pdf",
+      "verificationStatus": "verified"
+    }]
+  },
+  {
+    "id": "aua-2026-06-30-3200",
+    "referenceDate": "2026-06-30",
+    "amountMillionBaht": 3200,
+    "announcedAt": null,
+    "label": "Q2/2026",
+    "status": "verified",
+    "sources": [{
+      "id": "ltmh-q2-2026-mda",
+      "publisher": "LTMH",
+      "sourceKind": "company_mda",
+      "title": "Management Discussion and Analysis Q2/2026",
+      "url": "https://t0.ltmh.com/public/LTMH_MD_and_A_Q2_2026_EN_9198c71fd9.pdf",
+      "verificationStatus": "verified"
+    }]
+  },
+  {
+    "id": "aua-2026-07-20-5000",
+    "referenceDate": "2026-07-20",
+    "amountMillionBaht": 5000,
+    "announcedAt": "2026-07-20",
+    "label": "AUA 5,000 ล้านบาท",
+    "status": "verified",
+    "sources": [{
+      "id": "ltmh-aua-5000",
+      "publisher": "LTMH/SET",
+      "sourceKind": "official_news",
+      "title": "WealthX AUA reaches 5,000 million baht",
+      "url": "https://t0.ltmh.com/public/LTMH_014_2026_ELCID_EN_Notification_of_a_Material_Development_of_a_Subsidiary_Wealth_X_Securities_Company_Limited_s_Assets_Under_Advice_AUA_Reaching_5_000_Million_Baht_71ce5dbbfa.pdf",
+      "verificationStatus": "verified"
+    }]
+  }
+]
