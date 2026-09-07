@@ -14,7 +14,6 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   SITES_BASE_URL: https://ltmh-wealthx-aum-aua.benzkanin41.chatgpt.site
 
 jobs:
@@ -23,12 +22,13 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout scheduler client
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "22"
+          package-manager-cache: false
 
       - name: Refresh AUM, official AUA, model, and snapshot
         run: node scripts/run-sites-refresh.js
