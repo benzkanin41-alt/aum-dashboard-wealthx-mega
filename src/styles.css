@@ -236,3 +236,11 @@ footer { padding-top: 18px; border-top: 1px solid var(--line); color: var(--fain
   html { scroll-behavior: auto; }
   .spin { animation-duration: 2s; }
 }
+
+.interval-summary { margin: 0 0 10px; color: var(--muted); font-size: 14px; font-variant-numeric: tabular-nums; }
+.metric-meta, .metric-footer, .date-pairs, .date-pairs strong, .status-strip, .chart-meta, .source-row span, footer { font-size: 12px; }
+.metric-label, .source-row strong { font-size: 14px; }
+.metric-card, .chart-tooltip { overflow-wrap: anywhere; }
+.chart-tooltip { max-width: min(300px, 78vw); font-size: 12px; }
+.chart-ranges button, .icon-button, .primary-button { min-height: 40px; }
+.chart-meta { flex-wrap: wrap; }

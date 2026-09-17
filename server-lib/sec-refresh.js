@@ -3,9 +3,9 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { fetchTalisFundHistory, fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "./talis-public.js";
 import { mergeSettradeHistoryRows } from "./settrade-public.js";
+import { DATA_DIR } from "./local-paths.js";
 
 const ROOT = process.cwd();
-const DATA_DIR = path.join(ROOT, "data");
 const FUNDS_PATH = path.join(ROOT, "config", "funds.json");
 const HISTORY_PATH = path.join(DATA_DIR, "nav-history.json");
 const MAP_PATH = path.join(DATA_DIR, "project-map.json");

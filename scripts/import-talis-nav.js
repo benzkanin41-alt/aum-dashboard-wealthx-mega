@@ -1,10 +1,11 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { dataPath } from "../server-lib/local-paths.js";
 import { fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "../server-lib/talis-public.js";
 
 const ROOT = process.cwd();
 const configPath = path.join(ROOT, "config", "funds.json");
-const historyPath = path.join(ROOT, "data", "nav-history.json");
+const historyPath = dataPath("nav-history.json");
 
 const config = JSON.parse(await fs.readFile(configPath, "utf8"));
 let history = {};

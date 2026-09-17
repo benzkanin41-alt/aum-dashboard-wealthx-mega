@@ -3,9 +3,10 @@ import fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import { chromium } from "playwright";
+import { DATA_ROOT } from "../server-lib/local-paths.js";
 
 const baseUrl = process.env.QA_BASE_URL || process.argv[2] || "http://127.0.0.1:5174";
-const outputDir = path.resolve(process.env.QA_OUTPUT || process.argv[3] || path.join(process.cwd(), "qa-output"));
+const outputDir = path.resolve(process.env.QA_OUTPUT || process.argv[3] || path.join(DATA_ROOT, "tests", "ui"));
 const cases = [
   { name: "desktop-dark", width: 1440, height: 1100, mobile: false, theme: "dark" },
   { name: "desktop-light", width: 1440, height: 1100, mobile: false, theme: "light" },
@@ -28,7 +29,8 @@ try {
     console.error(`QA ${item.name}`);
     results.push(await runCase(browser, item));
   }
-  console.log(JSON.stringify({ ok: results.every((item) => item.ok), outputDir, browser: executablePath || "playwright-default", results }, null, 2));
+  await fs.writeFile(path.join(outputDir,"report.json"),JSON.stringify({ok:results.every(item=>item.ok),results},null,2));
+  console.log(JSON.stringify({ ok: results.every((item) => item.ok), outputDir, results:results.map(({name,ok})=>({name,ok})) }, null, 2));
   if (results.some((item) => !item.ok)) process.exitCode = 1;
 } finally {
   await browser.close();
@@ -113,6 +115,8 @@ async function runCase(browserInstance, item) {
     });
 
     const file = path.join(outputDir, `${item.name}.png`);
+    await page.locator('[data-chart-id="aua-aum-projection"]').screenshot({path:path.join(outputDir,`${item.name}-projection.png`)});
+    await page.evaluate(()=>scrollTo(0,0));
     await page.screenshot({ path: file, fullPage: false });
     const rangeInteractionPassed = ranges.every((range) => Object.values(timelineInteraction.ranges[range])
       .every((state) => state.range === range && state.activeButton === range && state.visiblePoints > 0));
@@ -132,7 +136,7 @@ async function runCase(browserInstance, item) {
       && metrics.rangeButtonHeights.every((height) => height >= 36)
       && metrics.bucketButtonCount === 3
       && metrics.bucketOrder.join(",") === "wealthx_other,mega30,other_funds"
-      && metrics.scatterSymbolCount === 7
+      && metrics.scatterSymbolCount === timelineInteraction.ranges["1Y"]["aua-aum-comparison"].visiblePoints
       && metrics.scatterBounds.every((rect) => rect.width > 0 && rect.height > 0)
       && metrics.metricCount === 5
       && metrics.hasActual

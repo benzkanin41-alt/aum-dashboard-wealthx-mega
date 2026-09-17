@@ -2,11 +2,11 @@ import http from "node:http";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { DATA_ROOT } from "./server-lib/local-paths.js";
+import { readBestCache, writeCacheSafely, validateDashboard } from "./server-lib/dashboard-cache.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STATIC_DIR = path.join(__dirname, "dist", "client");
-const CACHE_FILE = path.join(__dirname, "data", "dashboard-cache.json");
-const PREVIOUS_CACHE_FILE = `${CACHE_FILE}.previous`;
 const REMOTE_BASE = (process.env.SITES_BASE_URL || "https://ltmh-wealthx-aum-aua.benzkanin41.chatgpt.site").replace(/\/$/, "");
 const PORT = Number(process.env.PORT || 12014);
 
@@ -14,7 +14,7 @@ const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url || "/", `http://${req.headers.host || `127.0.0.1:${PORT}`}`);
     if (url.pathname === "/api/health") {
-      return sendJson(res, 200, { ok: true, appId: "aum-dashboard", mode: "local-cache-proxy", remote: REMOTE_BASE, time: new Date().toISOString() });
+      return sendJson(res, 200, { ok: true, appId: "aum-dashboard", mode: "local-cache-proxy", remote: REMOTE_BASE, dataRoot: DATA_ROOT, time: new Date().toISOString() });
     }
     if (url.pathname === "/api/dashboard" && req.method === "GET") {
       try {
@@ -31,7 +31,15 @@ const server = http.createServer(async (req, res) => {
         return sendJson(res, 200, { ...cached, offline: true, localProxy: true, cachedAt: cached.generatedAt || null, offlineReason: messageOf(error) });
       }
     }
-    if (url.pathname.startsWith("/api/")) return proxyApi(req, res, url);
+    if (url.pathname === "/api/dashboard/version" && req.method === "GET") {
+      try { return await proxyApi(req, res, url); }
+      catch (error) {
+        const cached = await readBestCache();
+        if (!cached) throw error;
+        return sendJson(res, 200, { appId: "aum-dashboard", dataVersion: cached.dataVersion, generatedAt: cached.generatedAt, offline: true, job: null });
+      }
+    }
+    if (url.pathname.startsWith("/api/")) return await proxyApi(req, res, url);
     return serveSpa(res, url.pathname);
   } catch (error) {
     sendJson(res, 500, { ok: false, error: messageOf(error) });
@@ -70,31 +78,6 @@ async function serveSpa(res, pathname) {
     res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" });
     res.end(content);
   }
-}
-
-async function writeCacheSafely(payload) {
-  const temporary = `${CACHE_FILE}.tmp`;
-  await fs.writeFile(temporary, `${JSON.stringify(payload)}\n`, "utf8");
-  try { await fs.rm(PREVIOUS_CACHE_FILE, { force: true }); } catch {}
-  try { await fs.rename(CACHE_FILE, PREVIOUS_CACHE_FILE); } catch (error) { if (error.code !== "ENOENT") throw error; }
-  try {
-    await fs.rename(temporary, CACHE_FILE);
-    await fs.rm(PREVIOUS_CACHE_FILE, { force: true });
-  } catch (error) {
-    try { await fs.rename(PREVIOUS_CACHE_FILE, CACHE_FILE); } catch {}
-    throw error;
-  }
-}
-
-async function readBestCache() {
-  for (const file of [CACHE_FILE, PREVIOUS_CACHE_FILE]) {
-    try { return JSON.parse(await fs.readFile(file, "utf8")); } catch {}
-  }
-  return null;
-}
-
-function validateDashboard(payload) {
-  if (!payload || payload.appId !== "aum-dashboard" || !Array.isArray(payload.buckets) || !Array.isArray(payload.funds)) throw new Error("ข้อมูล cache ไม่ใช่ dashboard รุ่นที่รองรับ");
 }
 
 function fetchWithTimeout(url, options, timeoutMs) {

@@ -1,9 +1,10 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { flattenFunds } from "../shared/model.js";
+import { dataPath } from "../server-lib/local-paths.js";
 
 const config = JSON.parse(await readFile(new URL("../config/funds.json", import.meta.url), "utf8"));
-const history = JSON.parse(await readFile(new URL("../data/nav-history.json", import.meta.url), "utf8"));
-const aua = JSON.parse(await readFile(new URL("../data/official-aua.json", import.meta.url), "utf8"));
+const history = JSON.parse(await readFile(dataPath("nav-history.json"), "utf8"));
+const aua = JSON.parse(await readFile(dataPath("official-aua.json"), "utf8"));
 const now = new Date().toISOString();
 const funds = flattenFunds(config).map((fund) => {
   const dates = Object.keys(history[fund.code] || {}).sort();
@@ -35,5 +36,5 @@ for (const fund of funds) {
 aumPoints.sort((a, b) => a.fundId.localeCompare(b.fundId) || a.asOfDate.localeCompare(b.asOfDate));
 
 const payload = { version: 1, builtAt: now, funds, aumPoints, aua };
-await writeFile(new URL("../data/bootstrap-data.json", import.meta.url), `${JSON.stringify(payload)}\n`, "utf8");
+await writeFile(dataPath("bootstrap-data.json"), `${JSON.stringify(payload)}\n`, "utf8");
 console.log(JSON.stringify({ funds: funds.length, aumPoints: aumPoints.length, aua: aua.length }));

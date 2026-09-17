@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
+import { dataPath } from "../server-lib/local-paths.js";
 import {
   SERIESX_BUCKET_ID,
   buildAggregateHistory,
@@ -12,8 +13,8 @@ import {
 
 const root = new URL("../", import.meta.url);
 const config = JSON.parse(await readFile(new URL("config/funds.json", root), "utf8"));
-const history = JSON.parse(await readFile(new URL("data/nav-history.json", root), "utf8"));
-const observations = JSON.parse(await readFile(new URL("data/official-aua.json", root), "utf8"));
+const history = JSON.parse(await readFile(dataPath("nav-history.json"), "utf8"));
+const observations = JSON.parse(await readFile(dataPath("official-aua.json"), "utf8"));
 
 test("strict SeriesX history reproduces the audited milestone matches", () => {
   const aggregates = buildAggregateHistory(config, history, SERIESX_BUCKET_ID);

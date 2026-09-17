@@ -18,7 +18,11 @@ npm start
 แล้วเปิด `http://localhost:12014`
 
 Local server ใช้ UI เดียวกับ Sites และ proxy API ไปฐานข้อมูลกลาง เมื่อออนไลน์ไม่ได้
-จะเปิด cache ล่าสุดใน `data/dashboard-cache.json` พร้อมระบุสถานะ offline
+จะเปิด cache ล่าสุดใน `E:\DASHBOARD\DASBOARD LTMH\ข้อมูล\cache\dashboard-cache.json` พร้อมระบุสถานะ offline
+ตำแหน่ง Local ทั้งหมดกำหนดใน `config/storage.json` และไม่ย้อนกลับไปสร้างฐานบน C:
+
+ช่วงประมาณการแสดงค่ากลางและขอบล่าง/บน 95% ภายใต้สมมติฐานโมเดล
+รายละเอียดการคำนวณและ rollback อยู่ใน `docs/adr/0003-predictive-interval-and-storage.md`
 
 ## Local Auto Run / Auto Refresh
 

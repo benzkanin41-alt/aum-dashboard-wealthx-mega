@@ -9,7 +9,7 @@ const TALIS_NAV_URL = "https://nav.talisam.co.th/index_NAV_Sum.jsp?p_lang=EN";
 const SETTRADE_URL = "https://www.settrade.com/th/mutualfund/quote";
 
 export async function refreshTalis(env: Env) {
-  const response = await fetch(TALIS_NAV_URL, { headers: sourceHeaders() });
+  const response = await fetch(TALIS_NAV_URL, { headers: sourceHeaders(), signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Talis NAV ${response.status}`);
   const rows = parseTalisNavRows(await response.text());
   const fundRows = await env.DB.prepare("SELECT * FROM funds WHERE data_source = 'talis' AND active = 1").all<FundRow>();
@@ -18,7 +18,9 @@ export async function refreshTalis(env: Env) {
   const statements: D1PreparedStatement[] = [];
   for (const row of rows) {
     const fund = configured.get(row.code);
-    if (!fund) continue;
+    if (!fund || (fund.inception_date && row.navDate < fund.inception_date)) continue;
+    const before = await env.DB.prepare("SELECT * FROM aum_points WHERE fund_id=? AND as_of_date=?").bind(fund.id, row.navDate).first<any>();
+    if (before && (before.aum_million_baht !== row.aumMillionBaht || before.nav_per_unit !== row.nav)) await audit(env, "aum_point", `${fund.id}:${row.navDate}`, "revise", before, row);
     statements.push(upsertAumStatement(env, fund, row.navDate, row.aumMillionBaht, row.nav, row.source, now));
   }
   if (statements.length) await env.DB.batch(statements);
@@ -30,7 +32,7 @@ export async function refreshSettradeFund(env: Env, fund: FundRow) {
   const result = await fetchSettradeFundLatest(fund.code);
   const now = nowIso();
   let imported = 0;
-  if (result.latest && !isSeedPlaceholder(result.latest)) {
+  if (result.latest && !isSeedPlaceholder(result.latest) && (!fund.inception_date || result.latest.navDate >= fund.inception_date)) {
     const before = await env.DB.prepare("SELECT aum_million_baht FROM aum_points WHERE fund_id=? AND as_of_date=?")
       .bind(fund.id, result.latest.navDate).first<{ aum_million_baht: number }>();
     await upsertAumStatement(env, fund, result.latest.navDate, result.latest.aumMillionBaht, result.latest.nav, result.latest.source, now).run();
@@ -44,14 +46,14 @@ export async function refreshSettradeFund(env: Env, fund: FundRow) {
     name: `Settrade ${fund.code}`,
     status: imported ? "ok" : "incomplete",
     url: result.url,
-    message: imported ? result.latest?.navDate : "ไม่พบ NAV ที่ใช้ได้"
+    message: imported ? result.latest?.navDate : `รอ NAV ตั้งแต่วันเริ่มกอง ${fund.inception_date || "ที่ตรวจสอบได้"}; ไม่รวมข้อมูลก่อนเริ่มกอง`
   });
   return { source: "settrade", code: fund.code, imported, date: result.latest?.navDate || null };
 }
 
 export async function fetchSettradeFundLatest(symbol: string) {
   const url = `${SETTRADE_URL}/${encodeURIComponent(symbol)}/overview`;
-  const response = await fetch(url, { headers: sourceHeaders() });
+  const response = await fetch(url, { headers: sourceHeaders(), signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Settrade ${symbol} ${response.status}`);
   const rows = parseSettradeNuxtRows(await response.text(), symbol, url).filter((row) => !isSeedPlaceholder(row));
   rows.sort((a, b) => a.navDate.localeCompare(b.navDate));
@@ -106,63 +108,6 @@ function extractBalanced(value: string, start: number, open: string, close: stri
   return null;
 }
 
-export async function refreshOfficialAua(env: Env) {
-  const setResult = await checkSetNews(env);
-  const irResult = await checkLtmhIr(env);
-  return {
-    set: setResult,
-    ltmhIr: irResult,
-    verificationComplete: setResult.ok && irResult.ok
-  };
-}
-
-async function checkSetNews(env: Env) {
-  try {
-    const response = await fetch(SET_NEWS_URL, { headers: sourceHeaders() });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const html = await response.text();
-    const looksValid = /LTMH/i.test(html) && /(ข่าว|news)/i.test(html);
-    await updateSourceStatus(env, {
-      id: "set-ltmh-news",
-      name: "SET LTMH News",
-      status: looksValid ? "ok" : "incomplete",
-      url: SET_NEWS_URL,
-      message: looksValid ? "เข้าถึงหน้าข่าวได้" : "หน้าเว็บตอบกลับแต่ยืนยันรายการข่าวไม่ได้"
-    });
-    return { ok: looksValid, status: looksValid ? "ok" : "incomplete" };
-  } catch (error) {
-    await updateSourceStatus(env, { id: "set-ltmh-news", name: "SET LTMH News", status: "incomplete", url: SET_NEWS_URL, message: errorMessage(error) });
-    return { ok: false, status: "incomplete", error: errorMessage(error) };
-  }
-}
-
-async function checkLtmhIr(env: Env) {
-  try {
-    const response = await fetch(LTMH_IR_URL, { headers: sourceHeaders() });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const html = await response.text();
-    const candidates = extractIrPdfUrls(html).filter(isAuaCandidateUrl).slice(0, 8);
-    let inserted = 0;
-    let pending = 0;
-    for (const url of candidates) {
-      const result = await inspectOfficialPdf(env, url);
-      inserted += result.inserted;
-      pending += result.pending;
-    }
-    await updateSourceStatus(env, {
-      id: "ltmh-investor-relations",
-      name: "LTMH Investor Relations",
-      status: "ok",
-      url: LTMH_IR_URL,
-      message: `ตรวจเอกสารที่เกี่ยวข้อง ${candidates.length} รายการ; AUA ใหม่ ${inserted}; รอตรวจสอบ ${pending}`
-    });
-    return { ok: true, status: "ok", candidates: candidates.length, inserted, pending };
-  } catch (error) {
-    await updateSourceStatus(env, { id: "ltmh-investor-relations", name: "LTMH Investor Relations", status: "failed", url: LTMH_IR_URL, message: errorMessage(error) });
-    return { ok: false, status: "failed", error: errorMessage(error) };
-  }
-}
-
 export function extractIrPdfUrls(html: string) {
   const normalized = html.replaceAll("\\u0026", "&").replaceAll("\\/", "/");
   const urls = [...normalized.matchAll(/https?:[^"'<>\s]+?\.pdf(?:\?[^"'<>\s]*)?/gi)].map((match) => match[0]);
@@ -195,54 +140,60 @@ export function extractAuaActuals(text: string) {
   return [...unique.values()].sort((a, b) => a.referenceDate.localeCompare(b.referenceDate));
 }
 
-async function inspectOfficialPdf(env: Env, url: string) {
-  const known = await env.DB.prepare("SELECT id, document_hash FROM aua_sources WHERE url = ?").bind(url).first<{ id: string; document_hash: string | null }>();
+export async function inspectOfficialPdf(env: Env, url: string, context: { publisher?: string; announcedAt?: string | null; title?: string } = {}) {
+  const known = await env.DB.prepare("SELECT id, document_hash, announced_at, notes, verification_status FROM aua_sources WHERE url = ?").bind(url).first<{ id: string; document_hash: string | null; announced_at: string | null; notes: string | null; verification_status: string }>();
   const sourceId = known?.id || `doc-${(await sha256Text(url)).slice(0, 20)}`;
-  const response = await fetch(url, { headers: sourceHeaders() });
+  const response = await fetch(url, { headers: sourceHeaders(), signal: AbortSignal.timeout(20000) });
   if (!response.ok) throw new Error(`Official PDF ${response.status}`);
+  if (Number(response.headers.get("content-length") || 0) > 25000000) throw new Error("เอกสารเกินขนาดที่ประมวลผลได้: รอตรวจสอบ");
   const bytes = new Uint8Array(await response.arrayBuffer());
+  if (bytes.length > 25000000 || new TextDecoder().decode(bytes.slice(0, 5)) !== "%PDF-") throw new Error("เอกสารไม่ใช่ PDF ที่ใช้ได้หรือใหญ่เกินขอบเขต");
   const documentHash = await sha256Bytes(bytes);
-  if (known?.document_hash === documentHash) {
+  if (known?.document_hash === documentHash && known.notes?.includes("parser-v3") && (!context.announcedAt || known.announced_at === context.announcedAt)) {
     await env.DB.prepare("UPDATE aua_sources SET last_checked_at=? WHERE id=?").bind(nowIso(), known.id).run();
-    return { inserted: 0, pending: 0, duplicate: true };
+    return { inserted: 0, pending: known.verification_status === "pending_review" ? 1 : 0, duplicate: true };
   }
   const r2Key = `official-aua/${documentHash}.pdf`;
   await env.FILES.put(r2Key, bytes, { httpMetadata: { contentType: "application/pdf" }, customMetadata: { sourceUrl: url } });
   const extracted = await extractText(bytes, { mergePages: true });
   const text = Array.isArray(extracted.text) ? extracted.text.join(" ") : String(extracted.text || "");
   const actuals = extractAuaActuals(text);
+  const announcedAt = context.announcedAt || extractDocumentDate(text);
+  const hasAua = /\bAUA\b|assets under (?:advice|administration)/i.test(text);
+  const pendingDocument = hasAua && (!actuals.length || !announcedAt);
   const now = nowIso();
-  const title = titleFromUrl(url);
+  const title = context.title || titleFromUrl(url);
   await env.DB.prepare(`
     INSERT INTO aua_sources (id, publisher, source_kind, title, url, announced_at, discovered_at, verification_status,
       completeness_status, document_hash, r2_key, notes, last_checked_at)
-    VALUES (?, 'LTMH', 'company_document', ?, ?, NULL, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, 'company_document', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(url) DO UPDATE SET document_hash=excluded.document_hash, r2_key=excluded.r2_key,
       verification_status=excluded.verification_status, completeness_status=excluded.completeness_status,
-      notes=excluded.notes, last_checked_at=excluded.last_checked_at
-  `).bind(sourceId, title, url, now, actuals.length ? "verified" : "pending_review", actuals.length ? "complete" : "incomplete",
-    documentHash, r2Key, actuals.length ? `Extracted ${actuals.length} exact AUA actual(s)` : "AUA document requires manual verification", now).run();
+      announced_at=COALESCE(excluded.announced_at,aua_sources.announced_at), notes=excluded.notes, last_checked_at=excluded.last_checked_at
+  `).bind(sourceId, context.publisher || "LTMH", title, url, announcedAt, now, pendingDocument ? "pending_review" : "verified", pendingDocument ? "incomplete" : "complete",
+    documentHash, r2Key, `parser-v3; ${actuals.length} exact actual(s); ${pendingDocument ? "AUA/date requires manual verification" : hasAua ? "AUA checked" : "No AUA in document"}`, now).run();
+  if (known?.document_hash && known.document_hash !== documentHash) await audit(env, "aua_source", sourceId, "document_revision", known, { documentHash, r2Key, announcedAt });
 
   let inserted = 0;
-  let pending = 0;
+  let pending = pendingDocument ? 1 : 0;
   for (const actual of actuals) {
     const existingSameDate = await env.DB.prepare("SELECT id, amount_million_baht FROM aua_observations WHERE reference_date=? AND status='verified' ORDER BY revision DESC LIMIT 1")
       .bind(actual.referenceDate).first<{ id: string; amount_million_baht: number }>();
     const key = `${actual.referenceDate}:${actual.amountMillionBaht}`;
     let observationId = `aua-${actual.referenceDate}-${actual.amountMillionBaht}`;
-    let status = "verified";
+    let status = announcedAt && actual.referenceDate <= announcedAt ? "verified" : "pending_review";
     if (existingSameDate && existingSameDate.amount_million_baht !== actual.amountMillionBaht) {
       status = "pending_review";
       pending += 1;
-      observationId = `${observationId}-pending-${documentHash.slice(0, 8)}`;
     }
-    const before = await env.DB.prepare("SELECT id FROM aua_observations WHERE observation_key=? AND status=? LIMIT 1").bind(key, status).first();
+    const before = await env.DB.prepare("SELECT id FROM aua_observations WHERE observation_key=? ORDER BY CASE WHEN status='verified' THEN 0 ELSE 1 END, revision DESC LIMIT 1").bind(key).first();
+    if (status === "pending_review") observationId = `${observationId}-pending-${documentHash.slice(0, 8)}`;
     if (!before) {
       await env.DB.prepare(`
         INSERT INTO aua_observations (id, reference_date, amount_million_baht, announced_at, discovered_at, status, label,
           observation_key, revision, supersedes_id, created_at, updated_at)
-        VALUES (?, ?, ?, NULL, ?, ?, ?, ?, 1, NULL, ?, ?)
-      `).bind(observationId, actual.referenceDate, actual.amountMillionBaht, now, status, `AUA ${actual.amountMillionBaht.toLocaleString("en-US")} ล้านบาท`, key, now, now).run();
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, NULL, ?, ?)
+      `).bind(observationId, actual.referenceDate, actual.amountMillionBaht, announcedAt, now, status, `AUA ${actual.amountMillionBaht.toLocaleString("en-US")} ล้านบาท`, key, now, now).run();
       if (status === "verified") inserted += 1;
       await audit(env, "aua_observation", observationId, status === "verified" ? "discover" : "flag_conflict", null, actual);
     } else {
@@ -252,6 +203,12 @@ async function inspectOfficialPdf(env: Env, url: string) {
       .bind(observationId, sourceId, actual.evidence).run();
   }
   return { inserted, pending, duplicate: false };
+}
+
+export function extractDocumentDate(text: string) {
+  const heading = text.slice(0, 1800).split(/Subject\s*:/i)[0];
+  const dates = [...heading.matchAll(/(?:^|\n)\s*([A-Za-z]+\s+\d{1,2},\s*20\d{2}|\d{1,2}\s+[A-Za-z]+\s+20\d{2})\s*(?:\n|$)/g)].map(m => parseEnglishDate(m[1])).filter(Boolean);
+  return dates.length === 1 ? dates[0] : null;
 }
 
 function upsertAumStatement(env: Env, fund: FundRow, date: string, aum: number, nav: number | null, source: string, now: string) {
@@ -333,10 +290,6 @@ function toDateOnly(value: unknown) {
 function parseEnglishDate(value: string) {
   const parsed = Date.parse(`${value} UTC`);
   return Number.isFinite(parsed) ? new Date(parsed).toISOString().slice(0, 10) : null;
-}
-
-function isAuaCandidateUrl(url: string) {
-  return /(aua|md[_-]?and[_-]?a|material[_-]?development|nws[_-]?\d|q[1-4][_-]?2026|fy[_-]?2025)/i.test(url);
 }
 
 function titleFromUrl(url: string) {

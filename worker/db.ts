@@ -25,7 +25,7 @@ export async function currentRefreshJob(env: Env) {
   if (!jobId) return null;
   const job = await env.DB.prepare("SELECT * FROM refresh_jobs WHERE id = ?").bind(jobId).first<RefreshJobRow>();
   if (!job || ["complete", "failed"].includes(job.status)) {
-    await env.DB.prepare("DELETE FROM metadata WHERE key = 'refresh_lock'").run();
+    await env.DB.prepare("DELETE FROM metadata WHERE key = 'refresh_lock' AND value=?").bind(jobId).run();
     return null;
   }
   return job;

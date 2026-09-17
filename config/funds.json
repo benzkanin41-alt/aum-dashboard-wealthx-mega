@@ -1,4 +1,5 @@
 {
+  "catalogVersion": "2026-09-17.1",
   "buckets": [
     {
       "id": "wealthx_other",
@@ -6,6 +7,7 @@
       "description": "นับเฉพาะกอง SeriesX/Class-X ที่เป็นกองพิเศษเฉพาะ WealthX ตามรูป ไม่รวม TLUSHD",
       "color": "#2563eb",
       "funds": [
+        { "code": "ONE-HUMANOID-X-UH", "group": "SeriesX Selected / Humanoid / KOID", "identifierType": "fund_class_name", "identifier": "ONE-HUMANOID-X-UH", "source": "WealthX / ONEAM; SEC factsheet 2026-09-03", "dataSource": "settrade", "inceptionDate": "2026-09-16", "evidenceUrl": "https://market.sec.or.th/public/mrap/MRAPFile.aspx?FILESEQUENCE=1&FUNDCOMPRUNCODE=MF06722569&FUNDNAME=ONE-HUMANOID&PERIOD=2026-09-10&REPORTID=47" },
         { "code": "M-ASIASEMI", "group": "Asia Semiconductor / Global X Asia Semiconductor ETF", "identifierType": "proj_id", "identifier": "M0802_2569", "source": "WealthX Series X / MFC", "dataSource": "settrade" },
         { "code": "TLCNTECH100-X", "group": "China Technology / CNQQ", "identifierType": "proj_id", "identifier": "M0752_2569", "source": "WealthX Series X / Talis" },
         { "code": "TLCOREWEALTH-UH-X", "group": "Series X / Core Wealth 60/40 Unhedged", "identifierType": "proj_id", "identifier": "M0728_2569", "source": "WealthX Series X / Talis" },

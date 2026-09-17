@@ -38,7 +38,16 @@
   job with a retry interval.
 - Work is staged and cursor-backed so each request advances or resumes the same
   job.
-- `GET /api/refresh/status?id=...` exposes progress without changing data.
+- `GET /api/refresh/status?job=...` exposes progress. `advance=1` advances one checkpoint.
+- `GET /api/dashboard/version` is read-only and does not start or advance jobs.
+- Visible clients poll every 15 seconds and on focus/reconnection; Local caches
+  validated snapshots on E: with serialized atomic replacement and last-good copy.
+- Official-source discovery paginates SET and checks all linked IR PDFs one at a
+  time. Reachable HTML alone never means verification is complete. Unknown dates,
+  conflicting figures and unreadable documents remain pending review.
+- Projections include lower, upper, intervalLevel, intervalMethod,
+  algorithmVersion and inputFingerprint. Historical chart estimates are labeled
+  reconstructed; recorded projection revisions remain append-only.
 - Every snapshot has immutable `dataVersion` and `modelVersion` identifiers.
 
 ## Provenance

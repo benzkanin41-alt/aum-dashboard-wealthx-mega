@@ -1,7 +1,10 @@
 import { audit, currentRefreshJob, getMetadata, latestRefreshJob, nowIso, randomId, setMetadata, updateSourceStatus } from "./db.ts";
 import { rebuildModelAndSnapshot } from "./snapshot.ts";
-import { refreshOfficialAua, refreshSettradeFund, refreshTalis } from "./sources.ts";
+import { refreshSettradeFund, refreshTalis } from "./sources.ts";
+import { advanceOfficialScan, newOfficialScan } from "./official.ts";
 import type { Env, FundRow, RefreshJobRow } from "./types.ts";
+import { syncFundCatalog } from "./catalog.ts";
+import { advanceUpgradeBackup } from "./backup.ts";
 
 const MIN_REFRESH_INTERVAL_MS = 5 * 60 * 1000;
 const STALE_STEP_MS = 2 * 60 * 1000;
@@ -22,7 +25,7 @@ export async function startOrReuseRefresh(env: Env, requestedBy: string) {
   const jobId = randomId("refresh");
   await env.DB.prepare(`
     INSERT INTO refresh_jobs (id, requested_at, started_at, completed_at, updated_at, status, stage, cursor, total, requested_by, error, result_json)
-    VALUES (?, ?, ?, NULL, ?, 'running', 'aum', 0, 0, ?, NULL, '{}')
+    VALUES (?, ?, ?, NULL, ?, 'running', 'backup', 0, 0, ?, NULL, '{}')
   `).bind(jobId, now, now, now, requestedBy).run();
   const lock = await env.DB.prepare("INSERT OR IGNORE INTO metadata (key, value, updated_at) VALUES ('refresh_lock', ?, ?)")
     .bind(jobId, now).run();
@@ -31,7 +34,7 @@ export async function startOrReuseRefresh(env: Env, requestedBy: string) {
     await env.DB.prepare("DELETE FROM refresh_jobs WHERE id=?").bind(jobId).run();
     const existing = activeId ? await env.DB.prepare("SELECT * FROM refresh_jobs WHERE id=?").bind(activeId).first<RefreshJobRow>() : null;
     if (existing) return { job: existing, reused: true, rateLimited: false };
-    await env.DB.prepare("DELETE FROM metadata WHERE key='refresh_lock'").run();
+    if (activeId) await env.DB.prepare("DELETE FROM metadata WHERE key='refresh_lock' AND value=?").bind(activeId).run();
     return startOrReuseRefresh(env, requestedBy);
   }
   await audit(env, "refresh_job", jobId, "create", null, { requestedBy }, requestedBy);
@@ -52,7 +55,10 @@ export async function advanceRefresh(env: Env, jobId?: string | null) {
   if (!(await acquireStep(env, stepKey))) return readJob(env, job.id);
 
   try {
-    if (job.stage === "aum") await advanceAum(env, job);
+    if (job.stage === "backup") {
+      if (await advanceUpgradeBackup(env, job)) await env.DB.prepare("UPDATE refresh_jobs SET stage='aum',cursor=0,total=0,updated_at=? WHERE id=?").bind(nowIso(),job.id).run();
+    }
+    else if (job.stage === "aum") await advanceAum(env, job);
     else if (job.stage === "aua") await advanceAua(env, job);
     else if (job.stage === "model") await finishModel(env, job);
     else throw new Error(`Unknown refresh stage: ${job.stage}`);
@@ -73,10 +79,10 @@ export async function refreshStatus(env: Env, jobId?: string | null) {
   return presentJob(job);
 }
 
-function presentJob(job: RefreshJobRow) {
+export function presentJob(job: RefreshJobRow) {
   const stageProgress = job.total > 0 ? job.cursor / job.total : 0;
-  const weights: Record<string, number> = { aum: 0, aua: 0.78, model: 0.9, complete: 1 };
-  const spans: Record<string, number> = { aum: 0.78, aua: 0.12, model: 0.1, complete: 0 };
+  const weights: Record<string, number> = { backup: 0, aum: 0.1, aua: 0.5, model: 0.9, complete: 1 };
+  const spans: Record<string, number> = { backup: 0.1, aum: 0.4, aua: 0.4, model: 0.1, complete: 0 };
   const base = weights[job.stage] ?? 0;
   return {
     id: job.id,
@@ -97,6 +103,7 @@ function presentJob(job: RefreshJobRow) {
 }
 
 async function advanceAum(env: Env, job: RefreshJobRow) {
+  if (job.cursor === 0) await syncFundCatalog(env);
   const settrade = await env.DB.prepare("SELECT * FROM funds WHERE active=1 AND data_source='settrade' ORDER BY code").all<FundRow>();
   const total = 1 + settrade.results.length;
   if (job.total !== total) {
@@ -130,10 +137,12 @@ async function advanceAum(env: Env, job: RefreshJobRow) {
 }
 
 async function advanceAua(env: Env, job: RefreshJobRow) {
-  const results = parseJson(job.result_json) as Record<string, unknown>;
-  results.aua = await refreshOfficialAua(env);
-  await env.DB.prepare("UPDATE refresh_jobs SET cursor=0, total=1, stage='model', result_json=?, updated_at=? WHERE id=?")
-    .bind(JSON.stringify(results), nowIso(), job.id).run();
+  const results = parseJson(job.result_json);
+  const scan = results.auaScan || newOfficialScan();
+  const done = await advanceOfficialScan(env, scan);
+  results.auaScan = scan;
+  await env.DB.prepare("UPDATE refresh_jobs SET cursor=?, total=?, stage=?, result_json=?, updated_at=? WHERE id=?")
+    .bind(done ? 0 : job.cursor + 1, done ? 1 : job.cursor + 2 + scan.queue.length, done ? "model" : "aua", JSON.stringify(results), nowIso(), job.id).run();
 }
 
 async function finishModel(env: Env, job: RefreshJobRow) {
@@ -147,6 +156,7 @@ async function finishModel(env: Env, job: RefreshJobRow) {
     .bind(JSON.stringify(results), now, now, job.id).run();
   await env.DB.prepare("DELETE FROM metadata WHERE key='refresh_lock' AND value=?").bind(job.id).run();
   await audit(env, "refresh_job", job.id, "complete", job, results);
+  await env.DB.prepare("DELETE FROM metadata WHERE key LIKE ?").bind(`refresh_step:${job.id}:%`).run();
 }
 
 async function acquireStep(env: Env, key: string) {
@@ -155,8 +165,8 @@ async function acquireStep(env: Env, key: string) {
   if ((inserted.meta.changes || 0) > 0) return true;
   const existing = await env.DB.prepare("SELECT updated_at FROM metadata WHERE key=?").bind(key).first<{ updated_at: string }>();
   if (existing && Date.now() - Date.parse(existing.updated_at) > STALE_STEP_MS) {
-    await env.DB.prepare("UPDATE metadata SET updated_at=? WHERE key=? AND updated_at=?").bind(now, key, existing.updated_at).run();
-    return true;
+    const reclaimed = await env.DB.prepare("UPDATE metadata SET updated_at=? WHERE key=? AND updated_at=?").bind(now, key, existing.updated_at).run();
+    return (reclaimed.meta.changes || 0) > 0;
   }
   return false;
 }
@@ -166,6 +176,7 @@ async function readJob(env: Env, id: string) {
 }
 
 function stageLabel(stage: string) {
+  if (stage === "backup") return "กำลังเก็บสำเนาก่อนอัปเกรด";
   if (stage === "aum") return "กำลังตรวจ AUM รายกอง";
   if (stage === "aua") return "กำลังตรวจ AUA ทางการ";
   if (stage === "model") return "กำลังคำนวณโมเดลและ snapshot";

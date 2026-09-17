@@ -2,7 +2,7 @@ const base = (process.env.SITES_BASE_URL || "https://ltmh-wealthx-aum-aua.benzka
 const started = await requestJson(`${base}/api/refresh`, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" }, [202, 429]);
 if (!started.body.job?.id) throw new Error(`Refresh did not return a job: ${JSON.stringify(started.body)}`);
 let job = started.body.job;
-for (let attempt = 0; attempt < 100 && !["complete", "failed"].includes(job.status); attempt += 1) {
+for (let attempt = 0; attempt < 600 && !["complete", "failed"].includes(job.status); attempt += 1) {
   await sleep(1200);
   const status = await requestJson(`${base}/api/refresh/status?job=${encodeURIComponent(job.id)}&advance=1`, {}, [200]);
   job = status.body.job;
@@ -14,7 +14,7 @@ const dashboard = await requestJson(`${base}/api/dashboard`, {}, [200]);
 console.log(JSON.stringify({ ok: true, jobId: job.id, dataVersion: dashboard.body.dataVersion, modelVersion: dashboard.body.model?.id, generatedAt: dashboard.body.generatedAt }));
 
 async function requestJson(url, options, accepted) {
-  const response = await fetch(url, options);
+  const response = await fetch(url, { ...options, signal: AbortSignal.timeout(60000) });
   const text = await response.text();
   let body;
   try { body = JSON.parse(text); } catch { throw new Error(`${url} returned non-JSON HTTP ${response.status}`); }

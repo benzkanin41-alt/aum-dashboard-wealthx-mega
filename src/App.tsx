@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import {
   AlertTriangle,
   BarChart3,
@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 import {
   CartesianGrid,
+  Area,
+  ComposedChart,
   Legend,
   Line,
   LineChart,
@@ -43,6 +45,9 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [job, setJob] = useState<RefreshJob | null>(null);
+  const dataRef = useRef<DashboardData | null>(null);
+  const refreshBusy = useRef(false);
+  const [lastRun, setLastRun] = useState<RefreshJob | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     try {
       return localStorage.getItem("ltmh-aum-theme") === "light" ? "light" : "dark";
@@ -56,7 +61,10 @@ export default function App() {
     const payload: any = await response.json();
     if (!response.ok) throw new Error(payload.error || (payload.bootstrapping ? "ระบบกำลังเตรียมฐานข้อมูล" : "โหลดข้อมูลไม่สำเร็จ"));
     if (payload.appId !== "aum-dashboard") throw new Error("ปลายทางไม่ใช่ LTMH WealthX dashboard");
-    setData(payload);
+    if (!dataRef.current || payload.generatedAt >= dataRef.current.generatedAt) {
+      dataRef.current = payload;
+      setData(payload);
+    }
     setError(null);
     return payload;
   }, []);
@@ -70,11 +78,18 @@ export default function App() {
     localStorage.setItem("ltmh-aum-theme", theme);
   }, [theme]);
 
-  const runRefresh = useCallback(async () => {
+  const runRefresh = useCallback(async (resume?: RefreshJob) => {
+    if (refreshBusy.current) return { status: "running" };
+    refreshBusy.current = true;
+    try {
     setError(null);
-    let response = await fetch("/api/refresh", { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
-    let payload: any = await response.json();
-    if (!response.ok && response.status !== 429) throw new Error(payload.error || "เริ่มอัปเดตไม่สำเร็จ");
+    let response: Response;
+    let payload: any = {job: resume};
+    if (!resume) {
+      response = await fetch("/api/refresh", { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+      payload = await response.json();
+      if (!response.ok && response.status !== 429) throw new Error(payload.error || "เริ่มอัปเดตไม่สำเร็จ");
+    }
     if (!payload.job) throw new Error("ไม่พบสถานะการอัปเดต");
     let current: RefreshJob = payload.job;
     setJob(current);
@@ -88,9 +103,36 @@ export default function App() {
     }
     if (current.status === "failed") throw new Error(current.error || "อัปเดตไม่สำเร็จ");
     const refreshed = await loadDashboard();
+    setLastRun(current);
     window.setTimeout(() => setJob(null), 2500);
     return { status: "complete", dataVersion: refreshed.dataVersion, modelVersion: refreshed.model.id };
+    } finally { refreshBusy.current = false; }
   }, [loadDashboard]);
+
+  useEffect(() => {
+    let active = true;
+    let checking = false;
+    const sync = async () => {
+      if (!active || document.visibilityState !== "visible" || checking || refreshBusy.current) return;
+      checking = true;
+      try {
+        const response = await fetch("/api/dashboard/version", { cache: "no-store" });
+        if (!response.ok) throw new Error("ตรวจสถานะข้อมูลกลางไม่สำเร็จ");
+        const meta: { job?: RefreshJob; dataVersion?: string; offline?: boolean } = await response.json();
+        if (!active) return;
+        if (meta.job) setLastRun(meta.job);
+        if (meta.dataVersion !== dataRef.current?.dataVersion || Boolean(meta.offline) !== Boolean(dataRef.current?.offline)) await loadDashboard();
+        if (meta.job?.status === "running") await runRefresh(meta.job);
+      } catch (caught) { if (active) setError(messageOf(caught)); }
+      finally { checking = false; }
+    };
+    void sync();
+    const timer = window.setInterval(() => void sync(), 15000);
+    document.addEventListener("visibilitychange", sync);
+    window.addEventListener("focus", sync);
+    window.addEventListener("online", sync);
+    return () => { active = false; window.clearInterval(timer); document.removeEventListener("visibilitychange", sync); window.removeEventListener("focus", sync); window.removeEventListener("online", sync); };
+  }, [loadDashboard, runRefresh]);
 
   useEffect(() => registerDashboardTools(runRefresh), [runRefresh]);
 
@@ -98,7 +140,7 @@ export default function App() {
     if (job?.status === "running") return;
     void runRefresh().catch((caught) => {
       setError(messageOf(caught));
-      setJob((current) => current ? { ...current, status: "failed", error: messageOf(caught) } : null);
+      setJob(null);
     });
   };
 
@@ -137,6 +179,8 @@ export default function App() {
             <span><Database size={15} /> รุ่นข้อมูล <strong>{data.dataVersion}</strong></span>
             <span><Clock3 size={15} /> ตรวจล่าสุด {formatDateTime(data.generatedAt)}</span>
             <span><ShieldCheck size={15} /> ฐานข้อมูลกลาง {data.canonicalStore}</span>
+            <span>รอบอัตโนมัติ 09:00 ไทย (เวลาเริ่มอาจล่าช้า)</span>
+            {lastRun && <span data-testid="run-times">เริ่มจริง {formatDateTime(lastRun.startedAt)} | เสร็จ {formatDateTime(lastRun.completedAt)}</span>}
           </section>
 
           <section className="kpi-grid" aria-label="ภาพรวม">
@@ -211,7 +255,10 @@ function ProjectionCard({ data }: { data: DashboardData }) {
     <article className="metric-card projection-card">
       <div className="metric-card-head"><div><p className="metric-label">AUA Projection</p><p className="metric-meta">Anchored OLS • {data.model.id}</p></div><Database size={19} /></div>
       <p className="metric-value">{formatMoney(data.projection.value)} <small>ลบ.</small></p>
-      <div className="date-pairs"><span>AUM ณ <strong>{formatDate(data.projection.asOfDate)}</strong></span><span className="provisional">{data.model.status === "ready" ? "พร้อมใช้" : "เบื้องต้น"}</span></div>
+      {data.projection.lower != null && <p className="interval-summary" data-testid="projection-interval">95%: {formatMoney(data.projection.lower)} – {formatMoney(data.projection.upper)} ลบ.</p>}
+      <div className="date-pairs"><span>AUM ณ <strong>{formatDate(data.projection.asOfDate)}</strong></span><span className="provisional">{data.projection.status === "unavailable" ? "ข้อมูลไม่พอ" : data.model.status === "ready" ? "พร้อมใช้" : "เบื้องต้น"}</span></div>
+      {data.projection.reason && <p className="metric-meta">{data.projection.reason}</p>}
+      {data.projection.extrapolated && <p className="provisional">AUM อยู่นอกช่วงข้อมูลฝึก</p>}
     </article>
   );
 }
@@ -352,11 +399,12 @@ function RangeSelector({ value, onChange, label, chartId }: { value: TimelineRan
 }
 
 function AumHistoryChart({ rows, color }: { rows: Bucket["history"]; color: string }) {
+  const chartRows = rows.map(row => ({ ...row, timestamp: Date.parse(`${row.date}T00:00:00Z`) }));
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={rows} margin={{ top: 12, right: 16, bottom: 8, left: 0 }}>
+      <LineChart data={chartRows} margin={{ top: 12, right: 16, bottom: 8, left: 0 }}>
         <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
-        <XAxis dataKey="date" tickFormatter={shortDate} minTickGap={42} stroke="var(--muted)" fontSize={11} />
+        <XAxis dataKey="timestamp" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={(v) => shortDate(new Date(v).toISOString())} minTickGap={42} stroke="var(--muted)" fontSize={12} />
         <YAxis tickFormatter={(value) => compactMoney.format(value)} stroke="var(--muted)" fontSize={11} width={50} domain={["auto", "auto"]} />
         <Tooltip content={<AumTooltip />} />
         <Line type="monotone" dataKey="value" name="AUM" stroke={color} strokeWidth={2.6} dot={false} activeDot={{ r: 5 }} />
@@ -366,14 +414,15 @@ function AumHistoryChart({ rows, color }: { rows: Bucket["history"]; color: stri
 }
 
 function OfficialAuaChart({ rows }: { rows: AuaObservation[] }) {
+  const chartRows = rows.map(row => ({ ...row, timestamp: Date.parse(`${row.referenceDate}T00:00:00Z`) }));
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={rows} margin={{ top: 12, right: 16, bottom: 8, left: 0 }}>
+      <LineChart data={chartRows} margin={{ top: 12, right: 16, bottom: 8, left: 0 }}>
         <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
-        <XAxis dataKey="referenceDate" tickFormatter={shortDate} minTickGap={28} stroke="var(--muted)" fontSize={11} />
+        <XAxis dataKey="timestamp" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={(v) => shortDate(new Date(v).toISOString())} minTickGap={28} stroke="var(--muted)" fontSize={12} />
         <YAxis tickFormatter={(value) => compactMoney.format(value)} stroke="var(--muted)" fontSize={11} width={48} />
         <Tooltip content={<MoneyTooltip labelKey="referenceDate" valueKey="amountMillionBaht" valueLabel="AUA Actual" />} />
-        <Line type="monotone" dataKey="amountMillionBaht" stroke="#f8c15c" strokeWidth={2.5} dot={{ r: 4, fill: "#f8c15c", strokeWidth: 0 }} activeDot={{ r: 6 }} />
+        <Line type="linear" dataKey="amountMillionBaht" stroke="#f8c15c" strokeWidth={2.5} dot={<ActualDot />} activeDot={<ActualDot />} />
       </LineChart>
     </ResponsiveContainer>
   );
@@ -403,18 +452,20 @@ function ComparisonChart({ data, rows }: { data: DashboardData; rows: DashboardD
 }
 
 function TimelineChart({ rows }: { rows: DashboardData["charts"]["timeline"] }) {
+  const chartRows = rows.map(row => ({ ...row, timestamp: Date.parse(`${row.date}T00:00:00Z`), interval: row.lower != null && row.upper != null ? [row.lower, row.upper] : null }));
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={rows} margin={{ top: 12, right: 18, bottom: 8, left: 2 }}>
+      <ComposedChart data={chartRows} margin={{ top: 12, right: 18, bottom: 8, left: 2 }}>
         <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
-        <XAxis dataKey="date" tickFormatter={shortDate} minTickGap={42} stroke="var(--muted)" fontSize={11} />
+        <XAxis dataKey="timestamp" type="number" scale="time" domain={["dataMin", "dataMax"]} tickFormatter={(v) => shortDate(new Date(v).toISOString())} minTickGap={42} stroke="var(--muted)" fontSize={12} />
         <YAxis tickFormatter={(value) => compactMoney.format(value)} stroke="var(--muted)" fontSize={11} width={50} />
         <Tooltip content={<TimelineTooltip />} />
         <Legend iconType="plainline" wrapperStyle={{ fontSize: 12, paddingTop: 8 }} />
+        <Area type="linear" dataKey="interval" name="ช่วง 95% ภายใต้โมเดล" fill="#59a5ff" fillOpacity={0.16} stroke="none" isAnimationActive={false} />
         <Line type="monotone" dataKey="seriesxAum" name="AUM SeriesX" stroke="#37d09f" strokeWidth={2} dot={false} />
-        <Line type="monotone" dataKey="projectedAua" name="AUA Projection" stroke="#59a5ff" strokeWidth={2.4} strokeDasharray="7 5" dot={false} connectNulls />
+        <Line type="linear" dataKey="projectedAua" name="AUA Projection กลาง" stroke="#59a5ff" strokeWidth={2.4} strokeDasharray="7 5" dot={false} />
         <Line type="linear" dataKey="actualAua" name="AUA Actual" stroke="#f8c15c" strokeWidth={2.5} dot={{ r: 4, fill: "#f8c15c" }} connectNulls />
-      </LineChart>
+      </ComposedChart>
     </ResponsiveContainer>
   );
 }
@@ -482,7 +533,7 @@ function FundRows({ fund, open, detail, onToggle }: { fund: Fund; open: boolean;
     <tr className="fund-row" onClick={onToggle}>
       <td><strong>{fund.code}</strong><span>{fund.group}</span></td>
       <td><span className={`bucket-dot bucket-${fund.bucketId}`} />{fund.bucketName}</td>
-      <td className="numeric"><strong>{formatMoney(fund.aumMillionBaht)}</strong></td>
+      <td className="numeric"><strong>{fund.aumMillionBaht == null ? "รอข้อมูล" : formatMoney(fund.aumMillionBaht)}</strong></td>
       <td className={`numeric ${positive ? "positive" : "negative"}`}>{positive ? "+" : ""}{formatMoney(fund.changeMillionBaht)}</td>
       <td>{formatDate(fund.latestDate)}</td>
       <td><button className="row-button" type="button" aria-label={`รายละเอียด ${fund.code}`}>{open ? <ChevronUp size={17} /> : <ChevronDown size={17} />}</button></td>
@@ -542,9 +593,15 @@ function ScatterDot({ cx, cy }: { cx?: number; cy?: number }) {
   return <circle cx={cx} cy={cy} r={5} fill="#f8c15c" stroke="var(--surface)" strokeWidth={2} />;
 }
 
+function ActualDot({ cx, cy, payload }: any) {
+  if (!Number.isFinite(cx) || !Number.isFinite(cy)) return null;
+  return <a href={payload?.sources?.[0]?.url} target="_blank" rel="noreferrer" aria-label={`AUA ${payload?.amountMillionBaht} แหล่งข้อมูล`}><circle cx={cx} cy={cy} r={6} fill="#f8c15c" stroke="var(--surface)" strokeWidth={2} /><circle cx={cx} cy={cy} r={16} fill="transparent" /></a>;
+}
+
 function TimelineTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
-  return <div className="chart-tooltip"><strong>{formatDate(label)}</strong>{payload.filter((item: any) => item.value !== null).map((item: any) => <span key={item.dataKey} style={{ color: item.color }}>{item.name}: {formatMoney(item.value)} ลบ.</span>)}</div>;
+  const row = payload[0].payload;
+  return <div className="chart-tooltip"><strong>{formatDate(row.date || label)}</strong>{payload.filter((item: any) => item.value != null && item.dataKey !== "interval").map((item: any) => <span key={item.dataKey} style={{ color: item.color }}>{item.name}: {formatMoney(item.value)} ลบ.</span>)}{row.lower != null && <><span>ขอบล่าง 95%: {formatMoney(row.lower)} ลบ.</span><span>ขอบบน 95%: {formatMoney(row.upper)} ลบ.</span><span>{row.modelVersion}</span><span>เส้นย้อนหลังคำนวณใหม่</span></>}</div>;
 }
 
 function filterTimeline<T>(rows: T[], dateOf: (row: T) => string | null | undefined, range: TimelineRange) {

@@ -87,7 +87,10 @@ export const modelVersions = sqliteTable("model_versions", {
   anchorAuaMillionBaht: real("anchor_aua_million_baht"),
   anchorAumDate: text("anchor_aum_date"),
   anchorAumMillionBaht: real("anchor_aum_million_baht"),
-  trainingPairsJson: text("training_pairs_json").notNull()
+  trainingPairsJson: text("training_pairs_json").notNull(),
+  algorithmVersion: text("algorithm_version"),
+  residualVariance: real("residual_variance"),
+  statisticsJson: text("statistics_json")
 });
 
 export const projections = sqliteTable("projections", {
@@ -96,12 +99,18 @@ export const projections = sqliteTable("projections", {
   aumDate: text("aum_date").notNull(),
   seriesxAumMillionBaht: real("seriesx_aum_million_baht").notNull(),
   projectedAuaMillionBaht: real("projected_aua_million_baht"),
+  lower: real("lower_bound"),
+  upper: real("upper_bound"),
+  intervalLevel: real("interval_level"),
+  intervalMethod: text("interval_method"),
+  algorithmVersion: text("algorithm_version"),
+  inputFingerprint: text("input_fingerprint"),
   status: text("status").notNull(),
   reason: text("reason"),
   projectionKind: text("projection_kind").notNull(),
   createdAt: text("created_at").notNull()
 }, (table) => [
-  uniqueIndex("projection_version_date_kind_idx").on(table.modelVersionId, table.aumDate, table.projectionKind)
+  uniqueIndex("projection_version_date_input_idx").on(table.modelVersionId, table.aumDate, table.projectionKind, table.inputFingerprint)
 ]);
 
 export const refreshJobs = sqliteTable("refresh_jobs", {

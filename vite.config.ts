@@ -2,6 +2,7 @@ import react from "@vitejs/plugin-react";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import { sites } from "@openai/sites-vite-plugin";
 import { defineConfig } from "vite";
+import { DEV_STATE_DIR } from "./server-lib/local-paths.js";
 
 export default defineConfig({
   publicDir: false,
@@ -9,6 +10,7 @@ export default defineConfig({
     react(),
     sites(),
     cloudflare({
+      persistState: { path: DEV_STATE_DIR },
       config: {
         name: "ltmh-wealthx-aum-aua",
         main: "./worker/index.ts",

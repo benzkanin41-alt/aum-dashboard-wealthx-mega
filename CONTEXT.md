@@ -40,3 +40,19 @@ _Avoid_: official AUA, company guidance
 
 **Pending Observation**:
 A detected AUA-like disclosure that cannot yet be accepted as Official AUA because its amount, Reference Date, or source identity is incomplete or conflicting.
+
+**Model-Based 95% Prediction Interval**:
+Lower and upper plausible AUA values conditional on the fitted model assumptions,
+including uncertainty in a new AUA observation. Not an accuracy guarantee or a
+confidence interval for the regression slope alone.
+
+**Recorded Projection**:
+An immutable estimate actually calculated and saved at a known time.
+
+**Reconstructed Projection**:
+A historical-date estimate recomputed with a later model. Not a forecast that
+was available to an investor on that historical date.
+
+**Pre-Inception Quote**:
+A published NAV dated earlier than the fund's verified start date. It is not
+accepted into post-launch AUM history until the date conflict is resolved.

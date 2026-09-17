@@ -1,9 +1,9 @@
 import { advanceBootstrap, getBootstrapStatus } from "./bootstrap.ts";
 import { getMetadata } from "./db.ts";
 import { apiError, json, optionsResponse } from "./http.ts";
-import { advanceRefresh, refreshStatus, startOrReuseRefresh } from "./refresh.ts";
+import { advanceRefresh, refreshStatus, startOrReuseRefresh, presentJob } from "./refresh.ts";
 import { loadDashboardSnapshot, loadFundDetail, rebuildModelAndSnapshot } from "./snapshot.ts";
-import type { Env } from "./types.ts";
+import type { Env, RefreshJobRow } from "./types.ts";
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
@@ -23,6 +23,13 @@ export default {
           status = await getBootstrapStatus(env);
         }
         return json({ ok: true, bootstrap: status });
+      }
+
+      if (url.pathname === "/api/dashboard/version" && request.method === "GET") {
+        const snapshot = await env.DB.prepare("SELECT data_version, generated_at FROM dashboard_snapshots ORDER BY generated_at DESC LIMIT 1").first<{data_version:string; generated_at:string}>();
+        const job = await env.DB.prepare("SELECT * FROM refresh_jobs ORDER BY requested_at DESC LIMIT 1").first<RefreshJobRow>();
+        return json({ appId: "aum-dashboard", dataVersion: snapshot?.data_version || null, generatedAt: snapshot?.generated_at || null,
+          job: job ? presentJob(job) : null, schedule: { time: "09:00", timezone: "Asia/Bangkok", scheduler: "GitHub Actions", delayPossible: true } });
       }
 
       if (url.pathname === "/api/dashboard" && request.method === "GET") {

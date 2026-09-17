@@ -1,4 +1,4 @@
-import { buildAggregateHistory, fitProjectionModel, projectAua, sha256 } from "../shared/model.js";
+import { buildAggregateHistory, fitProjectionModel, projectAua, matchAuaToAum, sha256 } from "../shared/model.js";
 import { audit, nowIso, setMetadata } from "./db.ts";
 import type { AuaRow, AumRow, Env, FundRow } from "./types.ts";
 
@@ -27,7 +27,7 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
   const canonicalAua = canonicalObservations(auaRows.results);
   const seriesHistory = bucketHistories.wealthx_other || [];
   const pairs: any[] = matchCanonicalAua(canonicalAua, seriesHistory);
-  const fitted = fitProjectionModel(pairs);
+  const fitted = fitProjectionModel(pairs, canonicalAua.map(row => ({ id: row.id, date: row.reference_date, amount: row.amount_million_baht, revision: row.revision })));
   const model = await persistModelVersion(env, fitted, canonicalAua.at(-1) || null, actor);
   const latestSeries = seriesHistory.at(-1) || null;
   const currentProjection = projectAua({ ...fitted, anchor: fitted.anchor }, latestSeries);
@@ -74,30 +74,38 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
       fundCount: bucket.funds.length,
       coveredFundCount: latest?.activeFundCount || 0,
       latestDate: latest?.date || null,
-      totalMillionBaht: latest?.aumMillionBaht || null,
+      totalMillionBaht: latest?.aumMillionBaht ?? null,
+      coverageComplete: latest?.complete ?? false,
       previousDate: previous?.date || null,
       previousTotalMillionBaht: previous?.aumMillionBaht || null,
-      changeMillionBaht: latest && previous ? round2(latest.aumMillionBaht - previous.aumMillionBaht) : null,
-      changePct: latest && previous && previous.aumMillionBaht ? (latest.aumMillionBaht - previous.aumMillionBaht) / previous.aumMillionBaht : null,
-      history: aggregate.map((item: { date: string; aumMillionBaht: number; activeFundCount: number }) => ({ date: item.date, value: item.aumMillionBaht, fundCount: item.activeFundCount }))
+      changeMillionBaht: latest?.aumMillionBaht != null && previous?.aumMillionBaht != null ? round2(latest.aumMillionBaht - previous.aumMillionBaht) : null,
+      changePct: latest?.aumMillionBaht != null && previous?.aumMillionBaht ? (latest.aumMillionBaht - previous.aumMillionBaht) / previous.aumMillionBaht : null,
+      history: aggregate.map((item) => ({ date: item.date, value: item.aumMillionBaht, fundCount: item.activeFundCount }))
     };
   });
   const fundCards = fundRows.results.map((fund) => fundCard(fund, history[fund.code] || {}));
-  const timelineMap = new Map<string, { date: string; seriesxAum: number | null; projectedAua: number | null; actualAua: number | null }>(seriesHistory.map((point: { date: string; aumMillionBaht: number }) => {
-    const projection = fitted.anchor && point.date >= fitted.anchor.aumDate ? projectAua(fitted, point) : null;
+  const timelineMap = new Map<string, any>(seriesHistory.map((point: any) => {
+    const projection = fitted.anchor && point.date >= fitted.anchor.referenceDate ? projectAua(fitted, point) : null;
     const actual = officialAua.find((item) => item.referenceDate === point.date);
     return [point.date, {
       date: point.date,
       seriesxAum: point.aumMillionBaht,
       projectedAua: projection?.value ?? null,
+      lower: projection?.lower ?? null,
+      upper: projection?.upper ?? null,
+      intervalLevel: 0.95,
+      modelVersion: model.id,
+      projectionKind: "reconstructed",
       actualAua: actual?.amountMillionBaht ?? null
-    }] as [string, { date: string; seriesxAum: number | null; projectedAua: number | null; actualAua: number | null }];
+    }] as [string, any];
   }));
   for (const actual of officialAua) {
     if (!timelineMap.has(actual.referenceDate)) timelineMap.set(actual.referenceDate, {
       date: actual.referenceDate,
       seriesxAum: null,
-      projectedAua: null,
+      projectedAua: actual.referenceDate === fitted.anchor?.referenceDate ? actual.amountMillionBaht : null,
+      lower: actual.referenceDate === fitted.anchor?.referenceDate ? actual.amountMillionBaht : null,
+      upper: actual.referenceDate === fitted.anchor?.referenceDate ? actual.amountMillionBaht : null,
       actualAua: actual.amountMillionBaht
     });
   }
@@ -106,11 +114,14 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
     buckets: buckets.map((bucket: { id: string; latestDate: string | null; totalMillionBaht: number | null }) => [bucket.id, bucket.latestDate, bucket.totalMillionBaht]),
     officialAua: officialAua.map((item) => [item.id, item.referenceDate, item.amountMillionBaht, item.status]),
     model: model.id,
-    projection: currentProjection.value
+    projection: currentProjection,
+    histories: buckets.map(bucket => bucket.history),
+    sourceStatus: sourceStatuses.results,
+    catalog: fundRows.results.map(fund => [fund.code, fund.inception_date])
   }).slice(0, 20);
   const payload = {
     appId: "aum-dashboard",
-    schemaVersion: 2,
+    schemaVersion: 3,
     generatedAt,
     dataVersion,
     canonicalStore: "Sites D1",
@@ -134,7 +145,10 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
       pearsonR: fitted.pearsonR,
       rSquared: fitted.rSquared,
       createdAt: model.createdAt,
-      isProvisional: fitted.status === "provisional"
+      isProvisional: fitted.status === "provisional",
+      algorithmVersion: fitted.algorithmVersion,
+      residualVariance: fitted.residualVariance,
+      trainingFingerprint: fitted.fingerprint
     },
     charts: {
       officialAua,
@@ -155,10 +169,12 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
       message: row.message,
       url: row.url
     })),
+    pendingReviewCount: auaRows.results.filter(row => row.status === "pending_review").length,
     cautions: [
       "Projection เป็นค่าประมาณจากความสัมพันธ์ในอดีต ไม่ใช่ข้อมูลที่บริษัทรับรอง",
       "Correlation สูงไม่ได้รับประกันความแม่นยำ โดยเฉพาะเมื่อจำนวนจุดข้อมูลยังน้อย",
-      "Projection สิ้นสุดที่วันที่ AUM ล่าสุดและไม่เติมข้อมูลที่ขาดด้วยศูนย์"
+      "Projection สิ้นสุดที่วันที่ AUM ล่าสุดและไม่เติมข้อมูลที่ขาดด้วยศูนย์",
+      "ช่วง 95% อยู่ภายใต้สมมติฐานโมเดล ไม่ใช่ความแม่นยำที่ผ่านการพิสูจน์; เส้นย้อนหลังสร้างใหม่ด้วยโมเดลปัจจุบัน"
     ]
   };
   const snapshotId = `snapshot-${generatedAt}-${dataVersion}`;
@@ -205,25 +221,28 @@ async function persistModelVersion(env: Env, fitted: any, latestAua: AuaRow | nu
   await env.DB.prepare(`
     INSERT INTO model_versions (id, created_at, training_fingerprint, slope, intercept, pearson_r, r_squared, pair_count,
       status, reason, latest_aua_observation_id, anchor_reference_date, anchor_aua_million_baht,
-      anchor_aum_date, anchor_aum_million_baht, training_pairs_json)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      anchor_aum_date, anchor_aum_million_baht, training_pairs_json, algorithm_version, residual_variance, statistics_json)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(id, createdAt, fitted.fingerprint, fitted.slope, fitted.intercept, fitted.pearsonR, fitted.rSquared,
     fitted.pairCount, fitted.status, fitted.reason, latestAua?.id || null, fitted.anchor?.referenceDate || null,
     fitted.anchor?.auaMillionBaht || null, fitted.anchor?.aumDate || null, fitted.anchor?.aumMillionBaht || null,
-    JSON.stringify(fitted.pairs)).run();
+    JSON.stringify(fitted.pairs), fitted.algorithmVersion, fitted.residualVariance,
+    JSON.stringify({ sse: fitted.sse, sxx: fitted.sxx, xMean: fitted.xMean, xMin: fitted.xMin, xMax: fitted.xMax })).run();
   await audit(env, "model_version", id, "create", null, { fingerprint: fitted.fingerprint, status: fitted.status, pairCount: fitted.pairCount }, actor);
   return { id, createdAt, created: true };
 }
 
 async function persistProjection(env: Env, modelId: string, projection: any, latestSeries: any, actor: string) {
-  if (!latestSeries) return;
-  const id = `${modelId}:${latestSeries.date}:recorded`;
+  if (!latestSeries || projection.value == null) return;
+  const id = `${modelId}:${latestSeries.date}:${projection.inputFingerprint}:recorded`;
   const existing = await env.DB.prepare("SELECT id FROM projections WHERE id=?").bind(id).first();
   if (existing) return;
   await env.DB.prepare(`
     INSERT INTO projections (id, model_version_id, aum_date, seriesx_aum_million_baht, projected_aua_million_baht,
-      status, reason, projection_kind, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 'recorded', ?)
-  `).bind(id, modelId, latestSeries.date, latestSeries.aumMillionBaht, projection.value, projection.status, projection.reason, nowIso()).run();
+      status, reason, projection_kind, created_at, lower_bound, upper_bound, interval_level, interval_method, algorithm_version, input_fingerprint)
+      VALUES (?, ?, ?, ?, ?, ?, ?, 'recorded', ?, ?, ?, ?, ?, ?, ?)
+  `).bind(id, modelId, latestSeries.date, latestSeries.aumMillionBaht, projection.value, projection.status, projection.reason,
+    nowIso(), projection.lower, projection.upper, projection.intervalLevel, projection.intervalMethod, projection.algorithmVersion, projection.inputFingerprint).run();
   await audit(env, "projection", id, "create", null, projection, actor);
 }
 
@@ -240,7 +259,7 @@ async function readAllAum(env: Env) {
 }
 
 function rowsToConfig(rows: FundRow[]) {
-  const buckets = new Map<string, { id: string; name: string; description: string; funds: Array<{ code: string; group: string | null; dataSource: string }> }>();
+  const buckets = new Map<string, { id: string; name: string; description: string; funds: Array<{ code: string; group: string | null; dataSource: string; inceptionDate: string | null }> }>();
   for (const row of rows) {
     if (!buckets.has(row.bucket_id)) buckets.set(row.bucket_id, {
       id: row.bucket_id,
@@ -248,9 +267,10 @@ function rowsToConfig(rows: FundRow[]) {
       description: bucketDescription(row.bucket_id),
       funds: []
     });
-    buckets.get(row.bucket_id)?.funds.push({ code: row.code, group: row.group_name, dataSource: row.data_source });
+    buckets.get(row.bucket_id)?.funds.push({ code: row.code, group: row.group_name, dataSource: row.data_source, inceptionDate: row.inception_date });
   }
-  return { buckets: [...buckets.values()] };
+  const order: Record<string,number> = { wealthx_other: 0, mega30: 1, other_funds: 2 };
+  return { buckets: [...buckets.values()].sort((a,b) => (order[a.id] ?? 99) - (order[b.id] ?? 99)) };
 }
 
 function rowsToHistory(funds: FundRow[], rows: AumRow[]) {
@@ -279,19 +299,8 @@ function canonicalObservations(rows: AuaRow[]) {
 }
 
 function matchCanonicalAua(rows: AuaRow[], aggregates: any[]): any[] {
-  return rows.map((row) => {
-    const aum = [...aggregates].reverse().find((point) => point.complete && point.date <= row.reference_date);
-    if (!aum) return null;
-    return {
-      auaId: row.id,
-      referenceDate: row.reference_date,
-      announcedAt: row.announced_at,
-      auaMillionBaht: Number(row.amount_million_baht),
-      aumDate: aum.date,
-      aumMillionBaht: Number(aum.aumMillionBaht),
-      activeFundCount: aum.activeFundCount
-    };
-  }).filter((value): value is NonNullable<typeof value> => Boolean(value));
+  return matchAuaToAum(rows.map(row => ({ id: row.id, referenceDate: row.reference_date,
+    announcedAt: row.announced_at, amountMillionBaht: Number(row.amount_million_baht), status: row.status, revision: row.revision })), aggregates);
 }
 
 function fundCard(fund: FundRow, pointsByDate: Record<string, any>) {

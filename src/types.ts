@@ -5,6 +5,7 @@ export interface Bucket {
   color: string;
   fundCount: number;
   coveredFundCount: number;
+  coverageComplete?: boolean;
   latestDate: string | null;
   totalMillionBaht: number | null;
   previousDate: string | null;
@@ -52,15 +53,16 @@ export interface DashboardData {
   funds: Fund[];
   officialAua: AuaObservation[];
   latestActual: AuaObservation | null;
-  projection: { status: string; value: number | null; reason: string | null; asOfDate: string | null; aumDate: string | null; aumMillionBaht: number | null; modelVersion: string; anchorReferenceDate: string | null; anchorAuaMillionBaht: number | null };
+  projection: { status: string; value: number | null; lower?: number | null; upper?: number | null; intervalLevel?: number; intervalMethod?: string; algorithmVersion?: string; inputFingerprint?: string; extrapolated?: boolean; reason: string | null; asOfDate: string | null; aumDate: string | null; aumMillionBaht: number | null; modelVersion: string; anchorReferenceDate: string | null; anchorAuaMillionBaht: number | null };
   model: { id: string; status: string; reason: string | null; pairCount: number; slope: number | null; intercept: number | null; pearsonR: number | null; rSquared: number | null; createdAt: string; isProvisional: boolean };
   charts: {
     officialAua: AuaObservation[];
     comparison: Array<{ referenceDate: string; aumDate: string; seriesxAum: number; actualAua: number }>;
-    timeline: Array<{ date: string; seriesxAum: number; projectedAua: number | null; actualAua: number | null }>;
+    timeline: Array<{ date: string; seriesxAum: number | null; projectedAua: number | null; lower?: number | null; upper?: number | null; modelVersion?: string; actualAua: number | null }>;
   };
   sourceStatus: Array<{ id: string; name: string; status: string; checkedAt: string; lastSuccessAt: string | null; message: string | null; url: string }>;
   cautions: string[];
+  pendingReviewCount?: number;
 }
 
 export interface RefreshJob {
@@ -73,4 +75,7 @@ export interface RefreshJob {
   total: number;
   error: string | null;
   updatedAt: string;
+  startedAt?: string;
+  completedAt?: string;
+  requestedAt?: string;
 }

@@ -1,11 +1,12 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { dataPath } from "../server-lib/local-paths.js";
 import { fetchTalisFundHistory, fetchTalisPublicNav, mergeTalisRowsIntoHistory, purgeEstimatedHistory } from "../server-lib/talis-public.js";
 import { mergeSettradeHistoryRows } from "../server-lib/settrade-public.js";
 
 const ROOT = process.cwd();
 const configPath = path.join(ROOT, "config", "funds.json");
-const historyPath = path.join(ROOT, "data", "nav-history.json");
+const historyPath = dataPath("nav-history.json");
 const days = Number(process.argv.find((arg) => arg.startsWith("--days="))?.split("=")[1] || 365);
 
 const config = JSON.parse(await fs.readFile(configPath, "utf8"));
