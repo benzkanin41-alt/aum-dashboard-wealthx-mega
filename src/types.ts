@@ -43,6 +43,7 @@ export interface AuaObservation {
 }
 
 export interface DashboardData {
+  cacheWarning?: string | null;
   appId: string;
   schemaVersion: number;
   generatedAt: string;

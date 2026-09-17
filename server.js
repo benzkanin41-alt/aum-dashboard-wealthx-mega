@@ -22,8 +22,15 @@ const server = http.createServer(async (req, res) => {
         if (!response.ok) throw new Error(`Sites dashboard HTTP ${response.status}`);
         const payload = await response.json();
         validateDashboard(payload);
-        await writeCacheSafely(payload);
-        return sendJson(res, 200, { ...payload, offline: false, localProxy: true });
+        let cacheWarning = null;
+        let cachedAt = payload.generatedAt;
+        try { await writeCacheSafely(payload); }
+        catch (error) {
+          console.error("Local cache write failed:", messageOf(error));
+          cachedAt = (await readBestCache())?.generatedAt || null;
+          cacheWarning = "ข้อมูลออนไลน์ล่าสุด แต่บันทึกสำเนาออฟไลน์บน E: ไม่สำเร็จ กรุณาตรวจสิทธิ์ไฟล์ cache";
+        }
+        return sendJson(res, 200, { ...payload, offline: false, localProxy: true, cacheWarning, cachedAt });
       } catch (error) {
         const cached = await readBestCache();
         if (!cached) throw error;

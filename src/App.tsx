@@ -170,6 +170,7 @@ export default function App() {
       {data?.offline && (
         <div className="system-banner warning"><WifiOff size={17} /><span>ออฟไลน์: แสดงสำเนาล่าสุดที่เก็บเมื่อ {formatDateTime(data.cachedAt)}</span></div>
       )}
+      {data?.cacheWarning && <div className="system-banner warning"><AlertTriangle size={17} /><span>{data.cacheWarning} • สำเนาที่มีอยู่ {formatDateTime(data.cachedAt)}</span></div>}
       {error && <div className="system-banner error"><AlertTriangle size={17} /><span>{error}</span></div>}
       {job && <RefreshProgress job={job} />}
 
@@ -365,10 +366,11 @@ function ComparisonPanel({ data }: { data: DashboardData }) {
 function TimelinePanel({ data }: { data: DashboardData }) {
   const [range, setRange] = useState<TimelineRange>("1Y");
   const rows = useMemo(() => filterTimeline(data.charts.timeline, (row) => row.date, range), [data.charts.timeline, range]);
+  const lastProjectionDate = data.charts.timeline.filter(row => row.projectedAua != null).at(-1)?.date;
   return (
     <ChartPanel
       title="เส้นเวลา AUA / AUM / Projection"
-      subtitle={`Projection ถึง ${formatDate(data.projection.asOfDate)} เท่านั้น`}
+      subtitle={lastProjectionDate ? `Projection ถึง ${formatDate(lastProjectionDate)} เท่านั้น` : "รอข้อมูลครบสำหรับประมาณการ"}
       chartId="aua-aum-projection"
       activeRange={range}
       visiblePoints={rows.length}

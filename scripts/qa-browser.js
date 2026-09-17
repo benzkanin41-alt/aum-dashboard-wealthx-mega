@@ -94,18 +94,20 @@ async function runCase(browserInstance, item) {
 
     const search = page.getByPlaceholder("ค้นหาชื่อกองทุน");
     await search.fill("ONE-HUMANOID-X-UH");
+    await page.waitForFunction(() => document.querySelectorAll(".fund-row").length === 1);
     if (await page.locator(".fund-row").count() !== 1) throw new Error("New class search failed");
     await page.getByLabel("รายละเอียด ONE-HUMANOID-X-UH", { exact: true }).click();
     await page.locator(".fund-detail").waitFor();
     await search.fill("");
     await page.getByLabel("เรียงข้อมูล", { exact: true }).selectOption("name");
+    await page.waitForFunction(() => { const names = [...document.querySelectorAll(".fund-row td:first-child strong")].map(e => e.textContent); return names.length > 1 && names.join("|") === [...names].sort((a,b)=>a.localeCompare(b)).join("|"); });
     const codes = await page.locator(".fund-row td:first-child strong").allTextContents();
     if (codes.join("|") !== [...codes].sort((a,b)=>a.localeCompare(b)).join("|")) throw new Error("Table sort failed");
     await page.getByLabel("เรียงข้อมูล", { exact: true }).selectOption("aum-desc");
 
     const projection = page.locator('[data-chart-id="aua-aum-projection"]');
     await projection.scrollIntoViewIfNeeded();
-    const bounds = await projection.locator(".recharts-surface").boundingBox();
+    const bounds = await projection.locator('.recharts-surface[role="application"]').boundingBox();
     const pointer = { x: bounds.x + bounds.width * 0.9, y: bounds.y + bounds.height * 0.4 };
     if (item.mobile) await page.touchscreen.tap(pointer.x, pointer.y);
     else await page.mouse.move(pointer.x, pointer.y);
@@ -175,6 +177,10 @@ async function runCase(browserInstance, item) {
       && metrics.updateEnabled
       && interactionPassed;
     return { ...item, ok, file, metrics, timelineInteraction, tooltipText, bandPaths, tableRows: codes.length, themeToggle: true };
+  } catch (error) {
+    await page.screenshot({path:path.join(outputDir,`${item.name}-failure.png`)});
+    await fs.writeFile(path.join(outputDir,`${item.name}-failure.txt`),`${error.stack}\n${await page.locator("body").innerText()}`);
+    throw error;
   } finally {
     await context.close();
   }
