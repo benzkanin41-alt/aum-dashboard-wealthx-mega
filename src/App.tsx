@@ -229,8 +229,9 @@ function BucketCard({ bucket }: { bucket: Bucket }) {
         <BarChart3 size={19} />
       </div>
       <p className="metric-value">{formatMoney(bucket.totalMillionBaht)} <small>ลบ.</small></p>
+      {bucket.coverageComplete === false && <p className="metric-meta">ยอดยังไม่ครบ{bucket.partialMillionBaht != null ? ` • ส่วนที่มีข้อมูล ${formatMoney(bucket.partialMillionBaht)} ลบ.` : ""}</p>}
       <div className="metric-footer">
-        <span className={positive ? "positive" : "negative"}>{positive ? "▲" : "▼"} {formatMoney(Math.abs(bucket.changeMillionBaht || 0))} ลบ.</span>
+        {bucket.changeMillionBaht == null ? <span>รอข้อมูลเปรียบเทียบ</span> : <span className={positive ? "positive" : "negative"}>{positive ? "▲" : "▼"} {formatMoney(Math.abs(bucket.changeMillionBaht))} ลบ.</span>}
         <span>{formatDate(bucket.latestDate)}</span>
       </div>
     </article>
@@ -534,7 +535,7 @@ function FundRows({ fund, open, detail, onToggle }: { fund: Fund; open: boolean;
       <td><strong>{fund.code}</strong><span>{fund.group}</span></td>
       <td><span className={`bucket-dot bucket-${fund.bucketId}`} />{fund.bucketName}</td>
       <td className="numeric"><strong>{fund.aumMillionBaht == null ? "รอข้อมูล" : formatMoney(fund.aumMillionBaht)}</strong></td>
-      <td className={`numeric ${positive ? "positive" : "negative"}`}>{positive ? "+" : ""}{formatMoney(fund.changeMillionBaht)}</td>
+      <td className={`numeric ${fund.changeMillionBaht == null ? "" : positive ? "positive" : "negative"}`}>{fund.changeMillionBaht != null && positive ? "+" : ""}{formatMoney(fund.changeMillionBaht)}</td>
       <td>{formatDate(fund.latestDate)}</td>
       <td><button className="row-button" type="button" aria-label={`รายละเอียด ${fund.code}`}>{open ? <ChevronUp size={17} /> : <ChevronDown size={17} />}</button></td>
     </tr>
@@ -556,6 +557,7 @@ function SourcePanel({ data }: { data: DashboardData }) {
         </div>
         <div className="source-list">
           <h3>สถานะการตรวจ</h3>
+          {!!data.pendingReviewCount && <p className="provisional">AUA รอตรวจสอบ {data.pendingReviewCount} รายการ ยังไม่ใช้คำนวณ</p>}
           {data.sourceStatus.length ? data.sourceStatus.map((source) => <div className="source-row" key={source.id}><div><strong>{source.name}</strong><span>{source.message || source.status} • {formatDateTime(source.checkedAt)}</span></div><span className={`status-pill ${source.status}`}>{source.status === "ok" ? "ครบ" : source.status === "incomplete" ? "ไม่ครบ" : "ผิดพลาด"}</span></div>) : <p className="empty-copy">สถานะแหล่งข้อมูลจะปรากฏหลัง Update รอบแรก</p>}
         </div>
       </div>

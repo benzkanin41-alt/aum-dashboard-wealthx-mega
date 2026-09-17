@@ -85,6 +85,37 @@ async function runCase(browserInstance, item) {
     await page.locator('[data-chart-id="aum-history"] [data-bucket-id="wealthx_other"]').click();
     await page.waitForTimeout(200);
 
+    await page.locator('[data-testid="theme-toggle"]').click();
+    const toggledTheme = await page.locator("html").getAttribute("data-theme");
+    if (toggledTheme === item.theme) throw new Error("Theme toggle did not change theme");
+    await page.locator('[data-testid="theme-toggle"]').click();
+    const savedTheme = await page.evaluate(() => localStorage.getItem("ltmh-aum-theme"));
+    if (savedTheme !== item.theme) throw new Error("Theme preference was not persisted");
+
+    const search = page.getByPlaceholder("ค้นหาชื่อกองทุน");
+    await search.fill("ONE-HUMANOID-X-UH");
+    if (await page.locator(".fund-row").count() !== 1) throw new Error("New class search failed");
+    await page.getByLabel("รายละเอียด ONE-HUMANOID-X-UH", { exact: true }).click();
+    await page.locator(".fund-detail").waitFor();
+    await search.fill("");
+    await page.getByLabel("เรียงข้อมูล", { exact: true }).selectOption("name");
+    const codes = await page.locator(".fund-row td:first-child strong").allTextContents();
+    if (codes.join("|") !== [...codes].sort((a,b)=>a.localeCompare(b)).join("|")) throw new Error("Table sort failed");
+    await page.getByLabel("เรียงข้อมูล", { exact: true }).selectOption("aum-desc");
+
+    const projection = page.locator('[data-chart-id="aua-aum-projection"]');
+    await projection.scrollIntoViewIfNeeded();
+    const bounds = await projection.locator(".recharts-surface").boundingBox();
+    const pointer = { x: bounds.x + bounds.width * 0.9, y: bounds.y + bounds.height * 0.4 };
+    if (item.mobile) await page.touchscreen.tap(pointer.x, pointer.y);
+    else await page.mouse.move(pointer.x, pointer.y);
+    const tooltip = projection.locator(".chart-tooltip");
+    await tooltip.waitFor({ state: "visible" });
+    const tooltipText = await tooltip.innerText();
+    if (!tooltipText.includes("ขอบล่าง 95%") || !tooltipText.includes("ขอบบน 95%") || !tooltipText.includes("Projection กลาง")) throw new Error(`Missing interval tooltip: ${tooltipText}`);
+    const bandPaths = await projection.locator(".recharts-area-area").count();
+    if (!bandPaths) throw new Error("Prediction interval band is missing");
+
     const metrics = await page.evaluate(() => {
       const html = document.documentElement;
       const body = document.body;
@@ -143,7 +174,7 @@ async function runCase(browserInstance, item) {
       && metrics.hasProjection
       && metrics.updateEnabled
       && interactionPassed;
-    return { ...item, ok, file, metrics, timelineInteraction };
+    return { ...item, ok, file, metrics, timelineInteraction, tooltipText, bandPaths, tableRows: codes.length, themeToggle: true };
   } finally {
     await context.close();
   }

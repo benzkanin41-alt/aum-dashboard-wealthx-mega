@@ -8,6 +8,7 @@ export interface Bucket {
   coverageComplete?: boolean;
   latestDate: string | null;
   totalMillionBaht: number | null;
+  partialMillionBaht?: number | null;
   previousDate: string | null;
   previousTotalMillionBaht: number | null;
   changeMillionBaht: number | null;

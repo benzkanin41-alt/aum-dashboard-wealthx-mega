@@ -14,12 +14,15 @@ export async function refreshTalis(env: Env) {
   const rows = parseTalisNavRows(await response.text());
   const fundRows = await env.DB.prepare("SELECT * FROM funds WHERE data_source = 'talis' AND active = 1").all<FundRow>();
   const configured = new Map(fundRows.results.map((fund) => [fund.code, fund]));
+  const dates = [...new Set(rows.filter(row => configured.has(row.code)).map(row => row.navDate))];
+  const previous = dates.length ? await env.DB.prepare(`SELECT * FROM aum_points WHERE as_of_date IN (${dates.map(() => "?").join(",")})`).bind(...dates).all<any>() : { results: [] };
+  const previousByKey = new Map(previous.results.map(row => [`${row.fund_id}:${row.as_of_date}`, row]));
   const now = nowIso();
   const statements: D1PreparedStatement[] = [];
   for (const row of rows) {
     const fund = configured.get(row.code);
     if (!fund || (fund.inception_date && row.navDate < fund.inception_date)) continue;
-    const before = await env.DB.prepare("SELECT * FROM aum_points WHERE fund_id=? AND as_of_date=?").bind(fund.id, row.navDate).first<any>();
+    const before = previousByKey.get(`${fund.id}:${row.navDate}`);
     if (before && (before.aum_million_baht !== row.aumMillionBaht || before.nav_per_unit !== row.nav)) await audit(env, "aum_point", `${fund.id}:${row.navDate}`, "revise", before, row);
     statements.push(upsertAumStatement(env, fund, row.navDate, row.aumMillionBaht, row.nav, row.source, now));
   }

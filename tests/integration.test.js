@@ -5,6 +5,44 @@ import { rebuildModelAndSnapshot } from "../worker/snapshot.ts";
 import { syncFundCatalog } from "../worker/catalog.ts";
 import { startOrReuseRefresh, advanceRefresh } from "../worker/refresh.ts";
 import { advanceOfficialScan, newOfficialScan } from "../worker/official.ts";
+import { refreshTalis } from "../worker/sources.ts";
+import { createHash } from "node:crypto";
+
+test("Talis batch reads preserve AUM corrections and avoid duplicate audit revisions", async () => {
+  const env = testEnv("talis-batch");
+  const originalFetch = globalThis.fetch;
+  try {
+    await seedModelFixture(env);
+    await env.DB.prepare("UPDATE funds SET data_source='talis'").run();
+    let amount = 900000000;
+    globalThis.fetch = async () => new Response(`<tr>${["Test fund", "TEST", "10", amount, "0", "0", "0", "0", "16/09/2026"].map(value => `<td>${value}</td>`).join("")}</tr>`);
+    assert.equal((await refreshTalis(env)).imported, 1);
+    amount = 950000000;
+    await refreshTalis(env);
+    await refreshTalis(env);
+    assert.equal((await env.DB.prepare("SELECT aum_million_baht AS value FROM aum_points WHERE as_of_date='2026-09-16'").first()).value, 950);
+    assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM audit_log WHERE entity_type='aum_point' AND action='revise'").first()).n, 1);
+  } finally { globalThis.fetch = originalFetch; env.close(); }
+});
+
+test("upgrade backup completes a hashed manifest before catalog or source mutation", async () => {
+  const env = testEnv("backup-manifest");
+  const objects = new Map();
+  env.FILES.put = async (key, value) => { objects.set(key, value); };
+  try {
+    await seedModelFixture(env);
+    let job = (await startOrReuseRefresh(env, "test")).job;
+    for (let i = 0; i < 30 && job.stage === "backup"; i++) job = await advanceRefresh(env, job.id);
+    assert.equal(job.stage, "aum");
+    const manifestKey = [...objects.keys()].find(key => key.endsWith("/manifest.json"));
+    assert(manifestKey);
+    const manifest = JSON.parse(objects.get(manifestKey));
+    assert.equal(manifest.files.length, 12);
+    for (const file of manifest.files) assert.equal(createHash("sha256").update(objects.get(file.key)).digest("hex"), file.sha256);
+    assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM funds").first()).n, 1);
+    assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM aum_points").first()).n, 8);
+  } finally { env.close(); }
+});
 
 test("D1-compatible persistence: duplicate, daily AUM, corrected AUM, actual revision and new actual",async()=>{
   const env=testEnv("model-revisions");

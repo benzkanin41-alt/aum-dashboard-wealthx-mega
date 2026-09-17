@@ -75,9 +75,10 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
       coveredFundCount: latest?.activeFundCount || 0,
       latestDate: latest?.date || null,
       totalMillionBaht: latest?.aumMillionBaht ?? null,
+      partialMillionBaht: latest?.partialMillionBaht ?? null,
       coverageComplete: latest?.complete ?? false,
       previousDate: previous?.date || null,
-      previousTotalMillionBaht: previous?.aumMillionBaht || null,
+      previousTotalMillionBaht: previous?.aumMillionBaht ?? null,
       changeMillionBaht: latest?.aumMillionBaht != null && previous?.aumMillionBaht != null ? round2(latest.aumMillionBaht - previous.aumMillionBaht) : null,
       changePct: latest?.aumMillionBaht != null && previous?.aumMillionBaht ? (latest.aumMillionBaht - previous.aumMillionBaht) / previous.aumMillionBaht : null,
       history: aggregate.map((item) => ({ date: item.date, value: item.aumMillionBaht, fundCount: item.activeFundCount }))
