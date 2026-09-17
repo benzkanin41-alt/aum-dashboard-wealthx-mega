@@ -8,6 +8,21 @@ import { advanceOfficialScan, newOfficialScan } from "../worker/official.ts";
 import { refreshTalis } from "../worker/sources.ts";
 import { createHash } from "node:crypto";
 
+test("finishing a UUID job cleans only its own step keys without a D1 LIKE pattern", async () => {
+  const env = testEnv("finish-job");
+  try {
+    await seedModelFixture(env);
+    const job = (await startOrReuseRefresh(env, "test")).job;
+    await env.DB.prepare("UPDATE refresh_jobs SET stage='model',cursor=0 WHERE id=?").bind(job.id).run();
+    await env.DB.prepare("INSERT INTO metadata(key,value,updated_at) VALUES ('refresh_step:another-job:0','running','2026-09-17')").run();
+    const completed = await advanceRefresh(env, job.id);
+    assert.equal(completed.status, "complete");
+    assert.equal(completed.error, null);
+    assert(await env.DB.prepare("SELECT value FROM metadata WHERE key='refresh_step:another-job:0'").first());
+    assert.equal(await env.DB.prepare("SELECT value FROM metadata WHERE key=?").bind(`refresh_step:${job.id}:model:0`).first(), null);
+  } finally { env.close(); }
+});
+
 test("Talis batch reads preserve AUM corrections and avoid duplicate audit revisions", async () => {
   const env = testEnv("talis-batch");
   const originalFetch = globalThis.fetch;

@@ -156,7 +156,9 @@ async function finishModel(env: Env, job: RefreshJobRow) {
     .bind(JSON.stringify(results), now, now, job.id).run();
   await env.DB.prepare("DELETE FROM metadata WHERE key='refresh_lock' AND value=?").bind(job.id).run();
   await audit(env, "refresh_job", job.id, "complete", job, results);
-  await env.DB.prepare("DELETE FROM metadata WHERE key LIKE ?").bind(`refresh_step:${job.id}:%`).run();
+  // D1 limits LIKE pattern length; a lexicographic prefix range is equivalent.
+  await env.DB.prepare("DELETE FROM metadata WHERE key >= ? AND key < ?")
+    .bind(`refresh_step:${job.id}:`, `refresh_step:${job.id};`).run();
 }
 
 async function acquireStep(env: Env, key: string) {
