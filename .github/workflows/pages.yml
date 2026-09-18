@@ -2,8 +2,17 @@ name: Refresh canonical Sites AUM and AUA
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: "daily skips a completed refresh after 09:00 Bangkok; manual always requests an update"
+        type: choice
+        options:
+          - manual
+          - daily
+        default: manual
   schedule:
-    # 09:00 Asia/Bangkok = 02:00 UTC. GitHub may start scheduled jobs later when queues are busy.
+    # Keep the original 09:00 target until the external scheduler is verified.
+    # Daily mode also deduplicates a delayed GitHub fallback after cron-job.org.
     - cron: "0 2 * * *"
 
 permissions:
@@ -31,6 +40,8 @@ jobs:
           package-manager-cache: false
 
       - name: Refresh AUM, official AUA, model, and snapshot
+        env:
+          REFRESH_MODE: ${{ github.event_name == 'schedule' && 'daily' || inputs.mode || 'manual' }}
         run: node scripts/run-sites-refresh.js
 
       - name: Verify canonical dashboard
