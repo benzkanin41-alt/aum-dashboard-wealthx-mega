@@ -34,6 +34,7 @@ import {
 } from "recharts";
 import type { AuaObservation, Bucket, DashboardData, Fund, RefreshJob } from "./types";
 import { registerDashboardTools } from "./webmcp";
+import { fetchApi } from "./api";
 
 const money = new Intl.NumberFormat("th-TH", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const compactMoney = new Intl.NumberFormat("th-TH", { notation: "compact", maximumFractionDigits: 1 });
@@ -57,7 +58,7 @@ export default function App() {
   });
 
   const loadDashboard = useCallback(async (): Promise<DashboardData> => {
-    const response = await fetch("/api/dashboard", { cache: "no-store" });
+    const response = await fetchApi("/api/dashboard", { cache: "no-store" });
     const payload: any = await response.json();
     if (!response.ok) throw new Error(payload.error || (payload.bootstrapping ? "ระบบกำลังเตรียมฐานข้อมูล" : "โหลดข้อมูลไม่สำเร็จ"));
     if (payload.appId !== "aum-dashboard") throw new Error("ปลายทางไม่ใช่ LTMH WealthX dashboard");
@@ -86,7 +87,7 @@ export default function App() {
     let response: Response;
     let payload: any = {job: resume};
     if (!resume) {
-      response = await fetch("/api/refresh", { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+      response = await fetchApi("/api/refresh", { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
       payload = await response.json();
       if (!response.ok && response.status !== 429) throw new Error(payload.error || "เริ่มอัปเดตไม่สำเร็จ");
     }
@@ -95,7 +96,7 @@ export default function App() {
     setJob(current);
     while (!["complete", "failed"].includes(current.status)) {
       await sleep(700);
-      response = await fetch(`/api/refresh/status?job=${encodeURIComponent(current.id)}&advance=1`, { cache: "no-store" });
+      response = await fetchApi(`/api/refresh/status?job=${encodeURIComponent(current.id)}&advance=1`, { cache: "no-store" });
       payload = await response.json();
       if (!response.ok || !payload.job) throw new Error(payload.error || "อ่านสถานะการอัปเดตไม่สำเร็จ");
       current = payload.job;
@@ -116,7 +117,7 @@ export default function App() {
       if (!active || document.visibilityState !== "visible" || checking || refreshBusy.current) return;
       checking = true;
       try {
-        const response = await fetch("/api/dashboard/version", { cache: "no-store" });
+        const response = await fetchApi("/api/dashboard/version", { cache: "no-store" });
         if (!response.ok) throw new Error("ตรวจสถานะข้อมูลกลางไม่สำเร็จ");
         const meta: { job?: RefreshJob; dataVersion?: string; offline?: boolean } = await response.json();
         if (!active) return;
@@ -494,7 +495,7 @@ function FundTable({ data }: { data: DashboardData }) {
     if (expanded === fund.code) return setExpanded(null);
     setExpanded(fund.code);
     if (!details[fund.code]) {
-      const response = await fetch(`/api/funds/${encodeURIComponent(fund.code)}`);
+      const response = await fetchApi(`/api/funds/${encodeURIComponent(fund.code)}`);
       const payload = response.ok ? await response.json() : null;
       if (payload) setDetails((current) => ({ ...current, [fund.code]: payload }));
     }

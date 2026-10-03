@@ -1,6 +1,9 @@
-name: Refresh canonical Sites AUM and AUA
+name: Refresh canonical Sites and publish AUM Pages
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       mode:
@@ -27,11 +30,16 @@ env:
 
 jobs:
   refresh:
+    if: github.event_name != 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
     steps:
       - name: Checkout scheduler client
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
@@ -48,3 +56,54 @@ jobs:
         run: |
           curl --fail --silent --show-error "$SITES_BASE_URL/api/dashboard" \
             | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const x=JSON.parse(s);if(x.appId!=="aum-dashboard"||!x.dataVersion||!x.model?.id)process.exit(1);console.log(JSON.stringify({dataVersion:x.dataVersion,modelVersion:x.model.id,generatedAt:x.generatedAt}))})'
+
+  build:
+    needs: refresh
+    # A skipped push refresh is intentional; daily/manual refresh failures block publication.
+    if: ${{ !cancelled() && (github.event_name == 'push' || needs.refresh.result == 'success') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout the shared React application
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - name: Install locked build dependencies
+        run: npm ci --include=dev --no-audit --no-fund
+
+      - name: Build the existing dashboard for GitHub Pages
+        run: npm run build:pages
+
+      - name: Upload only the static Pages build
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist-pages
+
+  deploy:
+    needs: build
+    if: ${{ !cancelled() && needs.build.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Deploy the static dashboard
+        id: deployment
+        uses: actions/deploy-pages@v5

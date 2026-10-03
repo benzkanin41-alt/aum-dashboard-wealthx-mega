@@ -11,6 +11,7 @@
     "start": "node server.js",
     "dev": "vite",
     "build": "node scripts/clean-dist.js && vite build && node scripts/prepare-site-dist.js",
+    "build:pages": "vite build --config vite.pages.config.ts",
     "preview": "wrangler dev --config dist/server/wrangler.json",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.js",

@@ -8,5 +8,6 @@ data/refresh-status.json
 data/dashboard-cache.json
 data/dashboard-cache.json.tmp
 dist/
+dist-pages/
 outputs/
 logs/

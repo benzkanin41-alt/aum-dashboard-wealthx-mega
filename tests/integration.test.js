@@ -93,13 +93,28 @@ test("D1-compatible persistence: duplicate, daily AUM, corrected AUM, actual rev
   } finally { env.close(); }
 });
 
-test("catalog upsert adds exactly one new class and retains all three groups",async()=>{
+test("catalog upsert adds the new fund once and retains all three groups",async()=>{
   const env=testEnv("catalog");try{
     const first=await syncFundCatalog(env);const second=await syncFundCatalog(env);assert.equal(first,second);
     const fund=await env.DB.prepare("SELECT * FROM funds WHERE code='ONE-HUMANOID-X-UH'").first();
     assert.equal(fund.inception_date,"2026-09-16");assert.equal(fund.bucket_id,"wealthx_other");
+    const added=await env.DB.prepare("SELECT * FROM funds WHERE code='TLCHINASTAR50-X'").first();
+    assert.equal(added.inception_date,"2026-09-24");assert.equal(added.bucket_id,"wealthx_other");
+    assert.equal(added.data_source,"talis");assert.equal(added.identifier,"TLCHINASTAR50-X");
+    assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM audit_log WHERE entity_type='fund' AND entity_id='TLCHINASTAR50-X' AND action='catalog_add'").first()).n,1);
     const groups=await env.DB.prepare("SELECT bucket_id,COUNT(*) AS n FROM funds GROUP BY bucket_id ORDER BY bucket_id").all();
-    assert.deepEqual(groups.results.map(r=>[r.bucket_id,r.n]),[["mega30",33],["other_funds",9],["wealthx_other",26]]);
+    assert.deepEqual(groups.results.map(r=>[r.bucket_id,r.n]),[["mega30",33],["other_funds",9],["wealthx_other",27]]);
+  }finally{env.close();}
+});
+
+test("catalog addition does not rewrite existing AUM or official AUA history",async()=>{
+  const env=testEnv("catalog-preserves-history");try{
+    await seedModelFixture(env);
+    const aum=(await env.DB.prepare("SELECT * FROM aum_points ORDER BY fund_id,as_of_date").all()).results;
+    const aua=(await env.DB.prepare("SELECT * FROM aua_observations ORDER BY id").all()).results;
+    await syncFundCatalog(env);await syncFundCatalog(env);
+    assert.deepEqual((await env.DB.prepare("SELECT * FROM aum_points ORDER BY fund_id,as_of_date").all()).results,aum);
+    assert.deepEqual((await env.DB.prepare("SELECT * FROM aua_observations ORDER BY id").all()).results,aua);
   }finally{env.close();}
 });
 
