@@ -2,6 +2,7 @@ import { extractText } from "unpdf";
 import { parseTalisNavRows } from "../server-lib/talis-public.js";
 import { audit, nowIso, updateSourceStatus } from "./db.ts";
 import type { Env, FundRow } from "./types.ts";
+import { backfillTalisHistory } from "./talis-history.ts";
 
 export const SET_NEWS_URL = "https://www.set.or.th/th/market/product/stock/quote/LTMH/news";
 export const LTMH_IR_URL = "https://www.ltmh.com/en/investor";
@@ -27,8 +28,9 @@ export async function refreshTalis(env: Env) {
     statements.push(upsertAumStatement(env, fund, row.navDate, row.aumMillionBaht, row.nav, row.source, now));
   }
   if (statements.length) await env.DB.batch(statements);
+  const historyBackfill = await backfillTalisHistory(env, rows);
   await updateSourceStatus(env, { id: "talis", name: "Talis Asset Management NAV", status: "ok", url: TALIS_NAV_URL, message: `${statements.length} กอง` });
-  return { source: "talis", imported: statements.length, available: rows.length };
+  return { source: "talis", imported: statements.length, available: rows.length, historyBackfill };
 }
 
 export async function refreshSettradeFund(env: Env, fund: FundRow) {
