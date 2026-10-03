@@ -63,11 +63,16 @@ export async function backfillTalisHistory(env: Env, latestRows: Array<{ code: s
           VALUES (?,?,?,?,?,?,?,?,NULL) ON CONFLICT(fund_id,as_of_date) DO NOTHING
         `).bind(fund.id, row.navDate, row.aumMillionBaht, row.nav, url, now, sourceHash, now));
       }
+      statements.push(env.DB.prepare(`
+        INSERT INTO source_status (source_id,source_name,status,checked_at,last_success_at,message,url)
+        VALUES (?,?,'ok',?,?,?,?) ON CONFLICT(source_id) DO UPDATE SET
+          source_name=excluded.source_name,status=excluded.status,checked_at=excluded.checked_at,
+          last_success_at=excluded.last_success_at,message=excluded.message,url=excluded.url
+      `).bind(`talis-history:${fund.code}`, `Talis history ${fund.code}`, now, now, `${repair.inceptionDate} - ${repair.through}; ${rows.length} published history point(s) verified`, url));
       statements.push(env.DB.prepare("INSERT INTO metadata (key,value,updated_at) VALUES (?,?,?) ON CONFLICT(key) DO NOTHING")
         .bind(key, JSON.stringify({ code: fund.code, publishedDates: repair.publishedDates, sourceUrl: url, sourceHash, backupPrefix: prefix, completedAt: now }), now));
       const applied = await env.DB.batch(statements);
-      const imported = applied.slice(0, -1).reduce((sum, result, index) => sum + (index % 2 === 1 ? result.meta.changes || 0 : 0), 0);
-      await updateSourceStatus(env, { id: `talis-history:${fund.code}`, name: `Talis history ${fund.code}`, status: "ok", url, message: `${repair.inceptionDate} - ${repair.through}; ${imported} missing published point(s) added` });
+      const imported = applied.slice(0, rows.length * 2).reduce((sum, result, index) => sum + (index % 2 === 1 ? result.meta.changes || 0 : 0), 0);
       results.push({ id: repair.id, code: fund.code, imported, sourceHash, backupPrefix: prefix });
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);

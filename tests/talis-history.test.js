@@ -108,3 +108,28 @@ test("conflicting existing history fails closed without overwriting or completin
     assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM metadata WHERE key LIKE 'talis_history_backfill:%'").first()).n, 0);
   } finally { globalThis.fetch = original; env.close(); }
 });
+
+test("a failed success-status write rolls back the repair and a retry restores status atomically", async () => {
+  const env = testEnv("talis-gap-status");
+  const original = globalThis.fetch;
+  const prepare = env.DB.prepare;
+  try {
+    await fixture(env);
+    globalThis.fetch = async () => new Response(html(points));
+    env.DB.prepare = sql => {
+      if (sql.includes("INSERT INTO source_status") && sql.includes("VALUES (?,?,'ok'")) {
+        return { bind() { return this; }, async run() { throw new Error("Simulated status write failure"); } };
+      }
+      return prepare(sql);
+    };
+    assert.match((await backfillTalisHistory(env, latest))[0].error, /status write failure/);
+    assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM aum_points WHERE fund_id='TLCHINASTAR50-X'").first()).n, 1);
+    assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM audit_log WHERE action='history_backfill'").first()).n, 0);
+    assert.equal((await env.DB.prepare("SELECT COUNT(*) AS n FROM metadata WHERE key LIKE 'talis_history_backfill:%'").first()).n, 0);
+    assert.equal((await env.DB.prepare("SELECT status FROM source_status WHERE source_id='talis-history:TLCHINASTAR50-X'").first()).status, "incomplete");
+    env.DB.prepare = prepare;
+    assert.equal((await backfillTalisHistory(env, latest))[0].imported, 3);
+    assert.equal((await env.DB.prepare("SELECT status FROM source_status WHERE source_id='talis-history:TLCHINASTAR50-X'").first()).status, "ok");
+    assert.equal((await backfillTalisHistory(env, latest))[0].reused, true);
+  } finally { env.DB.prepare = prepare; globalThis.fetch = original; env.close(); }
+});
