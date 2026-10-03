@@ -102,7 +102,8 @@ async function runCase(browserInstance, item) {
     await page.getByLabel("เรียงข้อมูล", { exact: true }).selectOption("name");
     await page.waitForFunction(() => { const names = [...document.querySelectorAll(".fund-row td:first-child strong")].map(e => e.textContent); return names.length > 1 && names.join("|") === [...names].sort((a,b)=>a.localeCompare(b)).join("|"); });
     const codes = await page.locator(".fund-row td:first-child strong").allTextContents();
-    if (codes.join("|") !== [...codes].sort((a,b)=>a.localeCompare(b)).join("|")) throw new Error("Table sort failed");
+    const tableSortLocale = await page.evaluate(() => new Intl.Collator().resolvedOptions().locale);
+    if (codes.join("|") !== [...codes].sort((a,b)=>a.localeCompare(b, tableSortLocale)).join("|")) throw new Error("Table sort failed");
     await page.getByLabel("เรียงข้อมูล", { exact: true }).selectOption("aum-desc");
 
     const projection = page.locator('[data-chart-id="aua-aum-projection"]');
@@ -176,7 +177,7 @@ async function runCase(browserInstance, item) {
       && metrics.hasProjection
       && metrics.updateEnabled
       && interactionPassed;
-    return { ...item, ok, file, metrics, timelineInteraction, tooltipText, bandPaths, tableRows: codes.length, themeToggle: true };
+    return { ...item, ok, file, metrics, timelineInteraction, tooltipText, bandPaths, tableRows: codes.length, tableSortLocale, themeToggle: true };
   } catch (error) {
     await page.screenshot({path:path.join(outputDir,`${item.name}-failure.png`)});
     await fs.writeFile(path.join(outputDir,`${item.name}-failure.txt`),`${error.stack}\n${await page.locator("body").innerText()}`);
