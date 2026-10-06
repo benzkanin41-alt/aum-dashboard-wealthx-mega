@@ -49,6 +49,7 @@ export default function App() {
   const dataRef = useRef<DashboardData | null>(null);
   const refreshBusy = useRef(false);
   const cacheRetryAt = useRef(0);
+  const reconnectPending = useRef(false);
   const [lastRun, setLastRun] = useState<RefreshJob | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     try {
@@ -125,17 +126,21 @@ export default function App() {
         if (meta.job) setLastRun(meta.job);
         const retryCache = Boolean(dataRef.current?.cacheWarning) && Date.now() >= cacheRetryAt.current;
         if (retryCache) cacheRetryAt.current = Date.now() + 60000;
-        if (meta.dataVersion !== dataRef.current?.dataVersion || Boolean(meta.offline) !== Boolean(dataRef.current?.offline) || retryCache) await loadDashboard();
+        if (meta.dataVersion !== dataRef.current?.dataVersion || Boolean(meta.offline) !== Boolean(dataRef.current?.offline) || retryCache || reconnectPending.current) {
+          await loadDashboard();
+          reconnectPending.current = false;
+        }
         if (meta.job?.status === "running") await runRefresh(meta.job);
       } catch (caught) { if (active) setError(messageOf(caught)); }
       finally { checking = false; }
     };
     void sync();
     const timer = window.setInterval(() => void sync(), 15000);
+    const reconnect = () => { reconnectPending.current = true; void sync(); };
     document.addEventListener("visibilitychange", sync);
     window.addEventListener("focus", sync);
-    window.addEventListener("online", sync);
-    return () => { active = false; window.clearInterval(timer); document.removeEventListener("visibilitychange", sync); window.removeEventListener("focus", sync); window.removeEventListener("online", sync); };
+    window.addEventListener("online", reconnect);
+    return () => { active = false; window.clearInterval(timer); document.removeEventListener("visibilitychange", sync); window.removeEventListener("focus", sync); window.removeEventListener("online", reconnect); };
   }, [loadDashboard, runRefresh]);
 
   useEffect(() => registerDashboardTools(runRefresh), [runRefresh]);
