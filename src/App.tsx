@@ -50,6 +50,7 @@ export default function App() {
   const refreshBusy = useRef(false);
   const cacheRetryAt = useRef(0);
   const reconnectPending = useRef(false);
+  const dashboardRequestId = useRef(0);
   const [lastRun, setLastRun] = useState<RefreshJob | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     try {
@@ -60,16 +61,25 @@ export default function App() {
   });
 
   const loadDashboard = useCallback(async (): Promise<DashboardData> => {
-    const response = await fetchApi("/api/dashboard", { cache: "no-store" });
-    const payload: any = await response.json();
-    if (!response.ok) throw new Error(payload.error || (payload.bootstrapping ? "ระบบกำลังเตรียมฐานข้อมูล" : "โหลดข้อมูลไม่สำเร็จ"));
-    if (payload.appId !== "aum-dashboard") throw new Error("ปลายทางไม่ใช่ LTMH WealthX dashboard");
-    if (!dataRef.current || payload.generatedAt >= dataRef.current.generatedAt) {
-      dataRef.current = payload;
-      setData(payload);
+    const requestId = ++dashboardRequestId.current;
+    try {
+      const response = await fetchApi("/api/dashboard", { cache: "no-store" });
+      const payload: any = await response.json();
+      if (!response.ok) throw new Error(payload.error || (payload.bootstrapping ? "ระบบกำลังเตรียมฐานข้อมูล" : "โหลดข้อมูลไม่สำเร็จ"));
+      if (payload.appId !== "aum-dashboard") throw new Error("ปลายทางไม่ใช่ LTMH WealthX dashboard");
+      if (requestId !== dashboardRequestId.current && dataRef.current) return dataRef.current;
+      if (!dataRef.current || payload.generatedAt >= dataRef.current.generatedAt) {
+        dataRef.current = payload;
+        setData(payload);
+      }
+      setError(null);
+      setLoading(false);
+      return dataRef.current || payload;
+    } catch (caught) {
+      // An old failure must not reinstate an error after a newer snapshot succeeded.
+      if (requestId !== dashboardRequestId.current && dataRef.current) return dataRef.current;
+      throw caught;
     }
-    setError(null);
-    return payload;
   }, []);
 
   useEffect(() => {

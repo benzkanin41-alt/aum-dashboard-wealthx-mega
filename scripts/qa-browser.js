@@ -47,8 +47,19 @@ async function runCase(browserInstance, item) {
   const page = await context.newPage();
   try {
     await page.addInitScript((theme) => localStorage.setItem("ltmh-aum-theme", theme), item.theme);
+    let initialRequest;
+    let dashboardRequests = 0;
+    await page.route("**/api/dashboard", (route) => {
+      if (++dashboardRequests === 1) initialRequest = route;
+      else void route.continue();
+    });
     await page.goto(baseUrl, { waitUntil: "domcontentloaded", timeout: 30_000 });
     await page.waitForSelector(".kpi-grid", { state: "visible", timeout: 30_000 });
+    if (!initialRequest || dashboardRequests < 2) throw new Error("Deferred initial request was not exercised");
+    await initialRequest.abort("failed");
+    await page.waitForTimeout(100);
+    if (await page.locator(".system-banner.error").count()) throw new Error("A stale initial failure replaced successful recovery");
+    await page.unroute("**/api/dashboard");
     await page.waitForFunction(() => document.querySelectorAll(".metric-card").length === 5 && document.querySelectorAll(".recharts-wrapper").length >= 4);
 
     const chartIds = ["aum-history", "official-aua", "aua-aum-comparison", "aua-aum-projection"];
@@ -119,6 +130,19 @@ async function runCase(browserInstance, item) {
     const bandPaths = await projection.locator(".recharts-area-area").count();
     if (!bandPaths) throw new Error("Prediction interval band is missing");
 
+    const selectedRanges = await page.locator('.chart-panel').evaluateAll(panels => panels.map(panel => panel.dataset.activeRange));
+    await search.fill("ONE-HUMANOID-X-UH");
+    await context.setOffline(true);
+    await page.getByTestId("refresh-button").click();
+    await page.locator(".system-banner.error").waitFor({ state: "visible", timeout: 15000 });
+    await context.setOffline(false);
+    await page.evaluate(() => window.dispatchEvent(new Event("online")));
+    await page.waitForFunction(() => !document.querySelector(".system-banner.error"), undefined, { timeout: 30000 });
+    if (await search.inputValue() !== "ONE-HUMANOID-X-UH") throw new Error("Reconnect reset the fund filter");
+    const recoveredRanges = await page.locator('.chart-panel').evaluateAll(panels => panels.map(panel => panel.dataset.activeRange));
+    if (selectedRanges.join("|") !== recoveredRanges.join("|")) throw new Error("Reconnect reset timeline ranges");
+    await search.fill("");
+
     const metrics = await page.evaluate(() => {
       const html = document.documentElement;
       const body = document.body;
@@ -177,7 +201,7 @@ async function runCase(browserInstance, item) {
       && metrics.hasProjection
       && metrics.updateEnabled
       && interactionPassed;
-    return { ...item, ok, file, metrics, timelineInteraction, tooltipText, bandPaths, tableRows: codes.length, tableSortLocale, themeToggle: true };
+    return { ...item, ok, file, metrics, timelineInteraction, tooltipText, bandPaths, tableRows: codes.length, tableSortLocale, themeToggle: true, reconnect: true, delayedInitialFailure: true };
   } catch (error) {
     await page.screenshot({path:path.join(outputDir,`${item.name}-failure.png`)});
     await fs.writeFile(path.join(outputDir,`${item.name}-failure.txt`),`${error.stack}\n${await page.locator("body").innerText()}`);
