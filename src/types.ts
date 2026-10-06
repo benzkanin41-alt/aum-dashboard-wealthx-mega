@@ -5,6 +5,18 @@ export interface Bucket {
   color: string;
   fundCount: number;
   coveredFundCount: number;
+  sameDateFundCount?: number;
+  carriedForwardFundCount?: number;
+  comparison?: {
+    method: string;
+    status: string;
+    reason: string | null;
+    baseline: { snapshotId: string; dataVersion: string; publishedAt: string; asOfDate: string; totalMillionBaht: number; fundSetFingerprint: string } | null;
+    changeMillionBaht: number | null;
+    revisedBaselineMillionBaht: number | null;
+    backfillChangeMillionBaht: number | null;
+    likeForDateChangeMillionBaht: number | null;
+  };
   coverageComplete?: boolean;
   latestDate: string | null;
   totalMillionBaht: number | null;

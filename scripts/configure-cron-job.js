@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { isDeepStrictEqual } from "node:util";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
@@ -33,36 +33,48 @@ export function selectExistingJob(jobs) {
 
 export function verifyJob(actual, expected) {
   for (const key of ["title", "url", "enabled", "saveResponses", "requestMethod", "requestTimeout", "redirectSuccess", "schedule"]) {
-    assert.deepEqual(actual[key], expected[key], `cron-job.org did not retain ${key}`);
+    if (!isDeepStrictEqual(actual?.[key], expected[key])) throw new Error(`cron-job.org did not retain ${key}`);
   }
-  if (actual.auth?.enable) throw new Error("Unexpected HTTP basic authentication");
-  // Avoid assertion diffs containing an Authorization token.
-  const actualHeaders = Object.fromEntries(Object.entries(actual.extendedData?.headers || {}).map(([key, value]) => [key.toLowerCase(), value]));
-  for (const [key, value] of Object.entries(expected.extendedData.headers)) {
-    if (actualHeaders[key.toLowerCase()] !== value) throw new Error(`cron-job.org header mismatch: ${key}`);
-  }
+  if (actual.auth?.enable !== false) throw new Error("Unexpected HTTP basic authentication");
+  // Never include saved headers or assertion diffs in an error or receipt.
+  const headerEntries = Object.entries(actual.extendedData?.headers || {});
+  const actualHeaders = Object.fromEntries(headerEntries.map(([key, value]) => [key.toLowerCase(), value]));
+  const expectedHeaders = Object.fromEntries(Object.entries(expected.extendedData.headers).map(([key, value]) => [key.toLowerCase(), value]));
+  if (Object.keys(actualHeaders).length !== headerEntries.length || !isDeepStrictEqual(actualHeaders, expectedHeaders)) throw new Error("cron-job.org dispatch headers mismatch");
   if (actual.extendedData?.body !== expected.extendedData.body) throw new Error("cron-job.org dispatch body mismatch");
 }
 
-async function main() {
-  const args = process.argv.slice(2);
+export async function configureCronJob({
+  args = process.argv.slice(2), fetchImpl = globalThis.fetch,
+  readFile = fs.readFile, writeFile = fs.writeFile, now = Date.now,
+  log = value => console.log(JSON.stringify(value))
+} = {}) {
+  const verifyOnly = args.includes("--verify");
+  if (verifyOnly && args.includes("--apply")) throw new Error("--verify cannot be combined with --apply");
   const credentialIndex = args.indexOf("--credentials");
   if (credentialIndex < 0 || !args[credentialIndex + 1]) throw new Error("Supply --credentials <private JSON file outside Git>");
   const credentialFile = path.resolve(args[credentialIndex + 1]);
-  const credentials = JSON.parse((await fs.readFile(credentialFile, "utf8")).replace(/^\uFEFF/, ""));
+  let credentials;
+  try { credentials = JSON.parse((await readFile(credentialFile, "utf8")).replace(/^\uFEFF/, "")); }
+  catch { throw new Error("Private credential file could not be read as JSON"); }
   const job = buildCronJob(credentials.githubActionsToken?.trim());
   const apiKey = credentials.cronJobApiKey?.trim();
   if (!apiKey || /[\r\n]/.test(apiKey)) throw new Error("Missing cron-job.org API key");
 
   async function api(url, token, method = "GET", body) {
     if (!["api.cron-job.org", "api.github.com"].includes(new URL(url).hostname)) throw new Error("Unapproved API destination");
-    const response = await fetch(url, {
-      method, redirect: "error", signal: AbortSignal.timeout(30000),
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2026-03-10" },
-      ...(body === undefined ? {} : { body: JSON.stringify(body) })
-    });
+    if (verifyOnly && method !== "GET") throw new Error("Verification only permits GET requests");
+    let response;
+    try {
+      response = await fetchImpl(url, {
+        method, redirect: "error", signal: AbortSignal.timeout(30000),
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2026-03-10" },
+        ...(body === undefined ? {} : { body: JSON.stringify(body) })
+      });
+    } catch { throw new Error(`${new URL(url).hostname} request failed; no credential or response body was logged`); }
     if (!response.ok) throw new Error(`${new URL(url).hostname} HTTP ${response.status}; no credential or response body was logged`);
-    return response.status === 204 ? {} : response.json();
+    try { return response.status === 204 ? {} : await response.json(); }
+    catch { throw new Error(`${new URL(url).hostname} returned invalid JSON; response body was not logged`); }
   }
   const github = (resource) => api(`https://api.github.com/repos/${REPOSITORY}${resource}`, credentials.githubActionsToken.trim());
   const repository = await github("");
@@ -74,9 +86,18 @@ async function main() {
   const listing = await api("https://api.cron-job.org/jobs", apiKey);
   if (listing.someFailed || !Array.isArray(listing.jobs)) throw new Error("Incomplete cron-job.org job list; no changes made");
   const existing = selectExistingJob(listing.jobs);
+  if (verifyOnly) {
+    if (!existing || !Number.isSafeInteger(existing.jobId) || existing.jobId <= 0) throw new Error("No uniquely matching saved cron-job.org job to verify");
+    const actual = (await api(`https://api.cron-job.org/jobs/${existing.jobId}`, apiKey)).jobDetails;
+    verifyJob(actual, job);
+    const evidence = { ...verificationEvidence(actual, existing.jobId, now()), verified: true, readOnly: true };
+    log(evidence);
+    return evidence;
+  }
   if (!args.includes("--apply")) {
-    console.log(JSON.stringify({ dryRun: true, action: existing ? "update" : "create", jobId: existing?.jobId || null, title: JOB_TITLE, schedule: job.schedule, credentialsValidated: true }));
-    return;
+    const evidence = { dryRun: true, action: existing ? "update" : "create", jobId: existing?.jobId || null, title: JOB_TITLE, schedule: job.schedule, credentialsValidated: true };
+    log(evidence);
+    return evidence;
   }
 
   let jobId = existing?.jobId;
@@ -85,16 +106,24 @@ async function main() {
   if (!Number.isSafeInteger(jobId)) throw new Error("Provider returned no job ID; inspect jobs before retrying");
   const actual = (await api(`https://api.cron-job.org/jobs/${jobId}`, apiKey)).jobDetails;
   verifyJob(actual, job);
-  const next = new Date(actual.nextExecution * 1000);
-  const nextTime = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(next);
-  if (!actual.nextExecution || nextTime !== "09:00" || next <= new Date()) throw new Error("Next execution was not verified as a future 09:00 Bangkok");
-  const evidence = { checkedAt: new Date().toISOString(), jobId, title: actual.title, url: actual.url, enabled: actual.enabled,
-    schedule: actual.schedule, nextExecution: next.toISOString(), nextExecutionBangkok: nextTime, credentials: "redacted", deliveryTested: false };
+  const evidence = verificationEvidence(actual, jobId, now());
   const evidenceFile = path.join(path.dirname(credentialFile), "cron-job-verification.json");
-  await fs.writeFile(evidenceFile, JSON.stringify(evidence, null, 2));
-  console.log(JSON.stringify(evidence));
+  await writeFile(evidenceFile, JSON.stringify(evidence, null, 2));
+  log(evidence);
+  return evidence;
+}
+
+function verificationEvidence(actual, jobId, now) {
+  const next = new Date(actual.nextExecution * 1000);
+  const bangkokDate = new Date(now + 7 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  let expectedNext = Date.parse(`${bangkokDate}T02:00:00.000Z`);
+  if (expectedNext <= now) expectedNext += 24 * 60 * 60 * 1000;
+  if (!Number.isSafeInteger(actual.nextExecution) || next.getTime() !== expectedNext) throw new Error("Next execution was not verified as the next 09:00 Bangkok");
+  const nextTime = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(next);
+  return { checkedAt: new Date(now).toISOString(), jobId, title: actual.title, url: actual.url, enabled: actual.enabled,
+    schedule: actual.schedule, nextExecution: next.toISOString(), nextExecutionBangkok: nextTime, credentials: "redacted", deliveryTested: false };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
-  try { await main(); } catch (error) { console.error(error.message); process.exitCode = 1; }
+  try { await configureCronJob(); } catch (error) { console.error(error.message); process.exitCode = 1; }
 }

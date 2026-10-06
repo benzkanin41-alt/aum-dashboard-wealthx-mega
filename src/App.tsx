@@ -48,6 +48,7 @@ export default function App() {
   const [job, setJob] = useState<RefreshJob | null>(null);
   const dataRef = useRef<DashboardData | null>(null);
   const refreshBusy = useRef(false);
+  const cacheRetryAt = useRef(0);
   const [lastRun, setLastRun] = useState<RefreshJob | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     try {
@@ -122,7 +123,9 @@ export default function App() {
         const meta: { job?: RefreshJob; dataVersion?: string; offline?: boolean } = await response.json();
         if (!active) return;
         if (meta.job) setLastRun(meta.job);
-        if (meta.dataVersion !== dataRef.current?.dataVersion || Boolean(meta.offline) !== Boolean(dataRef.current?.offline)) await loadDashboard();
+        const retryCache = Boolean(dataRef.current?.cacheWarning) && Date.now() >= cacheRetryAt.current;
+        if (retryCache) cacheRetryAt.current = Date.now() + 60000;
+        if (meta.dataVersion !== dataRef.current?.dataVersion || Boolean(meta.offline) !== Boolean(dataRef.current?.offline) || retryCache) await loadDashboard();
         if (meta.job?.status === "running") await runRefresh(meta.job);
       } catch (caught) { if (active) setError(messageOf(caught)); }
       finally { checking = false; }
@@ -223,19 +226,27 @@ export default function App() {
 }
 
 function BucketCard({ bucket }: { bucket: Bucket }) {
-  const positive = (bucket.changeMillionBaht || 0) >= 0;
+  const comparison = bucket.comparison;
+  const change = comparison ? comparison.changeMillionBaht : bucket.changeMillionBaht;
+  const positive = (change || 0) >= 0;
+  const baseline = comparison?.baseline;
+  const signedMoney = (value: number) => `${value >= 0 ? "+" : "−"}${formatMoney(Math.abs(value))}`;
   return (
-    <article className="metric-card" style={{ "--accent": bucket.color } as React.CSSProperties}>
+    <article className="metric-card" data-bucket-id={bucket.id} style={{ "--accent": bucket.color } as React.CSSProperties}>
       <div className="metric-card-head">
-        <div><p className="metric-label">{bucket.name}</p><p className="metric-meta">{bucket.coveredFundCount}/{bucket.fundCount} กอง</p></div>
+        <div><p className="metric-label">{bucket.name}</p><p className="metric-meta">{bucket.coveredFundCount}/{bucket.fundCount} กอง{bucket.sameDateFundCount != null && ` • วันล่าสุด ${bucket.sameDateFundCount} กอง`}</p></div>
         <BarChart3 size={19} />
       </div>
       <p className="metric-value">{formatMoney(bucket.totalMillionBaht)} <small>ลบ.</small></p>
       {bucket.coverageComplete === false && <p className="metric-meta">ยอดยังไม่ครบ{bucket.partialMillionBaht != null ? ` • ส่วนที่มีข้อมูล ${formatMoney(bucket.partialMillionBaht)} ลบ.` : ""}</p>}
       <div className="metric-footer">
-        {bucket.changeMillionBaht == null ? <span>รอข้อมูลเปรียบเทียบ</span> : <span className={positive ? "positive" : "negative"}>{positive ? "▲" : "▼"} {formatMoney(Math.abs(bucket.changeMillionBaht))} ลบ.</span>}
+        {change == null ? <span>{comparison?.reason === "fund_scope_changed" ? "องค์ประกอบกองเปลี่ยน" : "รอข้อมูลเปรียบเทียบ"}</span> : <span data-testid="bucket-change" className={positive ? "positive" : "negative"}>{positive ? "▲" : "▼"} {formatMoney(Math.abs(change))} ลบ.</span>}
         <span>{formatDate(bucket.latestDate)}</span>
       </div>
+      <p className="metric-meta" data-testid="bucket-baseline">{baseline ? `เทียบยอดเผยแพร่ ${formatDate(baseline.asOfDate)} • ${formatMoney(baseline.totalMillionBaht)} ลบ.` : bucket.previousDate ? `เทียบ ${formatDate(bucket.previousDate)} • ข้อมูลชุดปัจจุบัน` : "ยังไม่มีฐานเปรียบเทียบ"}</p>
+      {comparison?.status === "available" && comparison.backfillChangeMillionBaht != null && comparison.likeForDateChangeMillionBaht != null && (
+        <p className="metric-meta" data-testid="bucket-change-breakdown" title="รวมผลจากข้อมูลย้อนหลังที่เข้าช้าหรือแก้ไข กับผลต่างตามวันข้อมูลในชุดปัจจุบัน ไม่ใช่ยอดเงินไหลเข้าสุทธิ">ย้อนหลัง {signedMoney(comparison.backfillChangeMillionBaht)} • ตามวันข้อมูล {signedMoney(comparison.likeForDateChangeMillionBaht)} ลบ.</p>
+      )}
     </article>
   );
 }

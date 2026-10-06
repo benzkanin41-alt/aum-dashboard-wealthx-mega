@@ -1,4 +1,5 @@
 import { buildAggregateHistory, fitProjectionModel, projectAua, matchAuaToAum, sha256 } from "../shared/model.js";
+import { buildPublishedComparison, loadPublishedBaseline } from "../shared/bucket-comparison.js";
 import { audit, nowIso, setMetadata } from "./db.ts";
 import type { AuaRow, AumRow, Env, FundRow } from "./types.ts";
 
@@ -62,17 +63,20 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
     sources: sourceMap.get(row.id) || []
   }));
   const latestActual = officialAua.at(-1) || null;
-  const buckets = config.buckets.map((bucket) => {
+  const buckets = await Promise.all(config.buckets.map(async (bucket) => {
     const aggregate = bucketHistories[bucket.id] || [];
     const latest = aggregate.at(-1) || null;
     const previous = aggregate.at(-2) || null;
-    return {
+    const card = {
       id: bucket.id,
       name: bucket.name,
       description: bucket.description,
       color: BUCKET_COLORS[bucket.id] || "#8090a6",
       fundCount: bucket.funds.length,
       coveredFundCount: latest?.activeFundCount || 0,
+      sameDateFundCount: latest?.components.filter((component: any) => !component.missing && component.date === latest.date).length || 0,
+      carriedForwardFundCount: latest?.components.filter((component: any) => !component.missing && component.date !== latest.date).length || 0,
+      fundSetFingerprint: sha256(bucket.funds.map((fund: any) => fund.code).sort()),
       latestDate: latest?.date || null,
       totalMillionBaht: latest?.aumMillionBaht ?? null,
       partialMillionBaht: latest?.partialMillionBaht ?? null,
@@ -83,7 +87,9 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
       changePct: latest?.aumMillionBaht != null && previous?.aumMillionBaht ? (latest.aumMillionBaht - previous.aumMillionBaht) / previous.aumMillionBaht : null,
       history: aggregate.map((item) => ({ date: item.date, value: item.aumMillionBaht, fundCount: item.activeFundCount }))
     };
-  });
+    const baseline = await loadPublishedBaseline(env.DB, bucket.id, card.latestDate);
+    return { ...card, comparison: buildPublishedComparison(card, aggregate, baseline) };
+  }));
   const fundCards = fundRows.results.map((fund) => fundCard(fund, history[fund.code] || {}));
   const timelineMap = new Map<string, any>(seriesHistory.map((point: any) => {
     const projection = fitted.anchor && point.date >= fitted.anchor.referenceDate ? projectAua(fitted, point) : null;
@@ -118,7 +124,8 @@ export async function rebuildModelAndSnapshot(env: Env, actor = "system") {
     projection: currentProjection,
     histories: buckets.map(bucket => bucket.history),
     sourceStatus: sourceStatuses.results,
-    catalog: fundRows.results.map(fund => [fund.code, fund.inception_date])
+    catalog: fundRows.results.map(fund => [fund.code, fund.inception_date]),
+    publishedComparisons: buckets.map(bucket => [bucket.id, bucket.comparison, bucket.sameDateFundCount, bucket.carriedForwardFundCount])
   }).slice(0, 20);
   const payload = {
     appId: "aum-dashboard",

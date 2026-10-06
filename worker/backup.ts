@@ -1,7 +1,7 @@
 import { getMetadata, nowIso, setMetadata } from "./db.ts";
 import type { Env, RefreshJobRow } from "./types.ts";
 
-const UPGRADE = "2026-09-17-interval-v1";
+const UPGRADE = "2026-10-06-published-comparison-v1";
 const TABLES = ["funds", "aum_points", "aua_sources", "aua_observations", "aua_observation_sources", "model_versions", "projections", "dashboard_snapshots", "source_status", "audit_log", "metadata", "refresh_jobs"];
 
 export async function advanceUpgradeBackup(env: Env, job: RefreshJobRow) {

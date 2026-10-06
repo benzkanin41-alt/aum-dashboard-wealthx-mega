@@ -18,6 +18,36 @@
 - Missing fund observations are never replaced with zero. Aggregate points
   retain active-fund coverage and fund inception dates.
 
+## Published AUM Comparisons
+
+- The aggregation, per-fund rounding, seven-day carry, anchored OLS and 95%
+  prediction interval formulas are unchanged.
+- Existing `previousDate`, `previousTotalMillionBaht`, `changeMillionBaht` and
+  `changePct` remain the latest two reconstructed aggregate dates for API
+  compatibility. They are not a comparison against an earlier published screen.
+- `comparison.method = published-asof-baseline-v1` identifies the card's
+  separate published-total comparison. Its immutable baseline includes snapshot
+  id, data version, publication time, AUM date, total and fund-scope fingerprint.
+- Select the last published preceding AUM date, not a reconstructed total from
+  today's history. Reuse that baseline for every refresh of the same AUM date,
+  including corrections and intervening older-date publications.
+- Card delta = current total minus the published baseline. Split it into the
+  reconstructed baseline minus published baseline (late data/corrections), and
+  current total minus reconstructed baseline (movement in the current dataset).
+  Do not call either component net subscriptions or net inflows.
+- Missing totals, missing published baselines and changed fund scope have no
+  numeric comparison. Missing reconstructed history has no invented breakdown.
+- `sameDateFundCount` and `carriedForwardFundCount` describe source-date
+  coverage. Existing usable coverage must never imply all funds have same-day NAV.
+- Comparison and coverage changes participate in `dataVersion`; models do not
+  gain a new version solely because card comparison metadata changed.
+- Old snapshots and recorded projections are never edited or deleted. The
+  first refresh of this release creates an R2 hashed backup of D1 tables before
+  catalog, source ingestion and rebuilding a new snapshot.
+- Regression gates: reproduce 63.86 = 63.59 + 0.27; repeated/corrected snapshots
+  retain their baseline; dates never look forward; zero is distinct from missing;
+  scope changes are explicit; old payload bytes and model formulas are preserved.
+
 ## Official AUA
 
 - Accept only historical actual AUA reported by LTMH through SET or LTMH
