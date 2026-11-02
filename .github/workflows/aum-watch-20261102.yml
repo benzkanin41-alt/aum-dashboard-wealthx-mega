@@ -1,0 +1,45 @@
+name: Watch 2 November AUM completeness and notify
+
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        description: "watch updates Sites; verify is financially read-only"
+        options: [watch, verify]
+        default: watch
+      notify_test:
+        type: boolean
+        description: "Send one clearly labeled notification-channel test in verify mode"
+        default: false
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ltmh-wealthx-sites-refresh
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          package-manager-cache: false
+      - name: Verify monitor policy with isolated fixtures
+        run: node --test tests/aum-watch.test.js
+      - name: Monitor canonical AUM and update Sites only
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          AUM_WATCH_MODE: ${{ github.event_name == 'schedule' && 'watch' || inputs.mode || 'watch' }}
+          AUM_WATCH_NOTIFY_TEST: ${{ inputs.notify_test == true && 'true' || 'false' }}
+        run: node scripts/watch-aum-20261102.js
